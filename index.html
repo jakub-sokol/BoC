@@ -279,8 +279,14 @@
       el.style.pointerEvents='none';el.style.cursor='default';
     });
   }
-  // Run after React hydration
-  var observer=new MutationObserver(disableSweep);
+  // Run after React hydration. Disconnect while mutating so our own style
+  // writes don't retrigger the observer — that feedback loop starves the
+  // event loop and hangs Safari/WebKit (DOMContentLoaded never fires).
+  var observer=new MutationObserver(function(){
+    observer.disconnect();
+    disableSweep();
+    observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+  });
   observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
   setTimeout(function(){observer.disconnect();disableSweep()},5000);
   disableSweep();
