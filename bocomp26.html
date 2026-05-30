@@ -994,5 +994,25 @@
   if (document.querySelector('.framer-bd4dj1')) setTimeout(initSpeakersCollapse, 400);
 })();
 </script>
+<script>
+// Move sponsors-cards section to appear below gallery, above speakers
+(function() {
+  function moveSponsorSection() {
+    var sponsors = document.getElementById('sponsors-cards');
+    var speakers = document.querySelector('.framer-bd4dj1');
+    if (sponsors && speakers && speakers.parentNode) {
+      speakers.parentNode.insertBefore(sponsors, speakers);
+    }
+  }
+  var obs2 = new MutationObserver(function() {
+    if (document.querySelector('.framer-bd4dj1')) {
+      obs2.disconnect();
+      setTimeout(moveSponsorSection, 450);
+    }
+  });
+  obs2.observe(document.body, { childList: true, subtree: true });
+  if (document.querySelector('.framer-bd4dj1')) setTimeout(moveSponsorSection, 450);
+})();
+</script>
 </body>
 </html>
