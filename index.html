@@ -314,18 +314,23 @@
   disableSweep();
 })();
 
-// Make BoC 2026 card link to bocomp26.html directly (bypass Framer router)
+// Make BoC 2026 card link to bocomp26 page directly (bypass Framer router)
 (function(){
+  var TARGET = 'https://boc-phi.vercel.app/bocomp26';
   function fixBoC26Link(){
-    document.querySelectorAll('a[href*="bocomp26"]').forEach(function(el){
+    document.querySelectorAll('a[href*="/works/"]').forEach(function(el){
+      el.setAttribute('href', TARGET);
+      el.setAttribute('target', '_self');
       el.addEventListener('click',function(e){
         e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
-        window.location.href=el.href;
+        window.location.href = TARGET;
       },true);
     });
   }
-  setTimeout(fixBoC26Link,2000);
-  setTimeout(fixBoC26Link,4000);
+  var _poll = setInterval(function(){
+    if(document.querySelector('a[href*="/works/"]')){ clearInterval(_poll); fixBoC26Link(); }
+  }, 200);
+  setTimeout(function(){ clearInterval(_poll); }, 10000);
 })();
 </script>
 </body>
