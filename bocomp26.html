@@ -1038,5 +1038,24 @@ div.framer-18np4au { display: none !important; }
   }
 })();
 </script>
+<script>
+// Change "DAY 1" → "Day 1" and "DAY 2" → "Day 2" in schedule headings
+(function() {
+  var fixes = [
+    { selector: '.framer-1t5l8ay .framer-text', text: 'Day 1' },
+    { selector: '.framer-ia3j29 .framer-text',  text: 'Day 2' }
+  ];
+  function fixDayLabels() {
+    fixes.forEach(function(f) {
+      var el = document.querySelector(f.selector);
+      if (el) { el.textContent = f.text; el.style.textTransform = 'none'; }
+    });
+  }
+  var _dpoll = setInterval(function() {
+    if (document.querySelector('.framer-1t5l8ay')) { clearInterval(_dpoll); setTimeout(fixDayLabels, 400); }
+  }, 150);
+  setTimeout(function() { clearInterval(_dpoll); }, 10000);
+})();
+</script>
 </body>
 </html>
