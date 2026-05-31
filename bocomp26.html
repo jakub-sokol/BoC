@@ -1112,13 +1112,17 @@ div.framer-1aux6zn { display: none !important; }
 })();
 </script>
 <script>
-// Move sponsors-cards section to appear below gallery, above speakers
+// Section order: Gallery → Program → Speakers → Our Partners
+// Step 1 (450ms): move sponsors-cards to after the speakers block
 (function() {
   function moveSponsorSection() {
     var sponsors = document.getElementById('sponsors-cards');
     var speakers = document.querySelector('.framer-bd4dj1');
     if (sponsors && speakers && speakers.parentNode) {
-      speakers.parentNode.insertBefore(sponsors, speakers);
+      // Place sponsors after the "View all speakers" button if present, else after the grid
+      var btn = document.getElementById('speakers-view-all-btn');
+      var anchor = btn || speakers;
+      anchor.parentNode.insertBefore(sponsors, anchor.nextSibling);
     }
   }
   if (document.querySelector('.framer-bd4dj1')) {
@@ -1131,14 +1135,14 @@ div.framer-1aux6zn { display: none !important; }
   }
 })();
 
-// Move schedule section: Gallery → Program → Our Partners → Speakers
-// Runs at 600ms so moveSponsorSection (450ms) has already placed sponsors-cards first
+// Step 2 (600ms): move schedule to just before the speakers block
+// By now sponsors is already after speakers, so order becomes Program → Speakers → Our Partners
 (function() {
   function moveScheduleSection() {
     var schedule = document.getElementById('schedule');
-    var sponsors = document.getElementById('sponsors-cards');
-    if (schedule && sponsors && sponsors.parentNode) {
-      sponsors.parentNode.insertBefore(schedule, sponsors);
+    var speakers = document.querySelector('.framer-bd4dj1');
+    if (schedule && speakers && speakers.parentNode) {
+      speakers.parentNode.insertBefore(schedule, speakers);
     }
   }
   if (document.getElementById('schedule')) {
