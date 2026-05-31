@@ -1130,6 +1130,26 @@ div.framer-1aux6zn { display: none !important; }
     setTimeout(function() { clearInterval(_smpoll); }, 10000);
   }
 })();
+
+// Move schedule section: Gallery → Program → Our Partners → Speakers
+// Runs at 600ms so moveSponsorSection (450ms) has already placed sponsors-cards first
+(function() {
+  function moveScheduleSection() {
+    var schedule = document.getElementById('schedule');
+    var sponsors = document.getElementById('sponsors-cards');
+    if (schedule && sponsors && sponsors.parentNode) {
+      sponsors.parentNode.insertBefore(schedule, sponsors);
+    }
+  }
+  if (document.getElementById('schedule')) {
+    setTimeout(moveScheduleSection, 600);
+  } else {
+    var _schpoll = setInterval(function() {
+      if (document.getElementById('schedule')) { clearInterval(_schpoll); setTimeout(moveScheduleSection, 600); }
+    }, 150);
+    setTimeout(function() { clearInterval(_schpoll); }, 10000);
+  }
+})();
 </script>
 <script>
 // Fix schedule day labels and dates
