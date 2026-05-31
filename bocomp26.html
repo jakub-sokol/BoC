@@ -546,8 +546,11 @@ section#blog.framer-k0pqez { display: none !important; }
     var activeArea = comparison.querySelector('.framer-11kkxfx');
     if (!activeArea) return;
 
-    // Anchor arrows to the section itself (the active image container is offset-left)
-    comparison.style.position = 'relative';
+    // Anchor arrows to the photo wrapper so they stay within the image on wide screens
+    var photoWrap = comparison.querySelector('.framer-1japhbz-container');
+    var arrowParent = photoWrap || comparison;
+    arrowParent.style.position = 'relative';
+    arrowParent.style.overflow = 'visible';
 
     function getStack() {
       return comparison.querySelector('.framer-d2dmxa');
@@ -621,14 +624,12 @@ section#blog.framer-k0pqez { display: none !important; }
     prevBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo(currentIndex - 1); });
     nextBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo(currentIndex + 1); });
 
-    // Position arrows vertically centered on the active image within the section
-    // Active image occupies the top ~68% of the section height
-    var arrowTop = '34%';
-    prevBtn.style.top = arrowTop;
-    nextBtn.style.top = arrowTop;
+    // Position arrows at vertical midpoint of the active image (~68% of section = 50% of photo)
+    prevBtn.style.top = '50%';
+    nextBtn.style.top = '50%';
 
-    comparison.appendChild(prevBtn);
-    comparison.appendChild(nextBtn);
+    arrowParent.appendChild(prevBtn);
+    arrowParent.appendChild(nextBtn);
   }
 
   if (document.readyState === 'loading') {
