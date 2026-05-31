@@ -637,11 +637,9 @@ section#blog.framer-k0pqez { display: none !important; }
   }
   removeAboutSection();
 
-  var galleryObserver = new MutationObserver(function() {
-    removeGallery();
-    removeAboutSection();
-  });
-  galleryObserver.observe(document.documentElement, { childList: true, subtree: true });
+  // Poll briefly after load — safer than MutationObserver on Safari
+  var _gpoll = setInterval(function() { removeGallery(); removeAboutSection(); }, 200);
+  setTimeout(function() { clearInterval(_gpoll); }, 6000);
 
   // ── Speaker bio popup ────────────────────────────────────────────────────
 
@@ -921,16 +919,15 @@ section#blog.framer-k0pqez { display: none !important; }
     });
   }
 
-  // Wait for Framer to hydrate the gallery
-  var observer = new MutationObserver(function() {
-    if (document.querySelector('.framer-d2dmxa')) {
-      observer.disconnect();
-      setTimeout(initThumbArrows, 200);
-    }
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-  // Also try immediately in case it's already there
-  if (document.querySelector('.framer-d2dmxa')) initThumbArrows();
+  // Poll for gallery element — avoids MutationObserver feedback loop in Safari
+  if (document.querySelector('.framer-d2dmxa')) {
+    setTimeout(initThumbArrows, 200);
+  } else {
+    var _tpoll = setInterval(function() {
+      if (document.querySelector('.framer-d2dmxa')) { clearInterval(_tpoll); setTimeout(initThumbArrows, 200); }
+    }, 150);
+    setTimeout(function() { clearInterval(_tpoll); }, 10000);
+  }
 })();
 </script>
 
@@ -946,14 +943,14 @@ section#blog.framer-k0pqez { display: none !important; }
     grid.parentNode.insertBefore(heading, grid);
   }
 
-  var observer = new MutationObserver(function() {
-    if (document.querySelector('.framer-bd4dj1')) {
-      observer.disconnect();
-      setTimeout(insertSpeakersTitle, 100);
-    }
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-  if (document.querySelector('.framer-bd4dj1')) insertSpeakersTitle();
+  if (document.querySelector('.framer-bd4dj1')) {
+    setTimeout(insertSpeakersTitle, 100);
+  } else {
+    var _stpoll = setInterval(function() {
+      if (document.querySelector('.framer-bd4dj1')) { clearInterval(_stpoll); setTimeout(insertSpeakersTitle, 100); }
+    }, 150);
+    setTimeout(function() { clearInterval(_stpoll); }, 10000);
+  }
 })();
 </script>
 
@@ -991,14 +988,14 @@ section#blog.framer-k0pqez { display: none !important; }
     grid.parentNode.insertBefore(btn, grid.nextSibling);
   }
 
-  var observer = new MutationObserver(function() {
-    if (document.querySelector('.framer-bd4dj1')) {
-      observer.disconnect();
-      setTimeout(initSpeakersCollapse, 400);
-    }
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-  if (document.querySelector('.framer-bd4dj1')) setTimeout(initSpeakersCollapse, 400);
+  if (document.querySelector('.framer-bd4dj1')) {
+    setTimeout(initSpeakersCollapse, 400);
+  } else {
+    var _scpoll = setInterval(function() {
+      if (document.querySelector('.framer-bd4dj1')) { clearInterval(_scpoll); setTimeout(initSpeakersCollapse, 400); }
+    }, 150);
+    setTimeout(function() { clearInterval(_scpoll); }, 10000);
+  }
 })();
 </script>
 <script>
@@ -1011,14 +1008,14 @@ section#blog.framer-k0pqez { display: none !important; }
       speakers.parentNode.insertBefore(sponsors, speakers);
     }
   }
-  var obs2 = new MutationObserver(function() {
-    if (document.querySelector('.framer-bd4dj1')) {
-      obs2.disconnect();
-      setTimeout(moveSponsorSection, 450);
-    }
-  });
-  obs2.observe(document.body, { childList: true, subtree: true });
-  if (document.querySelector('.framer-bd4dj1')) setTimeout(moveSponsorSection, 450);
+  if (document.querySelector('.framer-bd4dj1')) {
+    setTimeout(moveSponsorSection, 450);
+  } else {
+    var _smpoll = setInterval(function() {
+      if (document.querySelector('.framer-bd4dj1')) { clearInterval(_smpoll); setTimeout(moveSponsorSection, 450); }
+    }, 150);
+    setTimeout(function() { clearInterval(_smpoll); }, 10000);
+  }
 })();
 </script>
 </body>
