@@ -1161,6 +1161,44 @@ div.framer-1aux6zn { display: none !important; }
 })();
 </script>
 <script>
+// Inject "Gallery" heading into the comparison/gallery section
+(function() {
+  function injectGalleryHeading() {
+    var section = document.getElementById('comparison');
+    if (!section || section.dataset.galleryH) return;
+    section.dataset.galleryH = '1';
+
+    var h2 = document.createElement('h2');
+    h2.textContent = 'Gallery';
+    h2.style.cssText = [
+      'font-family:"Erode Variable","Erode Variable Placeholder",serif',
+      'font-size:48px',
+      'font-variation-settings:"wght" 550',
+      'font-weight:550',
+      'letter-spacing:-0.04em',
+      'line-height:1.1',
+      'color:rgb(5,41,13)',
+      'text-align:center',
+      'margin:0 0 8px',
+      'width:100%',
+    ].join(';');
+
+    section.insertBefore(h2, section.firstChild);
+  }
+
+  if (document.getElementById('comparison')) {
+    setTimeout(injectGalleryHeading, 400);
+  } else {
+    var _ghpoll = setInterval(function() {
+      if (document.getElementById('comparison')) {
+        clearInterval(_ghpoll);
+        setTimeout(injectGalleryHeading, 400);
+      }
+    }, 150);
+    setTimeout(function() { clearInterval(_ghpoll); }, 10000);
+  }
+})();
+
 // Inject speaker face + name + company into every program session row
 (function() {
   // ── SPEAKER DATA ──────────────────────────────────────────────────────────
