@@ -420,6 +420,12 @@ div.framer-1aux6zn { display: none !important; }
   font-family: "DM Sans","DM Sans Placeholder",sans-serif !important;
 }
 
+/* Expand program day rows to full 1100px (was capped at 900px by framer-ekrpip)
+   Photo side (framer-d2zqo6) stays fixed at 300px; text side grows to fill the rest */
+.framer-BIZEb .framer-ekrpip {
+  max-width: 1100px !important;
+}
+
 /* Cap speaker grid column width so faces stay compact on wide screens */
 .framer-BIZEb .framer-bd4dj1 {
   grid-template-columns: repeat(4, minmax(50px, 200px)) !important;
