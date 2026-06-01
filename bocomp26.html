@@ -410,6 +410,14 @@ div.framer-twcsvs { display: none !important; }
 /* Hide the noise/grain canvas overlay in the gallery slideshow */
 .framer-gh39l9-container canvas[aria-hidden="true"] { display: none !important; }
 
+/* Hide Framer-native Event Gallery and Testimonial that we replaced/removed —
+   CSS attribute selector fires as soon as React renders them, so no flicker */
+[data-framer-name="Event Gallery"],
+[data-framer-name="Testimonial Highlight Section"] { display: none !important; }
+
+/* Hide the Framer-native sponsor logo ticker ("old logos") — replaced by our marquee */
+div.framer-1f29gs { display: none !important; }
+
 /* Hide venue location text: "Hayes Valley" (Day 1) and "Soma Tech District" (Day 2) */
 div.framer-v0p9p,
 div.framer-18np4au { display: none !important; }
