@@ -708,9 +708,9 @@ div.framer-1aux6zn { display: none !important; }
       ".boc27-tba .pill{display:inline-block;background:rgba(5,41,13,0.1);color:rgb(5,41,13);border-radius:100px;padding:0.25rem 0.65rem;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Sans','DM Sans Placeholder',sans-serif;}",
       /* register band */
       '.boc27-register{box-sizing:border-box;background:#05290d;border-radius:14px;max-width:1100px;width:100%;padding:56px 40px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;}',
-      '.boc27-register .boc27-eyebrow{color:#f2af4b;opacity:1;}',
-      '.boc27-register .boc27-h{color:#fff;}',
-      ".boc27-register .price{font-family:'Erode Variable','Erode Placeholder',serif;font-size:42px;font-weight:400;color:#f2af4b;line-height:1.1;}",
+      '.boc27-register .boc27-eyebrow{color:rgba(255,255,255,.7);opacity:1;letter-spacing:0.1em;}',
+      ".boc27-register .boc27-h{color:#fff;font-family:'DM Sans','DM Sans Placeholder',sans-serif;font-size:19.2px;letter-spacing:-0.04em;}",
+      ".boc27-register .price{font-family:'Erode Variable','Erode Placeholder',serif;font-size:33.6px;font-weight:600;color:#fff;line-height:1.1;}",
       '.boc27-register .note{color:rgba(255,255,255,.7);font-size:14px;max-width:460px;}',
       /* pricing */
       '.boc27-pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;width:100%;margin-top:34px;align-items:stretch;}',
@@ -721,16 +721,16 @@ div.framer-1aux6zn { display: none !important; }
       ".boc27-price-card .tagline{font-family:'DM Sans','DM Sans Placeholder',sans-serif;font-size:14px;letter-spacing:-0.04em;color:rgba(0,0,0,0.55);}",
       '.boc27-price-card.feat .tagline{color:rgba(255,255,255,.78);}',
       ".boc27-price-card .amt{font-family:'Erode Variable','Erode Placeholder',serif;font-size:32px;font-weight:400;color:#05290d;margin:10px 0 2px;}",
-      '.boc27-price-card.feat .amt{color:#f2af4b;}',
+      '.boc27-price-card.feat .amt{color:#fff;}',
       '.boc27-price-card ul{list-style:none;padding:0;margin:16px 0 22px;display:flex;flex-direction:column;gap:11px;}',
       ".boc27-price-card li{display:flex;gap:10px;align-items:flex-start;font-family:'DM Sans','DM Sans Placeholder',sans-serif;font-size:14px;line-height:1.45;letter-spacing:-0.04em;color:rgb(5,41,13);text-align:left;}",
       '.boc27-price-card.feat li{color:rgba(255,255,255,.92);}',
       '.boc27-price-card li svg{flex:0 0 18px;margin-top:1px;}',
       '.boc27-price-card .boc27-btn{margin-top:auto;text-align:center;}',
-      ".boc27-popular{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:rgba(242,175,75,0.22);color:#f2af4b;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.65rem;border-radius:100px;white-space:nowrap;font-family:'DM Sans','DM Sans Placeholder',sans-serif;}",
+      ".boc27-popular{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#fff;color:#05290d;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.65rem;border-radius:100px;white-space:nowrap;font-family:'DM Sans','DM Sans Placeholder',sans-serif;}",
       /* looking back */
       '.boc27-lookback-head{text-align:center;margin:0 auto 18px;max-width:680px;}',
-      '#boc27-prev-btn{text-align:center;margin:10px 0 0;width:100%;}',
+      '#boc27-prev-btn{text-align:center;margin:10px 0 64px;width:100%;}',
       /* variant caption */
       '.boc27-variant-tag{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9aa39c;text-align:center;margin-bottom:18px;}',
       '@media(max-width:809px){.boc27-pricing-grid{grid-template-columns:1fr;}.boc27-register{padding:44px 24px;}}'
@@ -741,9 +741,10 @@ div.framer-1aux6zn { display: none !important; }
   /* ---------- helpers ---------- */
   function el(tag, cls, html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
   function check(color){
+    var swoosh=(color==='#fff'||color==='#ffffff')?'#05290d':'#fff';
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-      + '<circle cx="12" cy="12" r="9.2" stroke="'+color+'" stroke-width="1.5"/>'
-      + '<path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="'+color+'" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      + '<circle cx="12" cy="12" r="9.2" fill="'+color+'"/>'
+      + '<path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="'+swoosh+'" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
   /* ---------- builders ---------- */
@@ -751,8 +752,7 @@ div.framer-1aux6zn { display: none !important; }
     var s=el('section','boc27-section'); s.id='boc27-register';
     var band=el('div','boc27-register');
     band.appendChild(el('div','boc27-eyebrow','Registration open'));
-    band.appendChild(el('h2','boc27-h','Secure your seat at the 2nd edition'));
-    band.appendChild(el('div','price','Early bird · €300'));
+    band.appendChild(el('div','price','Early bird  •  €300'));
     band.appendChild(el('div','note','Limited early-bird tickets — the price increases as the event approaches.'));
     var a=el('a','boc27-btn boc27-btn-light','Register now'); a.href='#boc27-register'; band.appendChild(a);
     s.appendChild(band);
@@ -798,34 +798,33 @@ div.framer-1aux6zn { display: none !important; }
     s.appendChild(el('p','boc27-sub','Align your brand with Europe’s leading competition-law gathering. Choose the package that fits your goals.'));
     var grid=el('div','boc27-pricing-grid');
     var tiers=[
-      { name:'Bronze', amt:'EUR 2.000', tag:'Increase brand visibility', feat:[
-        'Logo visibility — website, program & stage slides',
-        'Social media promotion',
-        '1 complimentary delegate pass'
-      ]},
-      { name:'Silver', amt:'EUR 5.000', tag:'Access key decision makers', pop:true, feat:[
+      { name:'Silver', amt:'EUR 5.000', tag:'Access key decision makers', feat:[
         'Logo visibility — website, program & stage slides',
         'Social media promotion',
         '2 complimentary delegate passes',
         'Company banner display',
         'Panel moderation'
       ]},
-      { name:'Gold', amt:'EUR 7.000', tag:'Build strategic partnerships', feat:[
+      { name:'Gold', amt:'EUR 7.000', tag:'Build strategic partnerships', pop:true, feat:[
         'Logo visibility — website, program & stage slides',
         'Social media promotion',
         '4 complimentary delegate passes',
         'Company banner display',
         'Keynote speaking slot'
+      ]},
+      { name:'Bronze', amt:'EUR 2.000', tag:'Increase brand visibility', feat:[
+        'Logo visibility — website, program & stage slides',
+        'Social media promotion',
+        '1 complimentary delegate pass'
       ]}
     ];
     tiers.forEach(function(t){
       var card=el('div','boc27-price-card'+(t.pop?' feat':''));
-      if(t.pop) card.appendChild(el('div','boc27-popular','Most popular'));
       card.appendChild(el('div','tier',t.name));
       card.appendChild(el('div','tagline',t.tag));
       card.appendChild(el('div','amt',t.amt));
       var ul=el('ul');
-      var col=t.pop?'#f2af4b':GREEN;
+      var col=t.pop?'#fff':GREEN;
       t.feat.forEach(function(f){ ul.appendChild(el('li','',check(col)+'<span>'+f+'</span>')); });
       card.appendChild(ul);
       var a=el('a','boc27-btn'+(t.pop?' boc27-btn-light':''),'Become a partner'); a.href='#boc27-pricing'; card.appendChild(a);
