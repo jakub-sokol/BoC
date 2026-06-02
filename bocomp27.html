@@ -733,6 +733,18 @@ div.framer-1aux6zn { display: none !important; }
       '#boc27-prev-btn{text-align:center;margin:10px 0 64px;width:100%;}',
       /* variant caption */
       '.boc27-variant-tag{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9aa39c;text-align:center;margin-bottom:18px;}',
+      /* testimonials marquee (matches home page) */
+      '#boc27-testi{width:100%;max-width:1100px;margin:8px auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}',
+      '#boc27-testi-track{display:flex;gap:10px;width:max-content;animation:boc27-marquee 32s linear infinite;}',
+      '#boc27-testi:hover #boc27-testi-track{animation-play-state:paused;}',
+      '.boc27-testi-card{flex:0 0 340px;width:340px;box-sizing:border-box;background:#f3f2f0;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:14px;}',
+      '.boc27-testi-foot{display:flex;align-items:center;gap:12px;}',
+      '.boc27-testi-avatar{width:53px;height:53px;border-radius:50%;object-fit:cover;flex:0 0 53px;display:block;}',
+      '.boc27-testi-meta{display:flex;flex-direction:column;}',
+      ".boc27-testi-q{font-family:'DM Sans','DM Sans Placeholder',sans-serif;font-size:16px;font-weight:500;line-height:24px;letter-spacing:-0.64px;color:rgba(0,0,0,0.7);margin:0;}",
+      ".boc27-testi-name{font-family:'DM Sans','DM Sans Placeholder',sans-serif;font-size:16px;font-weight:500;line-height:24px;letter-spacing:-0.64px;color:#000;}",
+      ".boc27-testi-role{font-family:'DM Sans','DM Sans Placeholder',sans-serif;font-size:16px;font-weight:500;line-height:24px;letter-spacing:-0.64px;color:rgba(0,0,0,0.7);}",
+      '@keyframes boc27-marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}',
       '@media(max-width:809px){.boc27-pricing-grid{grid-template-columns:1fr;}.boc27-register{padding:44px 24px;}}'
     ].join('');
     document.head.appendChild(st);
@@ -873,11 +885,50 @@ div.framer-1aux6zn { display: none !important; }
   }
 
   /* ---------- main injection loop ---------- */
+  /* ----- testimonials (replicates home-page slideshow content) ----- */
+  var BOC27_TESTI=[
+    { q:'"The process was smooth and collaborative. The result was better than I imagined."', name:'Marco L.', role:'Partner, Delphi', img:'./images/9iaucfczessgqfhvihcjplmagcw.jpg' },
+    { q:'"Professional, responsive, and easy to work with. Omega made me feel confident sharing my work."', name:'Helene Anderson', role:'Partner, Delphi', img:'./images/uudv301wreukiooig9fjlxjv0gg.jpg' },
+    { q:'"Every part of Omega felt intentional and beautifully done. Easily one of the cleanest portfolios I\u2019ve seen."', name:'M\u00e1t\u00e9 Fodor', role:'Managing Partner, Theseus Economics', img:'./images/ez6ms0j3s3lx1ncvm6x7xan2pdi.jpg' },
+    { q:'"After launching Omega, inquiries started coming in. The site finally works for me."', name:'Daniel T.', role:'Partner, Delphi', img:'./images/shfyentsrkwrunbg42mrgfhlvy.jpg' }
+  ];
+  function testiCard(t){
+    var c=el('div','boc27-testi-card');
+    c.appendChild(el('p','boc27-testi-q',t.q));
+    var foot=el('div','boc27-testi-foot');
+    if(t.img){ var av=el('img','boc27-testi-avatar'); av.src=t.img; av.alt=t.name; av.loading='lazy'; foot.appendChild(av); }
+    var m=el('div','boc27-testi-meta');
+    m.appendChild(el('div','boc27-testi-name',t.name));
+    m.appendChild(el('div','boc27-testi-role',t.role));
+    foot.appendChild(m);
+    c.appendChild(foot);
+    return c;
+  }
+  function dressTestimonials(){
+    var sec=document.getElementById('testimonials');
+    if(!sec) return;
+    /* hide the empty native Framer slideshow placeholder */
+    var conts=sec.querySelectorAll('.framer-128vcn1-container');
+    for(var i=0;i<conts.length;i++){ conts[i].style.display='none'; }
+    var nodes=sec.querySelectorAll('section,div');
+    for(var j=0;j<nodes.length;j++){ if(nodes[j].children.length===0 && /Connect to Content/.test(nodes[j].textContent)){ var box=nodes[j].closest('[class*="-container"]')||nodes[j]; box.style.display='none'; } }
+    if(document.getElementById('boc27-testi')) return;
+    var wrap=el('div'); wrap.id='boc27-testi';
+    var track=el('div'); track.id='boc27-testi-track';
+    for(var k=0;k<2;k++){ BOC27_TESTI.forEach(function(t){ track.appendChild(testiCard(t)); }); }
+    wrap.appendChild(track);
+    /* insert after the heading block, before the Contact button if present */
+    var contact=sec.querySelector('.framer-10lo2ms-container');
+    if(contact){ contact.parentNode.insertBefore(wrap, contact); }
+    else { sec.appendChild(wrap); }
+  }
+
   function injectAll(){
     var main=document.getElementById('main');
     if(!main) return;
     enforceHero(main);
     dressGallery();
+    dressTestimonials();
 
     /* hide the static "Speakers" label that precedes the native grid */
     var grid=main.querySelector('.framer-bd4dj1');
