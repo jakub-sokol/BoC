@@ -685,111 +685,140 @@ div.framer-1aux6zn { display: none !important; }
     <!-- End of bodyEnd -->
 <script>
 (function () {
-  var images = [
-    'images/ubtbkgzm0utstuodfmwgjuidsi.jpg',
-    'images/admdrlvqhoaxd2fkeubrjnmo2y.jpg',
-    'images/zab4stflzjhbegtje9nqtqgt6cs.jpg',
-    'images/lmagbqmhle5bt8oeiqt2jnqvz8.jpg'
+  var GALLERY_FALLBACK = [
+    { src: 'images/ubtbkgzm0utstuodfmwgjuidsi.jpg', alt: 'BoC 2026 event photo' },
+    { src: 'images/admdrlvqhoaxd2fkeubrjnmo2y.jpg', alt: 'BoC 2026 event photo' },
+    { src: 'images/zab4stflzjhbegtje9nqtqgt6cs.jpg', alt: 'BoC 2026 event photo' },
+    { src: 'images/lmagbqmhle5bt8oeiqt2jnqvz8.jpg', alt: 'BoC 2026 event photo' }
   ];
-  var currentIndex = 0;
 
-  function init() {
-    var comparison = document.getElementById('comparison');
-    if (!comparison) return;
+  function buildGallery(section, photos) {
+    if (section.dataset.bocGallery) return;
+    section.dataset.bocGallery = '1';
 
-    var activeArea = comparison.querySelector('.framer-11kkxfx');
-    if (!activeArea) return;
-
-    // Anchor arrows to the photo wrapper so they stay within the image on wide screens
-    var photoWrap = comparison.querySelector('.framer-1japhbz-container');
-    var arrowParent = photoWrap || comparison;
-    arrowParent.style.position = 'relative';
-    arrowParent.style.overflow = 'visible';
-
-    function getStack() {
-      return comparison.querySelector('.framer-d2dmxa');
+    // Inject heading (guards against duplicate if injectGalleryHeading already ran)
+    if (!section.dataset.galleryH) {
+      var h2 = document.createElement('h2');
+      h2.textContent = 'Event gallery';
+      h2.style.cssText = [
+        'font-family:"Erode Variable","Erode Variable Placeholder",serif',
+        'font-size:48px',
+        'font-variation-settings:"wght" 550',
+        'font-weight:550',
+        'letter-spacing:-0.04em',
+        'line-height:1.1',
+        'color:rgb(5,41,13)',
+        'text-align:center',
+        'margin:0 0 8px',
+        'width:100%'
+      ].join(';');
+      section.insertBefore(h2, section.firstChild);
+      section.dataset.galleryH = '1';
     }
 
-    function goTo(idx) {
-      currentIndex = ((idx % images.length) + images.length) % images.length;
-      var src = images[currentIndex];
+    var idx = 0;
 
-      // Update active image src
-      var activeImg = activeArea.querySelector('img');
-      if (activeImg) {
-        activeImg.src = src + '?width=2048&height=1365';
-        activeImg.srcset = [
-          src + '?scale-down-to=512&width=2048&height=1365 512w',
-          src + '?scale-down-to=1024&width=2048&height=1365 1024w',
-          src + '?width=2048&height=1365 2048w'
-        ].join(',');
-      }
+    // ── Build DOM ──────────────────────────────────────────────────
+    var wrap = document.createElement('div');
+    wrap.id = 'boc-gallery-wrap';
 
-      // Sync thumbnail opacities
-      var stack = getStack();
-      if (stack) {
-        var thumbs = stack.children;
-        for (var i = 0; i < thumbs.length; i++) {
-          thumbs[i].style.opacity = i === currentIndex ? '1' : '0.8';
-        }
-      }
+    var mainDiv = document.createElement('div');
+    mainDiv.className = 'boc-gallery__main';
 
-      // Also fire a native click on the thumb to keep Framer state in sync (thumbnails 2-4 are clickable)
-      if (currentIndex > 0 && stack) {
-        var thumb = stack.children[currentIndex];
-        if (thumb) thumb.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-      }
-    }
+    var img = document.createElement('img');
+    img.className = 'boc-gallery__img';
+    img.src = photos[0].src;
+    img.alt = photos[0].alt || '';
+    mainDiv.appendChild(img);
 
-    // Sync index when user clicks a thumbnail directly
-    var stack = getStack();
-    if (stack) {
-      var thumbs = stack.children;
-      for (var i = 0; i < thumbs.length; i++) {
-        (function (idx) {
-          thumbs[idx].addEventListener('click', function () { currentIndex = idx; });
-        })(i);
-      }
-    }
-
-    function makeArrow(isNext) {
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.setAttribute('aria-label', isNext ? 'Next' : 'Previous');
-      btn.style.cssText =
-        'position:absolute;top:50%;transform:translateY(-50%);' +
-        'width:44px;height:44px;border-radius:22px;' +
-        'background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);' +
-        'color:#fff;display:flex;align-items:center;justify-content:center;' +
-        'cursor:pointer;z-index:10;padding:0;transition:all 0.3s ease;' +
-        (isNext ? 'right:2rem' : 'left:2rem') + ';pointer-events:auto';
-      btn.innerHTML =
-        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    function svgArrow(pointsStr) {
+      return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
         'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<polyline points="' + (isNext ? '9 18 15 12 9 6' : '15 18 9 12 15 6') + '"/></svg>';
-      btn.addEventListener('mouseenter', function () { btn.style.background = 'rgba(255,255,255,0.22)'; });
-      btn.addEventListener('mouseleave', function () { btn.style.background = 'rgba(255,255,255,0.12)'; });
-      return btn;
+        '<polyline points="' + pointsStr + '"/></svg>';
+    }
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'boc-gallery__arrow boc-gallery__arrow--prev';
+    prevBtn.setAttribute('aria-label', 'Previous photo');
+    prevBtn.innerHTML = svgArrow('15 18 9 12 15 6');
+
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'boc-gallery__arrow boc-gallery__arrow--next';
+    nextBtn.setAttribute('aria-label', 'Next photo');
+    nextBtn.innerHTML = svgArrow('9 18 15 12 9 6');
+
+    var counter = document.createElement('div');
+    counter.className = 'boc-gallery__count';
+    counter.textContent = '1 / ' + photos.length;
+
+    mainDiv.appendChild(prevBtn);
+    mainDiv.appendChild(nextBtn);
+    mainDiv.appendChild(counter);
+    wrap.appendChild(mainDiv);
+
+    var thumbsDiv = document.createElement('div');
+    thumbsDiv.className = 'boc-gallery__thumbs';
+    photos.forEach(function (p, i) {
+      var t = document.createElement('div');
+      t.className = 'boc-gallery__thumb' + (i === 0 ? ' boc-active' : '');
+      var ti = document.createElement('img');
+      ti.src = p.src;
+      ti.alt = p.alt || '';
+      ti.loading = 'lazy';
+      t.appendChild(ti);
+      t.addEventListener('click', function () { goTo(i); });
+      thumbsDiv.appendChild(t);
+    });
+    wrap.appendChild(thumbsDiv);
+    section.appendChild(wrap);
+
+    // ── Navigation ─────────────────────────────────────────────────
+    function goTo(newIdx) {
+      if (newIdx === idx && photos.length > 1) {}
+      idx = ((newIdx % photos.length) + photos.length) % photos.length;
+      img.classList.add('boc-fade');
+      setTimeout(function () {
+        img.src = photos[idx].src;
+        img.alt = photos[idx].alt || '';
+        img.classList.remove('boc-fade');
+      }, 180);
+      counter.textContent = (idx + 1) + ' / ' + photos.length;
+      var thumbEls = thumbsDiv.querySelectorAll('.boc-gallery__thumb');
+      thumbEls.forEach(function (t, i) { t.classList.toggle('boc-active', i === idx); });
+      var active = thumbsDiv.children[idx];
+      if (active) active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
     }
 
-    var prevBtn = makeArrow(false);
-    var nextBtn = makeArrow(true);
+    prevBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo(idx - 1); });
+    nextBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo(idx + 1); });
 
-    prevBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo(currentIndex - 1); });
-    nextBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo(currentIndex + 1); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') goTo(idx - 1);
+      if (e.key === 'ArrowRight') goTo(idx + 1);
+    });
 
-    // Position arrows at vertical midpoint of the active image (~68% of section = 50% of photo)
-    prevBtn.style.top = '50%';
-    nextBtn.style.top = '50%';
+    var _swipeX = null;
+    mainDiv.addEventListener('touchstart', function (e) { _swipeX = e.touches[0].clientX; }, { passive: true });
+    mainDiv.addEventListener('touchend', function (e) {
+      if (_swipeX === null) return;
+      var dx = e.changedTouches[0].clientX - _swipeX;
+      _swipeX = null;
+      if (Math.abs(dx) > 40) goTo(dx < 0 ? idx + 1 : idx - 1);
+    }, { passive: true });
+  }
 
-    arrowParent.appendChild(prevBtn);
-    arrowParent.appendChild(nextBtn);
+  function initGallery() {
+    var section = document.getElementById('comparison');
+    if (!section) return;
+    fetch('gallery/bocomp26/photos.json')
+      .then(function (r) { return r.json(); })
+      .then(function (photos) { buildGallery(section, photos); })
+      .catch(function () { buildGallery(section, GALLERY_FALLBACK); });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { setTimeout(init, 400); });
+    document.addEventListener('DOMContentLoaded', function () { setTimeout(initGallery, 400); });
   } else {
-    setTimeout(init, 400);
+    setTimeout(initGallery, 400);
   }
 
   // Remove the Event Gallery canvas component whenever Framer renders it
@@ -955,44 +984,102 @@ div.framer-1aux6zn { display: none !important; }
 </script>
 
 <style>
-/* Make gallery container responsive so Framer's arrows stay within the visible viewport */
-.framer-BIZEb .framer-1japhbz-container {
-  width: 100% !important;
-  max-width: 1100px; /* match the Day-1 program banner width */
-}
-.framer-nOxv3.framer-13i1kqi {
-  width: 100% !important;
-}
-/* Gallery image: +25% height (369px → 461px) */
-.framer-BIZEb .framer-11kkxfx {
-  height: 461px !important;
-}
+/* Hide Framer's original slideshow content inside #comparison — replaced by custom gallery */
+#comparison .framer-1japhbz-container { display: none !important; }
 
-/* Thumbnail strip arrow buttons */
-.thumb-arrow {
+/* ── Custom Event Gallery ─────────────────────────────────────── */
+#boc-gallery-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
+.boc-gallery__main {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  line-height: 0;
+}
+.boc-gallery__img {
+  width: 100%;
+  height: 461px;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+.boc-gallery__img.boc-fade { opacity: 0; }
+.boc-gallery__arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 20;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.45);
-  border: none;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
   cursor: pointer;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-size: 14px;
-  line-height: 1;
   transition: background 0.2s;
+  padding: 0;
 }
-.thumb-arrow:hover { background: rgba(0,0,0,0.7); }
-/* Inset within .framer-d2dmxa so overflow:clip doesn't cut them */
-.thumb-arrow-prev { left: 6px; }
-.thumb-arrow-next { right: 6px; }
-.framer-d2dmxa { position: relative !important; }
+.boc-gallery__arrow:hover { background: rgba(255,255,255,0.28); }
+.boc-gallery__arrow--prev { left: 1.25rem; }
+.boc-gallery__arrow--next { right: 1.25rem; }
+.boc-gallery__count {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.25rem;
+  background: rgba(0,0,0,0.48);
+  color: #fff;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.02em;
+  line-height: normal;
+}
+.boc-gallery__thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.boc-gallery__thumbs::-webkit-scrollbar { display: none; }
+.boc-gallery__thumb {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 54px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, opacity 0.2s;
+  opacity: 0.55;
+  line-height: 0;
+}
+.boc-gallery__thumb:hover { opacity: 0.8; }
+.boc-gallery__thumb.boc-active {
+  border-color: rgb(5, 41, 13);
+  opacity: 1;
+}
+.boc-gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 809px) {
+  .boc-gallery__img { height: 240px; }
+  .boc-gallery__arrow { width: 36px; height: 36px; }
+  .boc-gallery__arrow--prev { left: 0.75rem; }
+  .boc-gallery__arrow--next { right: 0.75rem; }
+}
 
 /* Speakers section title — absolutely positioned above the grid so it doesn't occupy a grid row */
 .framer-bd4dj1 {
@@ -1068,61 +1155,6 @@ div.framer-1aux6zn { display: none !important; }
 }
 </style>
 
-<script>
-(function() {
-  function initThumbArrows() {
-    var strip = document.querySelector('.framer-d2dmxa');
-    if (!strip || strip.dataset.thumbArrows) return;
-    strip.dataset.thumbArrows = '1';
-
-    var thumbSelectors = ['.framer-1tnleee', '.framer-4m6vyn', '.framer-xc64wk', '.framer-ao1fsf'];
-    var currentIndex = 0;
-
-    function getThumbs() {
-      return thumbSelectors.map(function(s) { return strip.querySelector(s); }).filter(Boolean);
-    }
-
-    function goTo(idx) {
-      var thumbs = getThumbs();
-      if (!thumbs.length) return;
-      currentIndex = (idx + thumbs.length) % thumbs.length;
-      thumbs[currentIndex].click();
-    }
-
-    var prev = document.createElement('button');
-    prev.className = 'thumb-arrow thumb-arrow-prev';
-    prev.innerHTML = '&#8249;';
-    prev.setAttribute('aria-label', 'Previous image');
-    prev.addEventListener('click', function(e) { e.stopPropagation(); goTo(currentIndex - 1); });
-
-    var next = document.createElement('button');
-    next.className = 'thumb-arrow thumb-arrow-next';
-    next.innerHTML = '&#8250;';
-    next.setAttribute('aria-label', 'Next image');
-    next.addEventListener('click', function(e) { e.stopPropagation(); goTo(currentIndex + 1); });
-
-    // Append inside the strip — arrows are within its clip boundary so they're visible
-    strip.appendChild(prev);
-    strip.appendChild(next);
-
-    // Keep currentIndex in sync when user clicks a thumbnail directly
-    thumbSelectors.forEach(function(sel, i) {
-      var th = strip.querySelector(sel);
-      if (th) th.addEventListener('click', function() { currentIndex = i; });
-    });
-  }
-
-  // Poll for gallery element — avoids MutationObserver feedback loop in Safari
-  if (document.querySelector('.framer-d2dmxa')) {
-    setTimeout(initThumbArrows, 200);
-  } else {
-    var _tpoll = setInterval(function() {
-      if (document.querySelector('.framer-d2dmxa')) { clearInterval(_tpoll); setTimeout(initThumbArrows, 200); }
-    }, 150);
-    setTimeout(function() { clearInterval(_tpoll); }, 10000);
-  }
-})();
-</script>
 
 <script>
 (function() {
@@ -1415,44 +1447,6 @@ div.framer-1aux6zn { display: none !important; }
 })();
 </script>
 <script>
-// Inject "Gallery" heading into the comparison/gallery section
-(function() {
-  function injectGalleryHeading() {
-    var section = document.getElementById('comparison');
-    if (!section || section.dataset.galleryH) return;
-    section.dataset.galleryH = '1';
-
-    var h2 = document.createElement('h2');
-    h2.textContent = 'Event gallery';
-    h2.style.cssText = [
-      'font-family:"Erode Variable","Erode Variable Placeholder",serif',
-      'font-size:48px',
-      'font-variation-settings:"wght" 550',
-      'font-weight:550',
-      'letter-spacing:-0.04em',
-      'line-height:1.1',
-      'color:rgb(5,41,13)',
-      'text-align:center',
-      'margin:0 0 8px',
-      'width:100%',
-    ].join(';');
-
-    section.insertBefore(h2, section.firstChild);
-  }
-
-  if (document.getElementById('comparison')) {
-    setTimeout(injectGalleryHeading, 400);
-  } else {
-    var _ghpoll = setInterval(function() {
-      if (document.getElementById('comparison')) {
-        clearInterval(_ghpoll);
-        setTimeout(injectGalleryHeading, 400);
-      }
-    }, 150);
-    setTimeout(function() { clearInterval(_ghpoll); }, 10000);
-  }
-})();
-
 // Inject speaker face + name + company into every program session row
 (function() {
   // ── SPEAKER DATA ──────────────────────────────────────────────────────────
