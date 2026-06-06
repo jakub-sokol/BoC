@@ -808,19 +808,64 @@ div.framer-1aux6zn { display: none !important; }
     }, { passive: true });
   }
 
+  // Fetch photos.json — tries fetch() first, falls back to XHR (Safari compat)
+  function loadPhotos(onSuccess, onFail) {
+    var url = '/gallery/bocomp26/photos.json?_=' + Date.now();
+    if (window.fetch) {
+      fetch(url, { cache: 'no-store' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(onSuccess)
+        .catch(function (err) {
+          console.warn('[BoC gallery] fetch failed, trying XHR:', err);
+          xhrPhotos(url, onSuccess, onFail);
+        });
+    } else {
+      xhrPhotos(url, onSuccess, onFail);
+    }
+  }
+
+  function xhrPhotos(url, onSuccess, onFail) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        try { onSuccess(JSON.parse(xhr.responseText)); }
+        catch (e) { console.warn('[BoC gallery] XHR parse error:', e); onFail(); }
+      } else {
+        console.warn('[BoC gallery] XHR status:', xhr.status);
+        onFail();
+      }
+    };
+    xhr.onerror = function () { console.warn('[BoC gallery] XHR network error'); onFail(); };
+    xhr.send();
+  }
+
   function initGallery() {
-    var section = document.getElementById('comparison');
-    if (!section) return;
-    fetch('/gallery/bocomp26/photos.json')
-      .then(function (r) { return r.json(); })
-      .then(function (photos) { buildGallery(section, photos); })
-      .catch(function () { buildGallery(section, GALLERY_FALLBACK); });
+    var anchor = document.getElementById('comparison');
+    if (!anchor) return;
+
+    // Guard: only run once
+    if (document.getElementById('boc-event-gallery')) return;
+
+    // Create our section as a SIBLING before #comparison so Framer
+    // re-renders of #comparison can never wipe our gallery content
+    var section = document.createElement('section');
+    section.id = 'boc-event-gallery';
+    anchor.parentNode.insertBefore(section, anchor);
+
+    loadPhotos(
+      function (photos) { buildGallery(section, photos); },
+      function ()        { buildGallery(section, GALLERY_FALLBACK); }
+    );
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { setTimeout(initGallery, 400); });
+    document.addEventListener('DOMContentLoaded', function () { setTimeout(initGallery, 500); });
   } else {
-    setTimeout(initGallery, 400);
+    setTimeout(initGallery, 500);
   }
 
   // Remove the Event Gallery canvas component whenever Framer renders it
@@ -1011,10 +1056,14 @@ var BIOS = {
 </script>
 
 <style>
-/* Hide Framer's original slideshow content inside #comparison — replaced by custom gallery */
-#comparison .framer-1japhbz-container { display: none !important; }
+/* Hide #comparison entirely — our gallery lives in #boc-event-gallery (a sibling),
+   so Framer re-renders of #comparison can never wipe the gallery content */
+section#comparison { display: none !important; }
 
 /* ── Custom Event Gallery ─────────────────────────────────────── */
+#boc-event-gallery {
+  padding: 4rem 0 0;
+}
 #boc-gallery-wrap {
   max-width: 1100px;
   margin: 0 auto;
