@@ -791,7 +791,7 @@ div.framer-1aux6zn { display: none !important; }
   function initGallery() {
     var section = document.getElementById('comparison');
     if (!section) return;
-    fetch('gallery/bocomp26/photos.json')
+    fetch('/gallery/bocomp26/photos.json')
       .then(function (r) { return r.json(); })
       .then(function (photos) { buildGallery(section, photos); })
       .catch(function () { buildGallery(section, GALLERY_FALLBACK); });
