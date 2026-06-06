@@ -384,11 +384,15 @@
   function relabel(){
     var containers=document.querySelectorAll('.framer-5y79k1-container p.framer-text');
     if(containers.length>0&&containers[0].textContent==='Contact us') containers[0].textContent='Explore conferences';
+    document.querySelectorAll('section#testimonials .framer-10iarer p').forEach(function(p){
+      if(p.textContent.indexOf(‘Hear directly’)===0) p.textContent="Hear from the people we’ve worked with.";
+    });
   }
   relabel();
   var obs=new MutationObserver(relabel);
-  obs.observe(document.body,{childList:true,subtree:true});
-  setTimeout(function(){obs.disconnect();},5000);
+  obs.observe(document.body,{childList:true,subtree:true,characterData:true});
+  var iv=setInterval(relabel,100);
+  setTimeout(function(){obs.disconnect();clearInterval(iv);},5000);
 })();
 </script></body>
 </html>
