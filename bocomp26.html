@@ -261,7 +261,7 @@
 <section id="sponsors-cards" style="background:#fff;padding:5rem 1.5rem 5rem;font-family:'Erode Variable','Erode',serif;">
   <h2 style="text-align:center;font-size:24px;font-weight:400;letter-spacing:-0.4px;line-height:1.2em;color:rgb(5,41,13);margin:0 0 3rem;">Our Partners</h2>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;">
+  <div class="sp-grid">
 
     <!-- Card template (repeat 9x with different data) -->
 
@@ -448,6 +448,26 @@ div.framer-1aux6zn { display: none !important; }
 
 /* Section background white so beige cards stand out */
 #sponsors-cards { background: #fff !important; }
+
+/* Responsive partners grid: 3 cols desktop → 2 tablet → 1 phone */
+.sp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+/* Tablet */
+@media (max-width: 960px) {
+  .sp-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 700px; }
+}
+/* Phone */
+@media (max-width: 600px) {
+  .sp-grid { grid-template-columns: 1fr; gap: 1rem; max-width: 440px; }
+  #sponsors-cards { padding: 3.5rem 1.25rem 3.5rem !important; }
+  #sponsors-cards h2 { margin-bottom: 2rem !important; }
+  .sp-logo-wrap { height: 132px; padding: 1.5rem 1.5rem 0.75rem; }
+}
 
 /* Card: single unified beige background throughout, matching blog post card */
 .sp-card {
@@ -1195,34 +1215,34 @@ var BIOS = {
 (function() {
   // [name, position, company, photo]. Empty photo keeps the placeholder image.
   var SPEAKERS = [
-    ['Helene Andersson', 'Partner', 'Delphi', 'speakers/helene-andersson.jpeg'],
-    ['Antonio Capobianco', 'Deputy Head of Competition Division', 'OECD', 'speakers/Antonio-Capobianco-OECD.jpg'],
-    ['Juraj Beňa', 'Chairman', 'Slovak Competition Authority', 'speakers/juraj-bena.jpg'],
-    ['Kamil Nejezchleb', 'Vice-chairman', 'Czech Competition Authority', 'speakers/kamil-nejezchleb.jpg'],
-    ['Yolanda Martinez', 'Partner', 'Marimon Abogados', 'speakers/Yolanda-Martinez.jpg.webp'],
-    ['Cristina Volpin', 'Competition Expert', 'OECD', 'speakers/cristina-volpin.jpeg'],
-    ['Jan Kupčík', 'Head of Competition', 'Schoenherr', 'speakers/jan-kupcik.webp'],
-    ['Gerhard Klümpe', 'Presiding Judge', 'Regional Court of Dortmund', 'speakers/Gerhard-Klumpe.png'],
-    ['Jiří Mňuk', 'Managing Associate', 'Rowan Legal', 'speakers/jiri-mnuk.jpg'],
-    ['Lukas Cavanda', 'Executive Director for International Affairs', 'Austrian Federal Competition Authority', 'speakers/lukas-cavada.png'],
-    ['Robert Neruda', 'Partner', 'Havel & Partners', 'speakers/robert-neruda.jpg'],
-    ['Mathis Campestrin', 'Partner', 'Bruzzo Dubucq', 'speakers/mathis-campestrin.jpg.webp'],
-    ['Tomáš Prouza', 'Vice-President', 'EuroCommerce', 'speakers/tomas-prouza.jpg'],
+    ['Helene Andersson', 'Partner', 'Delphi', 'speakers/optimized/helene-andersson.jpg'],
+    ['Antonio Capobianco', 'Deputy Head of Competition Division', 'OECD', 'speakers/optimized/antonio-capobianco-oecd.jpg'],
+    ['Juraj Beňa', 'Chairman', 'Slovak Competition Authority', 'speakers/optimized/juraj-bena.jpg'],
+    ['Kamil Nejezchleb', 'Vice-chairman', 'Czech Competition Authority', 'speakers/optimized/kamil-nejezchleb.jpg'],
+    ['Yolanda Martinez', 'Partner', 'Marimon Abogados', 'speakers/optimized/yolanda-martinez.jpg'],
+    ['Cristina Volpin', 'Competition Expert', 'OECD', 'speakers/optimized/cristina-volpin.jpg'],
+    ['Jan Kupčík', 'Head of Competition', 'Schoenherr', 'speakers/optimized/jan-kupcik.jpg'],
+    ['Gerhard Klümpe', 'Presiding Judge', 'Regional Court of Dortmund', 'speakers/optimized/gerhard-klumpe.jpg'],
+    ['Jiří Mňuk', 'Managing Associate', 'Rowan Legal', 'speakers/optimized/jiri-mnuk.jpg'],
+    ['Lukas Cavanda', 'Executive Director for International Affairs', 'Austrian Federal Competition Authority', 'speakers/optimized/lukas-cavada.jpg'],
+    ['Robert Neruda', 'Partner', 'Havel & Partners', 'speakers/optimized/robert-neruda.jpg'],
+    ['Mathis Campestrin', 'Partner', 'Bruzzo Dubucq', 'speakers/optimized/mathis-campestrin.jpg'],
+    ['Tomáš Prouza', 'Vice-President', 'EuroCommerce', 'speakers/optimized/tomas-prouza.jpg'],
     ['Máté Fodor', 'Managing Partner', 'Theseus Economics', ''],
-    ['Porfírio Moreira', 'Partner', 'Sousa Ferro & Associados', 'speakers/porfirio-moreira.png'],
-    ['Joe Perkins', 'Senior Managing Director', 'FTI Consulting', 'speakers/joe_perkins.jpg'],
-    ['Stijn Huijts', 'Partner', 'Geradin Partners', 'speakers/stijn-huijts.jpeg'],
-    ['Valentin Depenne', 'Case Handler Officer, DMA', 'European Commission', 'speakers/valentin-depenne.png'],
-    ['Simon Boersen', 'Partner', 'Stek', 'speakers/simon-boersen.png'],
-    ['Gregoire Ryelandt', 'Partner', 'Deprevernet', 'speakers/gregoire-ryelandt.jpg'],
-    ['Juraj Šiška', 'Partner', 'LitFin', 'speakers/juraj-siska.png'],
-    ['Boris Bronfentrinker', 'Global Chair, Antitrust & Competition Litigation Practice', 'Willkie Farr & Gallagher', 'speakers/boris-bronfentrinker.png'],
-    ['Max von Thun', 'Director, Europe', 'Open Markets Institute', 'speakers/max-von-thun.jpg.webp'],
-    ['Carine Seron', 'Legal Counsel – Class Action', 'Euroconsumers', 'speakers/carine-seron.webp'],
-    ['Claire Godfrey', 'Executive Director', 'Balanced Economy Project', 'speakers/claire-godfrey.jpeg.webp'],
-    ['Paul Hitchings', 'Partner', 'Hitchings & González', 'speakers/Paul-Hitchings.png'],
-    ['Ben Bornemann', 'Director', 'CDC – Cartel Damage Claims', 'speakers/ben-bornemann.jpg'],
-    ['Dominik Fischer', 'Principal', 'Charles River Associates', 'speakers/Dominik-Fischer.jpg']
+    ['Porfírio Moreira', 'Partner', 'Sousa Ferro & Associados', 'speakers/optimized/porfirio-moreira.jpg'],
+    ['Joe Perkins', 'Senior Managing Director', 'FTI Consulting', 'speakers/optimized/joe_perkins.jpg'],
+    ['Stijn Huijts', 'Partner', 'Geradin Partners', 'speakers/optimized/stijn-huijts.jpg'],
+    ['Valentin Depenne', 'Case Handler Officer, DMA', 'European Commission', 'speakers/optimized/valentin-depenne.jpg'],
+    ['Simon Boersen', 'Partner', 'Stek', 'speakers/optimized/simon-boersen.jpg'],
+    ['Gregoire Ryelandt', 'Partner', 'Deprevernet', 'speakers/optimized/gregoire-ryelandt.jpg'],
+    ['Juraj Šiška', 'Partner', 'LitFin', 'speakers/optimized/juraj-siska.jpg'],
+    ['Boris Bronfentrinker', 'Global Chair, Antitrust & Competition Litigation Practice', 'Willkie Farr & Gallagher', 'speakers/optimized/boris-bronfentrinker.jpg'],
+    ['Max von Thun', 'Director, Europe', 'Open Markets Institute', 'speakers/optimized/max-von-thun.jpg'],
+    ['Carine Seron', 'Legal Counsel – Class Action', 'Euroconsumers', 'speakers/optimized/carine-seron.jpg'],
+    ['Claire Godfrey', 'Executive Director', 'Balanced Economy Project', 'speakers/optimized/claire-godfrey.jpg'],
+    ['Paul Hitchings', 'Partner', 'Hitchings & González', 'speakers/optimized/paul-hitchings.jpg'],
+    ['Ben Bornemann', 'Director', 'CDC – Cartel Damage Claims', 'speakers/optimized/ben-bornemann.jpg'],
+    ['Dominik Fischer', 'Principal', 'Charles River Associates', 'speakers/optimized/dominik-fischer.jpg']
   ];
 
   function fixSpeakers() {
