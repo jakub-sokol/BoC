@@ -284,17 +284,29 @@ intact, mobile menu + nav variants working, no duplication).
   vanished automatically with the runtime (never in SSR). Date corrected to 9–10
   April 2026.
 
-### Remaining (blocked or optional)
 - **Utility pages (contact-us, privacy-policy, terms-and-conditions)** —
-  *blocked*: these are fully client-rendered (empty SSR `#main`); removing the
-  runtime blanks them. They need a static rebuild — the contact form needs a
-  form backend (Formspree/Basin/etc.) and the legal pages need their text frozen
-  to static. Metadata `<title>` is fixed in HTML, but the runtime overrides the
-  browser-tab title until it's removed. Currently left on the runtime.
-- **E/H (delete js/*.mjs runtime + *.framercms CMS + unused fonts/icons)** —
-  *blocked by the above*: those files are still loaded by the 3 utility pages.
-  Delete only after the utility pages are rebuilt.
+  rebuilt from scratch as clean static pages (they were fully client-rendered
+  with only Omega boilerplate). Shared header/nav/mobile-menu + footer,
+  placeholder legal content, and a contact form with a placeholder action.
+  ~30KB client-rendered → ~3.5KB static each.
+- **E/H** — with every page runtime-free, deleted all 74 orphaned `js/` modules
+  (runtime, CMS `.framercms`, icon & font loaders), leaving only the
+  hand-written `js/boc-static.js`; `js/` 4.8MB → 4KB. Also deleted 14 orphaned
+  Framer template images (7MB, zero references).
+
+### Remaining for you (content + config, not Framer code)
+- **Real legal copy** — paste finalised privacy & terms text into the new
+  static shells (placeholders marked in-page).
+- **Contact form backend** — set the `action` on `contact-us.html`'s form
+  (`#REPLACE_WITH_FORM_ENDPOINT`) to a form service, or switch to `mailto:`.
+- **Real testimonials** — replace the placeholder "Omega" testimonial copy in
+  the page bodies (index, bocomp26/27) when ready.
+
+### Optional (cosmetic, low value)
 - **bocomp26 inert hidden elements** (Framer-native Event Gallery, Testimonial
   Highlight, old logo ticker, venue/tagline text) — still in SSR but
   `display:none` and now inert (no runtime). Optional byte-cleanup; reliable
   removal from the minified HTML proved risky, so left in place.
+- **Shared footer on the 3 main pages** still uses the original Framer markup
+  (includes template "Remix"/"404" links and placeholder socials) — out of
+  scope for this pass.
