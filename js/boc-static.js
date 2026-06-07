@@ -10,9 +10,11 @@
     else document.addEventListener('DOMContentLoaded', fn);
   }
 
-  // Collect nav links from the (CSS-hidden) desktop nav variant, deduped by href.
+  // Collect nav links, deduped by href. Works with the Framer desktop nav
+  // variant (main pages) or a plain [data-boc-nav] (rebuilt static pages).
   function collectLinks() {
     var src = document.querySelector('nav[data-framer-name="Desktop"]') ||
+              document.querySelector('[data-boc-nav]') ||
               document.querySelector('nav');
     var items = [], seen = {};
     if (src) {
@@ -24,13 +26,17 @@
         items.push({ href: href, text: text });
       });
     }
+    // Ensure a Home entry (on rebuilt pages the home link lives on the logo).
+    if (!items.some(function (l) { return l.href === './' || l.href === '/' || l.href === 'index.html'; })) {
+      items.unshift({ href: './', text: 'Home' });
+    }
     return items;
   }
 
   var LINKEDIN = 'https://www.linkedin.com/company/business-of-competition/posts/?feedView=all';
 
   function buildMenu() {
-    var hamburgers = document.querySelectorAll('nav [data-framer-name="Open"]');
+    var hamburgers = document.querySelectorAll('nav [data-framer-name="Open"], [data-boc-menu-toggle]');
     if (!hamburgers.length || document.querySelector('.boc-mm')) return;
 
     var links = collectLinks();

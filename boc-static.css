@@ -45,3 +45,133 @@
   font-family: "DM Sans", "DM Sans Placeholder", sans-serif !important;
   margin-top: 12px;
 }
+
+/* ============================================================
+   Rebuilt static utility pages (contact / privacy / terms)
+   Self-contained shell — no Framer runtime, no framer-* classes.
+   ============================================================ */
+.boc-page {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  color: #033222;
+  background: #fff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.boc-page a { color: inherit; }
+
+.boc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem;
+}
+.boc-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: "Erode", serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #033222;
+  white-space: nowrap;
+}
+.boc-logo em { font-style: italic; font-weight: 400; }
+.boc-logo svg { height: 22px; width: auto; flex-shrink: 0; }
+.boc-nav { display: flex; gap: 1.75rem; }
+.boc-nav a { text-decoration: none; font-size: 1rem; }
+.boc-nav a:hover { opacity: 0.65; }
+.boc-burger {
+  display: none;
+  background: none;
+  border: 0;
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #033222;
+}
+@media (max-width: 809px) {
+  .boc-nav { display: none; }
+  .boc-burger { display: block; }
+}
+
+.boc-main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+}
+.boc-main h1 {
+  font-family: "Erode", serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0 0 1.5rem;
+}
+.boc-main h2 {
+  font-family: "Erode", serif;
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin: 2.5rem 0 0.75rem;
+}
+.boc-main p, .boc-main li { font-size: 1.05rem; color: rgba(3, 50, 34, 0.85); }
+.boc-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  color: rgba(3, 50, 34, 0.55);
+  margin: 0 0 0.5rem;
+}
+.boc-placeholder {
+  border: 1px dashed rgba(3, 50, 34, 0.35);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  background: #f7f7f5;
+  color: rgba(3, 50, 34, 0.7);
+  font-size: 0.95rem;
+}
+
+/* Contact form */
+.boc-form { display: flex; flex-direction: column; gap: 1rem; max-width: 520px; margin-top: 1.5rem; }
+.boc-form label { font-size: 0.9rem; font-weight: 500; display: flex; flex-direction: column; gap: 0.4rem; }
+.boc-form input, .boc-form textarea {
+  font: inherit;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba(3, 50, 34, 0.25);
+  border-radius: 10px;
+  background: #fff;
+  color: #033222;
+}
+.boc-form textarea { min-height: 140px; resize: vertical; }
+.boc-form button {
+  align-self: flex-start;
+  font: inherit;
+  font-weight: 500;
+  color: #fff;
+  background: #033222;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.75rem 1.75rem;
+  cursor: pointer;
+}
+.boc-form button:hover { opacity: 0.9; }
+
+.boc-footer {
+  border-top: 1px solid rgba(3, 50, 34, 0.12);
+  padding: 2.5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+.boc-footer .boc-foot-brand { max-width: 420px; }
+.boc-footer strong { font-family: "Erode", serif; font-size: 1.1rem; }
+.boc-footer nav { display: flex; flex-direction: column; gap: 0.5rem; }
+.boc-footer nav a { text-decoration: none; color: rgba(3, 50, 34, 0.8); }
+.boc-footer nav a:hover { opacity: 0.65; }
+.boc-foot-copy { width: 100%; color: rgba(3, 50, 34, 0.55); font-size: 0.85rem; }
