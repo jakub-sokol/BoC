@@ -259,3 +259,42 @@ references before deleting any image.
   Safari-only).
 - After each deletion phase: `git diff` + reload to confirm no regression before
   proceeding.
+
+---
+
+## De-Framerization execution status (branch: `deframerize`)
+
+Done page-by-page with per-phase browser verification (console clean, content
+intact, mobile menu + nav variants working, no duplication).
+
+### Completed & verified
+- **J** — curly-quote SyntaxError fixed (index.html).
+- **A/F/K** — all 6 pages: Omega title/meta/OG → real content; removed
+  generator/search-index/framer comments; deleted search-index JSON, `.bak`,
+  `.DS_Store`; gitignore updated. (Note: placeholder "Omega" testimonial copy
+  in page bodies left for you to replace with real testimonials.)
+- **B/C/D + reimplement + I** — **index.html, bocomp26.html, bocomp27.html**:
+  removed React runtime (main bundle + modulepreloads), hydration payload,
+  framer/appear + all bootstrap inline scripts, rerouter; stripped appear-initial
+  opacity:0 states; added `js/boc-static.js` + `boc-static.css` (vanilla mobile
+  menu; nav breakpoints already CSS-driven); deleted redundant logo-inject;
+  consolidated observer/polling scripts into run-once handlers.
+- **G (index)** — removed template Blog section + empty CMS marquee gap.
+- **G (bocomp26)** — template Services/Works/Blog/etc. were runtime-rendered and
+  vanished automatically with the runtime (never in SSR). Date corrected to 9–10
+  April 2026.
+
+### Remaining (blocked or optional)
+- **Utility pages (contact-us, privacy-policy, terms-and-conditions)** —
+  *blocked*: these are fully client-rendered (empty SSR `#main`); removing the
+  runtime blanks them. They need a static rebuild — the contact form needs a
+  form backend (Formspree/Basin/etc.) and the legal pages need their text frozen
+  to static. Metadata `<title>` is fixed in HTML, but the runtime overrides the
+  browser-tab title until it's removed. Currently left on the runtime.
+- **E/H (delete js/*.mjs runtime + *.framercms CMS + unused fonts/icons)** —
+  *blocked by the above*: those files are still loaded by the 3 utility pages.
+  Delete only after the utility pages are rebuilt.
+- **bocomp26 inert hidden elements** (Framer-native Event Gallery, Testimonial
+  Highlight, old logo ticker, venue/tagline text) — still in SSR but
+  `display:none` and now inert (no runtime). Optional byte-cleanup; reliable
+  removal from the minified HTML proved risky, so left in place.

@@ -1,8 +1,0 @@
-/*
- * Handshake (phosphor-icons/Handshake@0.0.57)
- *
- * Learn More: https://www.framer.com/asset-urls
- */
-
-export * from "../js/handshake.js"
-export { default } from "../js/handshake.js"
