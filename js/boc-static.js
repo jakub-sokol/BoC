@@ -81,5 +81,24 @@
     });
   }
 
+  // Reveal Framer "appear" content that the old runtime used to fade in.
+  // Without the runtime these elements keep their initial opacity:0 and stay
+  // invisible. Reveal any inline-opacity:0 element that has real rendered area,
+  // except the old (unused) Framer mobile nav panel.
+  function revealAppear() {
+    document.querySelectorAll('[style*="opacity:0"], [style*="opacity: 0"]').forEach(function (el) {
+      if (el.getAttribute('data-framer-name') === 'Links + Search') return;
+      var op = el.style && el.style.opacity;
+      if (op === '' || parseFloat(op) >= 0.05) return;
+      var r = el.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) {
+        el.style.opacity = '1';
+        el.style.filter = 'none';
+        el.style.webkitFilter = 'none';
+      }
+    });
+  }
+
   ready(buildMenu);
+  ready(revealAppear);
 })();
