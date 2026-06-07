@@ -384,16 +384,16 @@
   function relabel(){
     var containers=document.querySelectorAll('.framer-5y79k1-container p.framer-text');
     if(containers.length>0&&containers[0].textContent==='Contact us') containers[0].textContent='Explore conferences';
-    document.querySelectorAll(‘section#testimonials .framer-10iarer p’).forEach(function(p){
-      if(p.textContent.indexOf(‘Hear directly’)===0) p.textContent="Hear from the people we’ve worked with.";
+    document.querySelectorAll('section#testimonials .framer-10iarer p').forEach(function(p){
+      if(p.textContent.indexOf('Hear directly')===0) p.textContent="Hear from the people we’ve worked with.";
     });
     if(!window._bocomp27linked){
       window._bocomp27linked=true;
-      document.addEventListener(‘click’,function(e){
-        var card=e.target.closest(‘a.framer-zTYtB’);
+      document.addEventListener('click',function(e){
+        var card=e.target.closest('a.framer-zTYtB');
         if(!card||card.href) return;
         e.preventDefault();
-        window.location.href=’./bocomp27.html’;
+        window.location.href='./bocomp27.html';
       });
     }
   }
