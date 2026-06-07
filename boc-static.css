@@ -1,0 +1,47 @@
+/* Business of Connections — static-site styles (mobile menu overlay).
+   Replaces the Framer-runtime-rendered mobile navigation. */
+.boc-mm {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #fff;
+  display: none;
+  flex-direction: column;
+  padding: 24px;
+}
+.boc-mm.open { display: flex; }
+.boc-mm-close {
+  align-self: flex-end;
+  background: none;
+  border: 0;
+  font-size: 40px;
+  line-height: 1;
+  cursor: pointer;
+  color: #033222;
+  padding: 8px 12px;
+}
+.boc-mm-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: auto 0;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.boc-mm-nav a {
+  font-family: "Erode Variable", "Erode", serif;
+  font-size: 32px;
+  line-height: 1.3;
+  color: #033222;
+  text-decoration: none;
+  padding: 10px 0;
+}
+.boc-mm-nav a:hover { opacity: 0.65; }
+.boc-mm-social {
+  font-size: 20px !important;
+  font-family: "DM Sans", "DM Sans Placeholder", sans-serif !important;
+  margin-top: 12px;
+}
