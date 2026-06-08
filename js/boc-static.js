@@ -140,8 +140,56 @@
     });
   }
 
+  // Make the testimonial cards scroll (the original was a Framer Ticker that
+  // collapses without the runtime). Rebuilds the existing placeholder cards into
+  // a CSS marquee; when real testimonials replace the content this still works.
+  function buildTestimonialMarquee() {
+    var heads = [].slice.call(document.querySelectorAll('#main h2, h2'));
+    var h = heads.filter(function (x) { return /partners have to say/i.test(x.textContent); })[0];
+    if (!h) return;
+    var sec = h.closest('section');
+    if (!sec || sec.querySelector('.boc-testi-marquee')) return;
+    var quotes = [].slice.call(sec.querySelectorAll('p')).filter(function (p) {
+      return /["“”]/.test(p.textContent) && p.textContent.trim().length > 25;
+    });
+    if (quotes.length < 2) return;
+
+    var data = quotes.map(function (q) {
+      var card = q;
+      for (var i = 0; i < 6 && card; i++) { if (card.querySelector && card.querySelector('img')) break; card = card.parentElement; }
+      var img = card ? card.querySelector('img') : null;
+      var authors = card ? [].slice.call(card.querySelectorAll('p')).filter(function (p) {
+        var t = p.textContent.trim(); return p !== q && t.length > 1 && t.length < 60;
+      }).map(function (p) { return p.textContent.trim(); }) : [];
+      // hide the original (collapsed) card
+      if (card) card.style.display = 'none';
+      return { quote: q.textContent.trim(), avatar: img ? img.getAttribute('src') : '', name: authors[0] || '', title: authors[1] || '' };
+    });
+
+    function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    var marquee = document.createElement('div');
+    marquee.className = 'boc-testi-marquee';
+    var track = document.createElement('div');
+    track.className = 'boc-testi-track';
+    data.concat(data).forEach(function (d) {
+      var card = document.createElement('div');
+      card.className = 'boc-testi-card';
+      card.innerHTML =
+        '<p class="boc-testi-quote">' + esc(d.quote) + '</p>' +
+        '<div class="boc-testi-author">' +
+          (d.avatar ? '<img src="' + d.avatar + '" alt="" loading="lazy">' : '') +
+          '<div><div class="boc-testi-name">' + esc(d.name) + '</div>' +
+          '<div class="boc-testi-title">' + esc(d.title) + '</div></div>' +
+        '</div>';
+      track.appendChild(card);
+    });
+    marquee.appendChild(track);
+    sec.appendChild(marquee);
+  }
+
   ready(buildMenu);
   ready(revealAppear);
   ready(buildHeroMarquee);
   ready(addCardHovers);
+  ready(buildTestimonialMarquee);
 })();
