@@ -102,41 +102,35 @@
   // Rebuild the hero "rolling photos" band as a CSS marquee. The original was a
   // Framer Ticker (runtime-driven) that collapses to 0px without the runtime;
   // its source images live in a now-hidden container (.framer-12ow6ey).
+  // Real Business of Competition event photos (the originals were CMS-injected
+  // into a Framer Ticker that collapses to 0px without the runtime).
+  var HERO_PHOTOS = [
+    'images/ubtbkgzm0utstuodfmwgjuidsi.jpg',
+    'gallery/bocomp26/businessofcompetitionP1557315.jpg',
+    'images/zab4stflzjhbegtje9nqtqgt6cs.jpg',
+    'gallery/bocomp26/businessofcompetitionP1557510.jpg',
+    'gallery/bocomp26/businessofcompetitionP1557639.jpg',
+    'images/lmagbqmhle5bt8oeiqt2jnqvz8.jpg',
+    'gallery/bocomp26/businessofcompetitionP1568206.jpg',
+    'gallery/bocomp26/businessofcompetitionP1557549.jpg'
+  ];
+
   function buildHeroMarquee() {
-    var src = document.querySelector('.framer-12ow6ey');
-    if (!src || document.querySelector('.boc-photo-marquee')) return;
-    var urls = [].slice.call(src.querySelectorAll('img'))
-      .map(function (i) { return i.getAttribute('src'); })
-      .filter(Boolean);
-    if (urls.length < 2) return;
+    var hero = document.getElementById('hero');
+    if (!hero || document.querySelector('.boc-photo-marquee')) return;
     var marquee = document.createElement('div');
     marquee.className = 'boc-photo-marquee';
     var track = document.createElement('div');
     track.className = 'boc-photo-track';
-    urls.concat(urls).forEach(function (u) {
+    // duplicate the set for a seamless loop
+    HERO_PHOTOS.concat(HERO_PHOTOS).forEach(function (u) {
       var im = document.createElement('img');
-      im.src = u; im.alt = ''; im.loading = 'lazy';
+      im.src = u; im.alt = 'Business of Competition event'; im.loading = 'lazy';
       track.appendChild(im);
     });
     marquee.appendChild(track);
-
-    // Place it below the CTA buttons (before the next section), per the design.
-    var hero = document.getElementById('hero');
-    var anchor = null;
-    if (hero) {
-      var btns = [].slice.call(hero.querySelectorAll('a, button'));
-      var cta = btns.filter(function (b) { return /Explore conferences|Contact us/.test(b.textContent); });
-      if (cta.length) {
-        // common row that contains the CTA buttons
-        anchor = cta[0];
-        for (var i = 0; i < 4 && anchor.parentElement; i++) {
-          if (cta.every(function (b) { return anchor.contains(b); })) break;
-          anchor = anchor.parentElement;
-        }
-      }
-    }
-    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(marquee, anchor.nextSibling);
-    else src.parentNode.insertBefore(marquee, src.nextSibling);
+    // full-bleed band right below the hero (under the CTAs, before "How can I help")
+    if (hero.parentNode) hero.parentNode.insertBefore(marquee, hero.nextSibling);
   }
 
   // Re-add the hover lift on conference project cards (was a Framer hover variant).

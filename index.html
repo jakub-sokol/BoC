@@ -252,8 +252,8 @@
 /* Fix feature cards: fill column width and pin content to top for consistent icon alignment */
 .framer-OQuvJ .framer-VEuZD.framer-1w1hwg5 { width: 100% !important; place-content: flex-start !important; }
 </style>
-	<link rel="stylesheet" href="boc-static.css">
-	<script src="js/boc-static.js" defer></script>
+	<link rel="stylesheet" href="boc-static.css?v=20260608a">
+	<script src="js/boc-static.js?v=20260608a" defer></script>
 </head>
 <body>
 	
@@ -311,6 +311,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.framer-1nkrdal-container').forEach(function (el) {
     if (el.previousElementSibling && el.previousElementSibling.hasAttribute('data-boc-li')) return;
     var liNav = el.closest('nav') || el.parentNode;
+    if (liNav.querySelector('a[href*="linkedin.com"]')) return; // nav already has a LinkedIn link
     if (liSeenNav.indexOf(liNav) !== -1) return; // only one LinkedIn icon per nav variant
     liSeenNav.push(liNav);
     var a = document.createElement('a');
