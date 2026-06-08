@@ -172,7 +172,7 @@
     // Spring params from Framer bundle: { type:"spring", duration:0.8, bounce:0 }
     // The spring reaches ~95% at ≈0.35s (duration:0.8 is full settle, not half-life).
     // cubic-bezier(0.33,1,0.68,1) = strong ease-out matching critically-damped spring.
-    var SPRING = 'height 0.35s cubic-bezier(0.33, 1, 0.68, 1)'; // bg-color handled by CSS
+    var SPRING = 'height 0.7s cubic-bezier(0.33, 1, 0.68, 1)'; // bg-color handled by CSS
     cards.forEach(function(c, i) {
       c.style.height     = (i === 0 ? openH : closedH) + 'px';
       c.style.overflow   = 'clip';

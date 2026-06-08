@@ -184,8 +184,8 @@
 
 /* Background colour driven by [data-framer-name] attribute (toggled by JS).
    This beats the Framer inline style that setProperty couldn't override. */
-#services-1 [data-framer-name="Open"]   { background-color: rgb(255,255,255) !important; transition: background-color 0.25s ease; }
-#services-1 [data-framer-name="Closed"] { background-color: rgb(237,237,237) !important; transition: background-color 0.25s ease; }
+#services-1 [data-framer-name="Open"]   { background-color: rgb(255,255,255) !important; transition: background-color 0.5s ease; }
+#services-1 [data-framer-name="Closed"] { background-color: rgb(237,237,237) !important; transition: background-color 0.5s ease; }
 
 /* Button text: force white — browser default link-blue bleeds through without
    the Framer runtime, which used to set color via JS. */
