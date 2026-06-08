@@ -172,7 +172,7 @@
     // Spring params from Framer bundle: { type:"spring", duration:0.8, bounce:0 }
     // The spring reaches ~95% at ≈0.35s (duration:0.8 is full settle, not half-life).
     // cubic-bezier(0.33,1,0.68,1) = strong ease-out matching critically-damped spring.
-    var SPRING = 'height 0.35s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.25s ease';
+    var SPRING = 'height 0.35s cubic-bezier(0.33, 1, 0.68, 1)'; // bg-color handled by CSS
     cards.forEach(function(c, i) {
       c.style.height     = (i === 0 ? openH : closedH) + 'px';
       c.style.overflow   = 'clip';
@@ -182,10 +182,13 @@
 
     function activate(idx) {
       cards.forEach(function(c, i) {
-        c.style.height = (i === idx ? openH : closedH) + 'px';
+        var isOpen = (i === idx);
+        c.style.height = (isOpen ? openH : closedH) + 'px';
+        // background-color is driven by CSS targeting [data-framer-name] (see
+        // boc-static.css) — no inline override needed here.
         c.classList.remove(OPEN_CLS, CLOSE_CLS);
-        c.classList.add(i === idx ? OPEN_CLS : CLOSE_CLS);
-        c.setAttribute('data-framer-name', i === idx ? 'Open' : 'Closed');
+        c.classList.add(isOpen ? OPEN_CLS : CLOSE_CLS);
+        c.setAttribute('data-framer-name', isOpen ? 'Open' : 'Closed');
       });
       imgSlots.forEach(function(slot, i) {
         if (!slot) return;
@@ -195,7 +198,7 @@
       });
     }
 
-    activate(0); // sync image stack to default open card
+    activate(0); // sync image stack and colours to default open card
     cards.forEach(function(card, idx) {
       card.addEventListener('mouseenter', function() { activate(idx); });
     });
