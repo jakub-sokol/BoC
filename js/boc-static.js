@@ -133,6 +133,42 @@
     if (hero.parentNode) hero.parentNode.insertBefore(marquee, hero.nextSibling);
   }
 
+  // "How can I help" section: full hover interaction (was a Framer variant swap).
+  // Each card has Open (225px, description+button visible) and Closed (91px, clipped)
+  // states baked into the SSR via framer-v-* classes. Switching those classes and
+  // bringing the matching image to front replicates the original behaviour.
+  function initHelpCards() {
+    var sec = document.getElementById('services-1');
+    if (!sec) return;
+    var OPEN_CLS  = 'framer-v-164cwfm';
+    var CLOSE_CLS = 'framer-v-akikko';
+    var cards = [].slice.call(sec.querySelectorAll(
+      '[data-framer-name="Open"], [data-framer-name="Closed"]'
+    ));
+    if (!cards.length) return;
+    var imgSlots = ['Image 1','Image 2','Image 3','Image 4'].map(function(n){
+      return sec.querySelector('[data-framer-name="' + n + '"]');
+    });
+    function activate(idx) {
+      cards.forEach(function(c, i) {
+        c.classList.remove(OPEN_CLS, CLOSE_CLS);
+        c.classList.add(i === idx ? OPEN_CLS : CLOSE_CLS);
+        c.setAttribute('data-framer-name', i === idx ? 'Open' : 'Closed');
+      });
+      imgSlots.forEach(function(slot, i) {
+        if (!slot) return;
+        slot.style.zIndex     = i === idx ? '2' : '1';
+        slot.style.opacity    = i === idx ? '1' : '0';
+        slot.style.transition = 'opacity 0.25s ease';
+      });
+    }
+    activate(0); // first card Open by default; sync image stack
+    cards.forEach(function(card, idx) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('mouseenter', function() { activate(idx); });
+    });
+  }
+
   // Re-add the hover lift on conference project cards (was a Framer hover variant).
   function addCardHovers() {
     document.querySelectorAll('[data-framer-name^="Project Card"]').forEach(function (card) {
@@ -190,6 +226,7 @@
   ready(buildMenu);
   ready(revealAppear);
   ready(buildHeroMarquee);
+  ready(initHelpCards);
   ready(addCardHovers);
   ready(buildTestimonialMarquee);
 })();
