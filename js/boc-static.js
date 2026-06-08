@@ -99,6 +99,61 @@
     });
   }
 
+  // Rebuild the hero "rolling photos" band as a CSS marquee. The original was a
+  // Framer Ticker (runtime-driven) that collapses to 0px without the runtime;
+  // its source images live in a now-hidden container (.framer-12ow6ey).
+  function buildHeroMarquee() {
+    var src = document.querySelector('.framer-12ow6ey');
+    if (!src || document.querySelector('.boc-photo-marquee')) return;
+    var urls = [].slice.call(src.querySelectorAll('img'))
+      .map(function (i) { return i.getAttribute('src'); })
+      .filter(Boolean);
+    if (urls.length < 2) return;
+    var marquee = document.createElement('div');
+    marquee.className = 'boc-photo-marquee';
+    var track = document.createElement('div');
+    track.className = 'boc-photo-track';
+    urls.concat(urls).forEach(function (u) {
+      var im = document.createElement('img');
+      im.src = u; im.alt = ''; im.loading = 'lazy';
+      track.appendChild(im);
+    });
+    marquee.appendChild(track);
+
+    // Place it below the CTA buttons (before the next section), per the design.
+    var hero = document.getElementById('hero');
+    var anchor = null;
+    if (hero) {
+      var btns = [].slice.call(hero.querySelectorAll('a, button'));
+      var cta = btns.filter(function (b) { return /Explore conferences|Contact us/.test(b.textContent); });
+      if (cta.length) {
+        // common row that contains the CTA buttons
+        anchor = cta[0];
+        for (var i = 0; i < 4 && anchor.parentElement; i++) {
+          if (cta.every(function (b) { return anchor.contains(b); })) break;
+          anchor = anchor.parentElement;
+        }
+      }
+    }
+    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(marquee, anchor.nextSibling);
+    else src.parentNode.insertBefore(marquee, src.nextSibling);
+  }
+
+  // Re-add the hover lift on conference cards (was a Framer hover variant).
+  function addCardHovers() {
+    document.querySelectorAll('a[href*="bocomp2"]').forEach(function (a) {
+      var el = a, card = null;
+      for (var i = 0; i < 6 && el; i++) {
+        var r = el.getBoundingClientRect();
+        if (r.height > 150 && r.width > 150) { card = el; break; }
+        el = el.parentElement;
+      }
+      if (card) card.classList.add('boc-hover-lift');
+    });
+  }
+
   ready(buildMenu);
   ready(revealAppear);
+  ready(buildHeroMarquee);
+  ready(addCardHovers);
 })();
