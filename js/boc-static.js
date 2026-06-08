@@ -139,16 +139,10 @@
     else src.parentNode.insertBefore(marquee, src.nextSibling);
   }
 
-  // Re-add the hover lift on conference cards (was a Framer hover variant).
+  // Re-add the hover lift on conference project cards (was a Framer hover variant).
   function addCardHovers() {
-    document.querySelectorAll('a[href*="bocomp2"]').forEach(function (a) {
-      var el = a, card = null;
-      for (var i = 0; i < 6 && el; i++) {
-        var r = el.getBoundingClientRect();
-        if (r.height > 150 && r.width > 150) { card = el; break; }
-        el = el.parentElement;
-      }
-      if (card) card.classList.add('boc-hover-lift');
+    document.querySelectorAll('[data-framer-name^="Project Card"]').forEach(function (card) {
+      card.classList.add('boc-hover-lift');
     });
   }
 
