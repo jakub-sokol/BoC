@@ -170,8 +170,9 @@
     // Lock in explicit heights + add the spring-equivalent CSS transition.
     // (height: min-content can't CSS-interpolate, so we own the value from here.)
     // Spring params from Framer bundle: { type:"spring", duration:0.8, bounce:0 }
-    // ≈ critically-damped ease-out: cubic-bezier(0.33, 1, 0.68, 1) at 0.5s.
-    var SPRING = 'height 0.5s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.3s ease';
+    // The spring reaches ~95% at ≈0.35s (duration:0.8 is full settle, not half-life).
+    // cubic-bezier(0.33,1,0.68,1) = strong ease-out matching critically-damped spring.
+    var SPRING = 'height 0.35s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.25s ease';
     cards.forEach(function(c, i) {
       c.style.height     = (i === 0 ? openH : closedH) + 'px';
       c.style.overflow   = 'clip';

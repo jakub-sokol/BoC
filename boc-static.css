@@ -180,9 +180,11 @@
    Reimplemented Framer-runtime effects (hover + photo marquees)
    ============================================================ */
 
-/* "How can I help" cards: lighten background on hover (was a Framer variant) */
-.framer-xnswm { transition: background-color 0.25s ease; }
-.framer-xnswm:hover { background-color: #fff !important; }
+/* "How can I help" cards */
+/* Button text: force white — browser default link-blue bleeds through without
+   the Framer runtime, which used to set color via JS. */
+#services-1 a[data-framer-name="Small"],
+#services-1 a[data-framer-name="Small"] * { color: #fff !important; }
 
 /* Generic card lift for conference/works cards */
 .boc-hover-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
