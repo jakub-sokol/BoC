@@ -116,6 +116,9 @@
   ];
 
   function buildHeroMarquee() {
+    // Only runs on the homepage — bocomp26/27 have their own gallery/carousel.
+    var path = location.pathname;
+    if (path !== '/' && !/(^|\/)index\.html$/.test(path)) return;
     var hero = document.getElementById('hero');
     if (!hero || document.querySelector('.boc-photo-marquee')) return;
     var marquee = document.createElement('div');
