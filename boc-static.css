@@ -199,7 +199,7 @@
 }
 .boc-photo-track {
   display: flex;
-  gap: 0;
+  gap: 8px;
   width: max-content;
   animation: boc-scroll-x 60s linear infinite;
 }
