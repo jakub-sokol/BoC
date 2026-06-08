@@ -149,8 +149,39 @@
     var imgSlots = ['Image 1','Image 2','Image 3','Image 4'].map(function(n){
       return sec.querySelector('[data-framer-name="' + n + '"]');
     });
+
+    // Fix button labels for cards 2 & 3 ("Contact us" not "Explore conferences").
+    // Each button has two [data-framer-name="Text"] spans (desktop + mobile variants).
+    [1, 2].forEach(function(cardIdx) {
+      if (!cards[cardIdx]) return;
+      cards[cardIdx].querySelectorAll('[data-framer-name="Small"] [data-framer-name="Text"]').forEach(function(el) {
+        el.textContent = 'Contact us';
+      });
+      // Also update the href to contact page
+      cards[cardIdx].querySelectorAll('[data-framer-name="Small"] a, a[data-framer-name="Small"]').forEach(function(a) {
+        a.href = './contact-us';
+      });
+    });
+
+    // Measure natural heights once from current SSR state (card[0]=Open, rest=Closed).
+    var openH  = Math.round(cards[0].getBoundingClientRect().height);  // ~225
+    var closedH = Math.round(cards[1].getBoundingClientRect().height); // ~91
+
+    // Lock in explicit heights + add the spring-equivalent CSS transition.
+    // (height: min-content can't CSS-interpolate, so we own the value from here.)
+    // Spring params from Framer bundle: { type:"spring", duration:0.8, bounce:0 }
+    // ≈ critically-damped ease-out: cubic-bezier(0.33, 1, 0.68, 1) at 0.5s.
+    var SPRING = 'height 0.5s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.3s ease';
+    cards.forEach(function(c, i) {
+      c.style.height     = (i === 0 ? openH : closedH) + 'px';
+      c.style.overflow   = 'clip';
+      c.style.transition = SPRING;
+      c.style.cursor     = 'pointer';
+    });
+
     function activate(idx) {
       cards.forEach(function(c, i) {
+        c.style.height = (i === idx ? openH : closedH) + 'px';
         c.classList.remove(OPEN_CLS, CLOSE_CLS);
         c.classList.add(i === idx ? OPEN_CLS : CLOSE_CLS);
         c.setAttribute('data-framer-name', i === idx ? 'Open' : 'Closed');
@@ -159,12 +190,12 @@
         if (!slot) return;
         slot.style.zIndex     = i === idx ? '2' : '1';
         slot.style.opacity    = i === idx ? '1' : '0';
-        slot.style.transition = 'opacity 0.25s ease';
+        slot.style.transition = 'opacity 0.3s ease';
       });
     }
-    activate(0); // first card Open by default; sync image stack
+
+    activate(0); // sync image stack to default open card
     cards.forEach(function(card, idx) {
-      card.style.cursor = 'pointer';
       card.addEventListener('mouseenter', function() { activate(idx); });
     });
   }
