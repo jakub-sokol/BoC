@@ -689,13 +689,24 @@ div.framer-1aux6zn { display: none !important; }
       ".boc27-eyebrow{font-family:'Erode Variable','Erode Placeholder',serif;text-transform:uppercase;letter-spacing:2px;font-size:13px;color:#05290d;opacity:.55;margin-bottom:10px;text-align:center;}",
       ".boc27-h{font-family:'Erode Variable','Erode Placeholder',serif;font-size:24px;font-weight:400;letter-spacing:-0.4px;line-height:1.2em;color:#05290d;margin:0 0 10px;text-align:center;}",
       ".boc27-sub{font-family:'DM Sans','DM Sans Placeholder',sans-serif;font-size:16px;line-height:1.6;letter-spacing:-0.04em;color:rgba(0,0,0,0.55);max-width:580px;text-align:center;margin:0 auto;}",
+      /* focus section — heading matches home 'How can I help' (Erode 48/40/32px, wght 550); body matches home body text (DM Sans 16px/500/-0.64px/24px) */
+      '.boc27-focus-h{font-family:"Erode Variable","Erode Variable Placeholder",serif;font-size:48px;font-weight:400;font-variation-settings:"wght" 550;letter-spacing:-0.04em;line-height:1.1em;color:#000;text-align:center;margin:0 0 28px;}',
+      '@media(max-width:1199.98px){.boc27-focus-h{font-size:40px;}}',
+      '@media(max-width:809.98px){.boc27-focus-h{font-size:32px;}}',
+      '.boc27-focus-body{max-width:680px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:18px;}',
+      '.boc27-focus-body p{font-family:"DM Sans","DM Sans Placeholder",sans-serif;font-size:16px;font-weight:500;letter-spacing:-0.64px;line-height:24px;color:rgba(0,0,0,0.7);text-align:center;margin:0;}',
+      '#boc27-focus .boc27-btn{margin-top:34px;}',
       /* buttons */
       ".boc27-btn{display:inline-flex;align-items:center;justify-content:center;background:#05290d;color:#fff;font-family:'DM Sans','DM Sans Placeholder',sans-serif;font-size:15px;font-weight:500;letter-spacing:-0.04em;line-height:1;height:48px;padding:0 24px;border-radius:100px;text-decoration:none;transition:opacity .2s;cursor:pointer;}",
       '.boc27-btn:hover{opacity:.85;}',
       '.boc27-btn-ghost{background:transparent;color:#05290d;border:1.5px solid #05290d;}',
       '.boc27-btn-light{background:#fff;color:#05290d;}',
+      '.boc27-btn-dark{background:#000;color:#fff;}',
+      /* hero headline — exact match of the home-page hero headline (Erode 72px / wght 550 / -0.06em, 1.1em; 56px under 810px). First word green + italic, rest roman black. */
+      '.boc27-hero-h{font-family:"Erode Variable","Erode Variable Placeholder",serif!important;font-size:72px!important;font-variation-settings:"wght" 550!important;letter-spacing:-0.06em!important;line-height:1.1em!important;text-align:center!important;color:#000!important;}',
+      '@media(max-width:809px){.boc27-hero-h{font-size:56px!important;}}',
       /* hero cta */
-      '#boc27-hero-cta{display:flex;justify-content:center;width:100%;margin-top:26px;}',
+      '#boc27-hero-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;width:100%;margin-top:26px;}',
       /* TBA card */
       '.boc27-tba{box-sizing:border-box;background:#f3f2f0;border-radius:14px;padding:44px 32px;max-width:720px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;}',
       '.boc27-tba+.boc27-tba{margin-top:20px;}',
@@ -777,7 +788,6 @@ div.framer-1aux6zn { display: none !important; }
   /* VARIANT A — per-section TBA cards */
   function buildVariantA(){
     var s=el('section','boc27-section'); s.id='boc27-tba-a';
-    s.appendChild(el('div','boc27-variant-tag','Option A — per-section cards'));
     s.appendChild(tbaCard('Program', 'We are curating two days of expert panels, keynotes and discussions. The full agenda will be published soon.'));
     s.appendChild(tbaCard('Speakers', "Europe's leading competition-law minds are being confirmed. Check back to meet this edition's line-up."));
     s.appendChild(tbaCard('Partners', 'Our partner roster for 2027 is taking shape. Explore the packages below to join them.'));
@@ -787,7 +797,6 @@ div.framer-1aux6zn { display: none !important; }
   /* VARIANT B — single combined "Coming soon" */
   function buildVariantB(){
     var s=el('section','boc27-section'); s.id='boc27-tba-b';
-    s.appendChild(el('div','boc27-variant-tag','Option B — combined'));
     var c=el('div','boc27-tba');
     c.appendChild(el('span','pill','Coming soon'));
     c.appendChild(el('h2','boc27-h','Program, speakers & partners — coming soon'));
@@ -840,12 +849,30 @@ div.framer-1aux6zn { display: none !important; }
     return s;
   }
 
+  /* VARIANT — "Our focus for 2027" intro section */
+  function buildFocus(){
+    var s=el('section','boc27-section'); s.id='boc27-focus';
+    s.appendChild(el('h2','boc27-focus-h','Our focus for 2027'));
+    var body=el('div','boc27-focus-body');
+    body.appendChild(el('p','','The first edition gave us a strong foundation. For 2027, we want to build on it by putting even more care into the programme.'));
+    body.appendChild(el('p','','We will focus on the topics, speakers, and panels — choosing questions that matter, inviting people who can add real value, and meticulously preparing each session so it leads to a useful discussion.'));
+    body.appendChild(el('p','','We also want to hear from you. What topics should be part of the 2027 programme? Which speakers would you like to see in Prague?'));
+    s.appendChild(body);
+    var a=el('a','boc27-btn','Suggest a topic or speaker'); a.href='./contact-us';
+    s.appendChild(a);
+    return s;
+  }
+
   /* ---------- hero text enforcement (survive React hydration) ---------- */
   function enforceHero(main){
-    var h2s=main.querySelectorAll('h2.framer-styles-preset-1sar910 em.framer-text');
-    for(var i=0;i<h2s.length;i++){
-      if(h2s[i].textContent.indexOf('Business of Competition')===0 && h2s[i].textContent!=='Business of Competition 2027')
-        h2s[i].textContent='Business of Competition 2027';
+    var heroEl=document.getElementById('hero');
+    var heroH=heroEl && heroEl.querySelector('h2.framer-styles-preset-1sar910');
+    if(heroH && !heroH.classList.contains('boc27-hero-h')){
+      heroH.classList.add('boc27-hero-h');
+      /* "Business" green + italic (like home page "Conferences"); rest roman black.
+         Plain span (no framer-text) so it inherits the 72px headline size instead of
+         the preset's --framer-font-size. */
+      heroH.innerHTML='<span style="color:rgb(5,41,13);font-style:italic">Business</span> of Competition 2027';
     }
     var h4s=main.querySelectorAll('h4 em.framer-text');
     for(var j=0;j<h4s.length;j++){
@@ -938,8 +965,9 @@ div.framer-1aux6zn { display: none !important; }
         if(paras[i].textContent.indexOf('Two days of insights')===0){
           var host=paras[i].closest('[data-framer-component-type="RichTextContainer"]') || paras[i].parentNode;
           var wrap=el('div'); wrap.id='boc27-hero-cta';
-          var a=el('a','boc27-btn','Register — Early bird €300'); a.href='#boc27-register';
-          wrap.appendChild(a);
+          var a1=el('a','boc27-btn','Register interest'); a1.href='#boc27-register';
+          var a2=el('a','boc27-btn boc27-btn-dark','View 2026 edition'); a2.href='./bocomp26';
+          wrap.appendChild(a1); wrap.appendChild(a2);
           host.parentNode.insertBefore(wrap, host.nextSibling);
           break;
         }
@@ -950,12 +978,16 @@ div.framer-1aux6zn { display: none !important; }
     var footer=main.querySelector('.framer-eohine-container');
     if(footer && !document.getElementById('boc27-register')){
       var p=footer.parentNode;
+      p.insertBefore(buildFocus(), footer);
       p.insertBefore(buildRegister(), footer);
       p.insertBefore(buildVariantA(), footer);
       p.insertBefore(buildVariantB(), footer);
       p.insertBefore(buildPricing(), footer);
+      /* move testimonials out of the hero block to sit after pricing */
+      var testi=document.getElementById('testimonials');
+      if(testi) p.insertBefore(testi, footer);
       var comp=document.getElementById('comparison');
-      if(comp) p.insertBefore(comp, footer); /* move "Looking back" gallery to the end */
+      if(comp) p.insertBefore(comp, footer); /* "Looking back" gallery stays last */
     }
   }
 
