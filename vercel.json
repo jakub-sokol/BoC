@@ -14,6 +14,12 @@
       ]
     },
     {
+      "source": "/bocomp27",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+      ]
+    },
+    {
       "source": "/js/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
@@ -49,6 +55,7 @@
     { "source": "/privacy-policy",       "destination": "/privacy-policy.html" },
     { "source": "/terms-and-conditions", "destination": "/terms-and-conditions.html" },
     { "source": "/bocomp26",             "destination": "/bocomp26.html" },
+    { "source": "/bocomp27",             "destination": "/bocomp27.html" },
     { "source": "/style-guide",          "destination": "/style-guide.html" },
     { "source": "/:path*",               "destination": "/index.html" }
   ]
