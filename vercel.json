@@ -49,6 +49,7 @@
     { "source": "/privacy-policy",       "destination": "/privacy-policy.html" },
     { "source": "/terms-and-conditions", "destination": "/terms-and-conditions.html" },
     { "source": "/bocomp26",             "destination": "/bocomp26.html" },
+    { "source": "/style-guide",          "destination": "/style-guide.html" },
     { "source": "/:path*",               "destination": "/index.html" }
   ]
 }
