@@ -198,6 +198,21 @@
   color: #000 !important;
 }
 
+/* About (#quote) — emphasis to DM Sans bold italic (was a leftover Framer Inter
+   preset), and body to the style guide's 18px lede size. */
+#quote em, #quote em *, #quote strong, #quote strong * {
+  font-family: "DM Sans", "DM Sans Placeholder", sans-serif !important;
+  font-style: italic !important;
+}
+/* Size on p + all descendant spans — the Framer preset puts 20px on the inner
+   spans, so styling the <p> alone leaves the visible text (and emphasis) at 20px. */
+#quote p, #quote p * {
+  font-size: 18px !important;
+}
+#quote p {
+  line-height: 1.6 !important;
+}
+
 .boc-footer {
   border-top: 1px solid rgba(3, 50, 34, 0.12);
   padding: 2.5rem 2rem;
