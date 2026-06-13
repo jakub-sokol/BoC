@@ -202,11 +202,31 @@
 /* Rolling photo band (hero) — full-bleed, flush portrait crops, matching the
    original Framer marquee. */
 .boc-photo-marquee {
+  position: relative;
   overflow: hidden;
   width: 100%;
   margin: 0;
   padding: 0;
   line-height: 0;
+}
+/* White fade on the side edges (restores the original Framer marquee look) */
+.boc-photo-marquee::before,
+.boc-photo-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(60px, 10vw, 160px);
+  z-index: 2;
+  pointer-events: none;
+}
+.boc-photo-marquee::before {
+  left: 0;
+  background: linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+}
+.boc-photo-marquee::after {
+  right: 0;
+  background: linear-gradient(to left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
 }
 .boc-photo-track {
   display: flex;
@@ -215,8 +235,8 @@
   animation: boc-scroll-x 60s linear infinite;
 }
 .boc-photo-track img {
-  height: clamp(300px, 42vw, 560px);
-  aspect-ratio: 0.64;
+  height: clamp(217px, 30.3vw, 405px);
+  aspect-ratio: 0.734;
   width: auto;
   object-fit: cover;
   flex-shrink: 0;
