@@ -176,12 +176,6 @@
     padding: 0.25rem 0.65rem; border-radius: 100px; white-space: nowrap;
   }
 
-  /* ---- Testimonials (reuses shared marquee; palette conformed to guide) ---- */
-  #boc27-testi.boc-testi-marquee { max-width: 1100px; margin: 0 auto; }
-  #boc27-testi .boc-testi-card { background: var(--linen); border-radius: 16px; }
-  #boc27-testi .boc-testi-quote, #boc27-testi .boc-testi-title { color: var(--black-70); }
-  #boc27-testi .boc-testi-name { color: var(--black); }
-
   /* ---- "Looking back" gallery ---- */
   .b27-gallery { width: 100%; max-width: 1100px; margin: 0 auto; }
   .b27-gallery-frame {
@@ -326,25 +320,6 @@
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section class="b27-section" id="testimonials">
-    <p class="b27-eyebrow">Testimonials</p>
-    <h2 class="b27-h2">What our partners have to say</h2>
-    <div class="boc-testi-marquee" id="boc27-testi">
-      <div class="boc-testi-track">
-        <div class="boc-testi-card"><p class="boc-testi-quote">&ldquo;The process was smooth and collaborative. The result was better than I imagined.&rdquo;</p><div class="boc-testi-author"><img src="./images/9iaucfczessgqfhvihcjplmagcw.jpg" alt="Marco L." loading="lazy"><div><div class="boc-testi-name">Marco L.</div><div class="boc-testi-title">Partner, Delphi</div></div></div></div>
-        <div class="boc-testi-card"><p class="boc-testi-quote">&ldquo;Professional, responsive, and easy to work with. Omega made me feel confident sharing my work.&rdquo;</p><div class="boc-testi-author"><img src="./images/uudv301wreukiooig9fjlxjv0gg.jpg" alt="Helene Anderson" loading="lazy"><div><div class="boc-testi-name">Helene Anderson</div><div class="boc-testi-title">Partner, Delphi</div></div></div></div>
-        <div class="boc-testi-card"><p class="boc-testi-quote">&ldquo;Every part of Omega felt intentional and beautifully done. Easily one of the cleanest portfolios I&rsquo;ve seen.&rdquo;</p><div class="boc-testi-author"><img src="./images/ez6ms0j3s3lx1ncvm6x7xan2pdi.jpg" alt="Máté Fodor" loading="lazy"><div><div class="boc-testi-name">Máté Fodor</div><div class="boc-testi-title">Managing Partner, Theseus Economics</div></div></div></div>
-        <div class="boc-testi-card"><p class="boc-testi-quote">&ldquo;After launching Omega, inquiries started coming in. The site finally works for me.&rdquo;</p><div class="boc-testi-author"><img src="./images/shfyentsrkwrunbg42mrgfhlvy.jpg" alt="Daniel T." loading="lazy"><div><div class="boc-testi-name">Daniel T.</div><div class="boc-testi-title">Partner, Delphi</div></div></div></div>
-        <!-- duplicate set for a seamless loop -->
-        <div class="boc-testi-card" aria-hidden="true"><p class="boc-testi-quote">&ldquo;The process was smooth and collaborative. The result was better than I imagined.&rdquo;</p><div class="boc-testi-author"><img src="./images/9iaucfczessgqfhvihcjplmagcw.jpg" alt="" loading="lazy"><div><div class="boc-testi-name">Marco L.</div><div class="boc-testi-title">Partner, Delphi</div></div></div></div>
-        <div class="boc-testi-card" aria-hidden="true"><p class="boc-testi-quote">&ldquo;Professional, responsive, and easy to work with. Omega made me feel confident sharing my work.&rdquo;</p><div class="boc-testi-author"><img src="./images/uudv301wreukiooig9fjlxjv0gg.jpg" alt="" loading="lazy"><div><div class="boc-testi-name">Helene Anderson</div><div class="boc-testi-title">Partner, Delphi</div></div></div></div>
-        <div class="boc-testi-card" aria-hidden="true"><p class="boc-testi-quote">&ldquo;Every part of Omega felt intentional and beautifully done. Easily one of the cleanest portfolios I&rsquo;ve seen.&rdquo;</p><div class="boc-testi-author"><img src="./images/ez6ms0j3s3lx1ncvm6x7xan2pdi.jpg" alt="" loading="lazy"><div><div class="boc-testi-name">Máté Fodor</div><div class="boc-testi-title">Managing Partner, Theseus Economics</div></div></div></div>
-        <div class="boc-testi-card" aria-hidden="true"><p class="boc-testi-quote">&ldquo;After launching Omega, inquiries started coming in. The site finally works for me.&rdquo;</p><div class="boc-testi-author"><img src="./images/shfyentsrkwrunbg42mrgfhlvy.jpg" alt="" loading="lazy"><div><div class="boc-testi-name">Daniel T.</div><div class="boc-testi-title">Partner, Delphi</div></div></div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- Looking back — 1st edition gallery -->
   <section class="b27-section" id="comparison">
     <p class="b27-eyebrow">Looking back</p>
@@ -371,6 +346,7 @@
 
 </main>
 
+<div class="boc-footwrap">
 <footer class="boc-footer">
   <div class="boc-foot-brand">
     <strong>Business of Connections</strong>
@@ -386,6 +362,7 @@
   </nav>
   <p class="boc-foot-copy">&copy; 2026 Business of Connections. All rights reserved.</p>
 </footer>
+</div>
 
 <script src="js/boc-static.js?v=20260608k" defer></script>
 <script>

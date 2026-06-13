@@ -231,6 +231,18 @@
 .boc-footer nav a:hover { opacity: 0.65; }
 .boc-foot-copy { width: 100%; color: rgba(3, 50, 34, 0.55); font-size: 0.85rem; }
 
+/* Full-bleed Pine footer with white text — shared treatment used across the
+   conference pages so every footer matches the home page. Wrap the <footer
+   class="boc-footer"> in <div class="boc-footwrap">. */
+.boc-footwrap { background: #05290d; }
+.boc-footwrap .boc-footer { border-top: 0; }
+.boc-footwrap .boc-footer,
+.boc-footwrap .boc-footer strong { color: #fff; }
+.boc-footwrap .boc-footer p,
+.boc-footwrap .boc-footer nav a,
+.boc-footwrap .boc-footer .boc-foot-copy { color: rgba(255, 255, 255, 0.7); }
+.boc-footwrap .boc-footer nav a:hover { opacity: 1; color: #fff; }
+
 /* ============================================================
    Reimplemented Framer-runtime effects (hover + photo marquees)
    ============================================================ */
