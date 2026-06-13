@@ -166,6 +166,7 @@
   #b26-testi .boc-testi-card { background:var(--linen); border-radius:16px; }
   #b26-testi .boc-testi-quote, #b26-testi .boc-testi-title { color:var(--black-70); }
   #b26-testi .boc-testi-name { color:var(--black); }
+  #b26-testi .b26-testi-initials { width:44px; height:44px; border-radius:99px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--pine); color:var(--white); font-weight:600; font-size:.95rem; letter-spacing:.02em; }
 
   @media (max-width:809px){ .b26-section{ padding:3.5rem 1.25rem; } }
 
@@ -413,13 +414,22 @@
 
   /* ---------- Testimonials ---------- */
   var TESTI = [
-    { q:'The process was smooth and collaborative. The result was better than I imagined.', name:'Marco L.', role:'Partner, Delphi', img:'images/9iaucfczessgqfhvihcjplmagcw.jpg' },
-    { q:'Professional, responsive, and easy to work with. Omega made me feel confident sharing my work.', name:'Helene Anderson', role:'Partner, Delphi', img:'images/uudv301wreukiooig9fjlxjv0gg.jpg' },
-    { q:'Every part of Omega felt intentional and beautifully done. Easily one of the cleanest portfolios I’ve seen.', name:'Máté Fodor', role:'Managing Partner, Theseus Economics', img:'images/ez6ms0j3s3lx1ncvm6x7xan2pdi.jpg' },
-    { q:'After launching Omega, inquiries started coming in. The site finally works for me.', name:'Daniel T.', role:'Partner, Delphi', img:'images/shfyentsrkwrunbg42mrgfhlvy.jpg' }
+    { q:'Thanks a lot for the organization, it was really a great event with excellent panels! I hope we will have the chance to work again together next year.', name:'Alexandre Lercher', role:'IVO Capital', img:'testimonials/optimized/alexandre-lercher.jpg' },
+    { q:'Thank you for the hospitality and perfect organisation of this memorable event. I so much appreciate meeting old friends and making new ones. I hope this Conference is the first one in a row of the next to come. I am already looking forward to enrolling.', name:'Jaroslaw Sroczyński', role:'Markiewicz Sroczyński Mioduszewski GP', img:'testimonials/optimized/jaroslaw-sroczynski.jpg' },
+    { q:'Many thanks. It was such a nice conference and you have organised everything with so much passion! Congrats', name:'Lars Maritzen', role:'Schalast', img:'testimonials/optimized/lars-maritzen.jpg' },
+    { q:'Thank you for such a great conference! I was really impressed by everything you put together. Everything, from the topics to the speakers, the venue and the boat trip was so well organised. It was also a real pleasure working with you.', name:'Helene Andersson', role:'Delphi', img:'testimonials/optimized/helene-andersson.jpg' },
+    { q:'I would like to congratulate you on a wonderful event, which was both highly insightful and a great opportunity to connect with fellow professionals.', name:'Ivana Halamova-Dobiskova', role:'A&O Shearman', img:'testimonials/optimized/ivana-halamova-dobiskova.jpg' },
+    { q:'Thank you for a fantastic conference and all your efforts in organising it — it really showed. I thoroughly enjoyed the event and found the discussions very valuable.', name:'Lukas Cavada', role:'Austrian Federal Competition Authority', img:'testimonials/optimized/lukas-cavada.jpg' }
   ];
 
   var esc = function (s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+  var initials = function (name) {
+    var parts = (name || '').split(/[\s-]+/).filter(Boolean);
+    if (!parts.length) return '';
+    var first = parts[0].charAt(0);
+    var last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : '';
+    return (first + last).toUpperCase();
+  };
 
   /* ---------- Render: logo strip ---------- */
   function renderLogos() {
@@ -538,9 +548,13 @@
     var track = el('div', 'boc-testi-track');
     TESTI.concat(TESTI).forEach(function (t, i) {
       var card = el('div', 'boc-testi-card');
+      var alt = i < TESTI.length ? esc(t.name) : '';
+      var avatar = t.img
+        ? '<img src="' + t.img + '" alt="' + alt + '" loading="lazy">'
+        : '<span class="b26-testi-initials" aria-hidden="true">' + esc(initials(t.name)) + '</span>';
       card.innerHTML =
         '<p class="boc-testi-quote">&ldquo;' + esc(t.q) + '&rdquo;</p>' +
-        '<div class="boc-testi-author"><img src="' + t.img + '" alt="' + (i < TESTI.length ? esc(t.name) : '') + '" loading="lazy">' +
+        '<div class="boc-testi-author">' + avatar +
         '<div><div class="boc-testi-name">' + esc(t.name) + '</div><div class="boc-testi-title">' + esc(t.role) + '</div></div></div>';
       track.appendChild(card);
     });

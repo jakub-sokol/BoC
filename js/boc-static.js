@@ -214,30 +214,41 @@
     });
   }
 
+  // Real BoC 2026 testimonials. Mirrors the set rendered on bocomp26.html so the
+  // home page and the event page stay in sync (same people, text and style).
+  // Cards without a photo render an initials avatar (see .boc-testi-initials).
+  var TESTIMONIALS = [
+    { quote: 'Thanks a lot for the organization, it was really a great event with excellent panels! I hope we will have the chance to work again together next year.', name: 'Alexandre Lercher', title: 'IVO Capital', avatar: 'testimonials/optimized/alexandre-lercher.jpg' },
+    { quote: 'Thank you for the hospitality and perfect organisation of this memorable event. I so much appreciate meeting old friends and making new ones. I hope this Conference is the first one in a row of the next to come. I am already looking forward to enrolling.', name: 'Jaroslaw Sroczyński', title: 'Markiewicz Sroczyński Mioduszewski GP', avatar: 'testimonials/optimized/jaroslaw-sroczynski.jpg' },
+    { quote: 'Many thanks. It was such a nice conference and you have organised everything with so much passion! Congrats', name: 'Lars Maritzen', title: 'Schalast', avatar: 'testimonials/optimized/lars-maritzen.jpg' },
+    { quote: 'Thank you for such a great conference! I was really impressed by everything you put together. Everything, from the topics to the speakers, the venue and the boat trip was so well organised. It was also a real pleasure working with you.', name: 'Helene Andersson', title: 'Delphi', avatar: 'testimonials/optimized/helene-andersson.jpg' },
+    { quote: 'I would like to congratulate you on a wonderful event, which was both highly insightful and a great opportunity to connect with fellow professionals.', name: 'Ivana Halamova-Dobiskova', title: 'A&O Shearman', avatar: 'testimonials/optimized/ivana-halamova-dobiskova.jpg' },
+    { quote: 'Thank you for a fantastic conference and all your efforts in organising it — it really showed. I thoroughly enjoyed the event and found the discussions very valuable.', name: 'Lukas Cavada', title: 'Austrian Federal Competition Authority', avatar: 'testimonials/optimized/lukas-cavada.jpg' }
+  ];
+
+  function testiInitials(name) {
+    var parts = (name || '').split(/[\s-]+/).filter(Boolean);
+    if (!parts.length) return '';
+    var last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : '';
+    return (parts[0].charAt(0) + last).toUpperCase();
+  }
+
   // Make the testimonial cards scroll (the original was a Framer Ticker that
-  // collapses without the runtime). Rebuilds the existing placeholder cards into
-  // a CSS marquee; when real testimonials replace the content this still works.
+  // collapses without the runtime). Hides the Framer placeholder ticker and
+  // rebuilds the section as the shared CSS marquee from TESTIMONIALS above.
   function buildTestimonialMarquee() {
     var heads = [].slice.call(document.querySelectorAll('#main h2, h2'));
     var h = heads.filter(function (x) { return /partners have to say/i.test(x.textContent); })[0];
     if (!h) return;
     var sec = h.closest('section');
     if (!sec || sec.querySelector('.boc-testi-marquee')) return;
-    var quotes = [].slice.call(sec.querySelectorAll('p')).filter(function (p) {
-      return /["“”]/.test(p.textContent) && p.textContent.trim().length > 25;
-    });
-    if (quotes.length < 2) return;
 
-    var data = quotes.map(function (q) {
-      var card = q;
-      for (var i = 0; i < 6 && card; i++) { if (card.querySelector && card.querySelector('img')) break; card = card.parentElement; }
-      var img = card ? card.querySelector('img') : null;
-      var authors = card ? [].slice.call(card.querySelectorAll('p')).filter(function (p) {
-        var t = p.textContent.trim(); return p !== q && t.length > 1 && t.length < 60;
-      }).map(function (p) { return p.textContent.trim(); }) : [];
-      // hide the original (collapsed) card
-      if (card) card.style.display = 'none';
-      return { quote: q.textContent.trim(), avatar: img ? img.getAttribute('src') : '', name: authors[0] || '', title: authors[1] || '' };
+    // Hide the original Framer ticker (and any "Connect to Content" placeholder).
+    var ul = sec.querySelector('ul');
+    var ticker = ul ? (ul.closest('[data-framer-name="Ticker Stack"]') || ul.parentElement) : null;
+    if (ticker) ticker.style.display = 'none';
+    [].slice.call(sec.querySelectorAll('section')).forEach(function (s) {
+      if (/Connect to Content/i.test(s.textContent)) s.style.display = 'none';
     });
 
     function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
@@ -245,13 +256,15 @@
     marquee.className = 'boc-testi-marquee';
     var track = document.createElement('div');
     track.className = 'boc-testi-track';
-    data.concat(data).forEach(function (d) {
+    TESTIMONIALS.concat(TESTIMONIALS).forEach(function (d) {
       var card = document.createElement('div');
       card.className = 'boc-testi-card';
+      var avatar = d.avatar
+        ? '<img src="' + d.avatar + '" alt="" loading="lazy">'
+        : '<span class="boc-testi-initials" aria-hidden="true">' + esc(testiInitials(d.name)) + '</span>';
       card.innerHTML =
-        '<p class="boc-testi-quote">' + esc(d.quote) + '</p>' +
-        '<div class="boc-testi-author">' +
-          (d.avatar ? '<img src="' + d.avatar + '" alt="" loading="lazy">' : '') +
+        '<p class="boc-testi-quote">&ldquo;' + esc(d.quote) + '&rdquo;</p>' +
+        '<div class="boc-testi-author">' + avatar +
           '<div><div class="boc-testi-name">' + esc(d.name) + '</div>' +
           '<div class="boc-testi-title">' + esc(d.title) + '</div></div>' +
         '</div>';
