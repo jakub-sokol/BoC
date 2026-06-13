@@ -153,17 +153,20 @@
       return sec.querySelector('[data-framer-name="' + n + '"]');
     });
 
-    // Fix button labels for cards 2 & 3 ("Contact us" not "Explore conferences").
-    // Each button has two [data-framer-name="Text"] spans (desktop + mobile variants).
-    [1, 2].forEach(function(cardIdx) {
-      if (!cards[cardIdx]) return;
-      cards[cardIdx].querySelectorAll('[data-framer-name="Small"] [data-framer-name="Text"]').forEach(function(el) {
-        el.textContent = 'Contact us';
-      });
-      // Also update the href to contact page
-      cards[cardIdx].querySelectorAll('[data-framer-name="Small"] a, a[data-framer-name="Small"]').forEach(function(a) {
-        a.href = './contact-us';
-      });
+    // Rebuild each card's CTA as the shared style-guide primary button (.boc-btn).
+    // The Framer markup ships an <a data-framer-name="Small"> wrapping duplicated
+    // desktop/mobile Text spans with inline background/radius — replace that with a
+    // single clean label and our button class so all cards match the style guide.
+    // Card 0 → "Explore conferences"; cards 2 & 3 → "Contact us".
+    var ctaLabels = ['Explore conferences', 'Contact us', 'Contact us'];
+    var ctaHrefs  = [null, './contact-us', './contact-us'];
+    cards.forEach(function(card, idx) {
+      var a = card.querySelector('a[data-framer-name="Small"]');
+      if (!a) return;
+      a.className = 'boc-btn boc-btn--pine';
+      a.removeAttribute('style');
+      a.innerHTML = '<span>' + (ctaLabels[idx] || 'Learn more') + '</span>';
+      if (ctaHrefs[idx]) a.href = ctaHrefs[idx];
     });
 
     // Measure natural heights once from current SSR state (card[0]=Open, rest=Closed).
@@ -192,6 +195,15 @@
         c.classList.remove(OPEN_CLS, CLOSE_CLS);
         c.classList.add(isOpen ? OPEN_CLS : CLOSE_CLS);
         c.setAttribute('data-framer-name', isOpen ? 'Open' : 'Closed');
+        // Hide the description+button on closed cards. The clip height is fixed,
+        // but single-line titles sit higher than two-line ones, so without this
+        // their content peeks below the title (e.g. "Support at any stage").
+        var content = c.querySelector('[data-framer-name="Content"]');
+        if (content) {
+          content.style.opacity = isOpen ? '1' : '0';
+          content.style.transition = 'opacity 0.3s ease';
+          content.style.pointerEvents = isOpen ? '' : 'none';
+        }
       });
       imgSlots.forEach(function(slot, i) {
         if (!slot) return;

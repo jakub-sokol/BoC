@@ -158,6 +158,46 @@
 }
 .boc-form button:hover { opacity: 0.9; }
 
+/* Shared primary button — mirrors the style guide .sg-btn (Pine / Black forms).
+   On hover the opposite colour wipes in from the left and the button scales up. */
+.boc-btn {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: 48px; padding: 0 24px; border: 0; border-radius: 100px;
+  font-family: "DM Sans", "DM Sans Placeholder", sans-serif;
+  font-size: 15px; font-weight: 500; letter-spacing: -0.04em;
+  color: #fff; cursor: pointer; white-space: nowrap; text-decoration: none;
+  transition: transform 0.35s cubic-bezier(0.34, 1.25, 0.64, 1);
+  will-change: transform;
+}
+.boc-btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.boc-btn:hover { transform: scale(1.04); }
+.boc-btn:hover::before { transform: scaleX(1); }
+.boc-btn:active { transform: scale(0.99); }
+.boc-btn--pine  { background: #05290d; }
+.boc-btn--pine::before  { background: #000; }
+.boc-btn--black { background: #000; }
+.boc-btn--black::before { background: #05290d; }
+@media (prefers-reduced-motion: reduce) {
+  .boc-btn, .boc-btn::before { transition: none; }
+}
+
+/* Help-card titles → style guide h4 preset (Erode 24px / 550). Overrides the
+   original Framer heading preset so the "How can I help" cards match the system. */
+#services-1 h3 {
+  font-family: "Erode Variable", "Erode", serif !important;
+  font-weight: 550 !important;
+  font-variation-settings: "wght" 550 !important;
+  font-size: 24px !important;
+  line-height: 1.2 !important;
+  letter-spacing: normal !important;
+  color: #000 !important;
+}
+
 .boc-footer {
   border-top: 1px solid rgba(3, 50, 34, 0.12);
   padding: 2.5rem 2rem;
