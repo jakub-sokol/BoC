@@ -156,6 +156,9 @@
   .b26-sp-desc { font-family:var(--sans); font-size:14px; font-weight:500; line-height:1.5; color:var(--black-70); margin:0; flex:1; }
   .b26-sp-links { display:flex; gap:0.6rem; margin-top:0.75rem; }
   .b26-sp-link { width:40px; height:40px; border-radius:50%; background:var(--pine); color:var(--white); display:flex; align-items:center; justify-content:center; text-decoration:none; flex-shrink:0; transition:background 0.2s, transform 0.15s; }
+  /* Out-specify the shared `.boc-page a { color: inherit }` rule so the icons
+     render white on the pine circle instead of inheriting the dark card text. */
+  .boc-page a.b26-sp-link { color:var(--white); }
   .b26-sp-link:hover { background:var(--black); transform:scale(1.07); }
   .b26-sp-link svg { width:18px; height:18px; }
   @media (max-width:900px){ #b26-sponsors-grid{ grid-template-columns:repeat(2,1fr); } }
