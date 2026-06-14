@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business of Class Actions 2027 — Class Action Conference, Porto</title>
+<meta name="description" content="Business of Class Actions 2027 — the 1st edition of the Class Action Conference. February 18–19, 2027, Porto. Two days of insights, networking and strategic discussion for Europe's leading class-action community.">
+<link rel="icon" href="images/atv4soethwqm06m3jp5rjcih0e-1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="boc-static.css?v=20260608k">
+<style id="b27">
+  /* ============================================================
+     boca27 — Business of Class Actions 2027 landing page.
+     Rebuilt on the unified design system (see /style-guide).
+     Self-contained: no Framer runtime, no framer-* classes.
+     ============================================================ */
+
+  /* Erode Variable — self-hosted (same files the home page / style guide ship).
+     A variable font, so headings can be set to weight 550 / 600 via
+     font-variation-settings. */
+  @font-face { font-family: "Erode Variable"; src: url("images/mokcgu3ekyhoxp3y5x7xq2bpg4hcmf66.woff2"); font-display: swap; font-style: normal; font-weight: 400 700; }
+  @font-face { font-family: "Erode Variable"; src: url("images/ocj3wfmt5pzol4g7ergyk77eykdlsntr.woff2"); font-display: swap; font-style: italic; font-weight: 400 700; }
+
+  :root {
+    /* The brand palette — nothing else */
+    --black:    #000000;
+    --white:    #ffffff;
+    --pine:     #05290D;
+    --linen:    #F3F2F0;
+    --yellow:   #F2AF4B;
+    --black-70: rgba(0,0,0,0.7);
+    --white-70: rgba(255,255,255,0.7);
+
+    --serif: "Erode Variable", "Erode", serif;
+    --sans:  "DM Sans", "DM Sans Placeholder", sans-serif;
+  }
+
+  /* ---- Header / nav: unified with the home page + style guide ----
+     White bar, black logo + black DM-Sans 15/500 links. */
+  .boc-header { max-width: 1200px; padding: 0 20px; min-height: 65px; gap: 1rem; }
+  .boc-header a.boc-logo { font-family: var(--serif); font-size: 26px; font-weight: 600; font-variation-settings: "wght" 600; letter-spacing: -0.06em; color: var(--black); gap: 8px; }
+  .boc-logo em { font-style: italic; font-weight: 600; }
+  .boc-logo svg { height: 22px; fill: var(--black); }
+  .boc-nav { gap: 25px; align-items: center; }
+  .boc-nav a { font-family: var(--sans); font-size: 15px; font-weight: 500; color: var(--black); }
+  .boc-nav a:hover { opacity: 0.65; }
+  .boc-nav .boc-nav-social { display: inline-flex; align-items: center; color: var(--black); }
+  .boc-nav .boc-nav-search { cursor: default; }
+  .boc-burger { color: var(--black); }
+
+  /* ---- Page scaffolding ---- */
+  .b27-page { font-family: var(--sans); }
+  .b27-section {
+    box-sizing: border-box; width: 100%;
+    max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .b27-eyebrow {
+    font-family: var(--sans); font-size: 0.8rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--black-70);
+    margin: 0 0 0.6rem; text-align: center;
+  }
+  /* Type scale (per style guide): Erode, weight 550 for H2–H4. */
+  .b27-h2 { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: clamp(2rem, 5vw, 48px); line-height: 1.05; letter-spacing: -0.02em; color: var(--black); margin: 0 0 1.25rem; text-align: center; }
+  .b27-h4 { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; color: var(--black); margin: 0; text-align: center; }
+  .b27-sub { font-family: var(--sans); font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--black-70); max-width: 600px; text-align: center; margin: 0 auto; }
+
+  /* ---- Buttons: unified system (Pine / Black primary + outline pill) ---- */
+  .b27-btn {
+    position: relative; isolation: isolate; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    height: 48px; padding: 0 24px; border: 0; border-radius: 100px;
+    font-family: var(--sans); font-size: 15px; font-weight: 500; letter-spacing: -0.04em;
+    color: var(--white); cursor: pointer; white-space: nowrap; text-decoration: none;
+    transition: transform 0.35s cubic-bezier(0.34, 1.25, 0.64, 1); will-change: transform;
+  }
+  .b27-btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+    transform: scaleX(0); transform-origin: left center;
+    transition: transform 0.45s cubic-bezier(0.5, 0, 0.2, 1);
+  }
+  .b27-btn:hover { transform: scale(1.04); }
+  .b27-btn:hover::before { transform: scaleX(1); }
+  .b27-btn:active { transform: scale(0.99); }
+  .b27-btn-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .b27-btn-row .b27-btn { margin-top: 0; }
+  .b27-btn--pine  { background: var(--pine); }
+  .b27-btn--pine::before  { background: var(--black); }
+  .b27-btn--black { background: var(--black); }
+  .b27-btn--black::before { background: var(--pine); }
+  /* Light button — used on the dark Pine register band */
+  .b27-btn--light { background: var(--white); color: var(--pine); }
+  .b27-btn--light::before { display: none; }
+  /* Outline pill (Erode 550) */
+  .b27-btn-outline {
+    box-sizing: border-box; height: 48px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 1rem; letter-spacing: -0.02em;
+    color: var(--pine); background: var(--white); border: 1.5px solid rgba(5,41,13,0.25);
+    border-radius: 100px; padding: 0 2rem; cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .b27-btn-outline:hover { background: rgba(5,41,13,0.04); border-color: var(--pine); }
+  /* Label colours — scoped under .boc-page to beat boc-static.css `.boc-page a { color: inherit }` */
+  .boc-page a.b27-btn, .boc-page a.b27-btn--pine, .boc-page a.b27-btn--black { color: var(--white); }
+  .boc-page a.b27-btn--light { color: var(--pine); }
+  .boc-page a.b27-btn-outline { color: var(--pine); }
+  @media (prefers-reduced-motion: reduce) {
+    .b27-btn, .b27-btn::before { transition: none; }
+  }
+
+  /* ---- Hero ---- */
+  .b27-hero { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  .b27-hero-h {
+    font-family: var(--serif); font-weight: 600; font-variation-settings: "wght" 600;
+    font-size: clamp(3rem, 7vw, 72px); line-height: 1.02; letter-spacing: -0.02em;
+    color: var(--black); text-align: center; margin: 0;
+  }
+  .b27-hero-h .lead { color: var(--pine); font-style: italic; }
+  .b27-hero-sub {
+    font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550;
+    font-size: clamp(1.4rem, 3vw, 24px); line-height: 1.2; letter-spacing: -0.01em;
+    color: var(--black); text-align: center; margin: 1.1rem 0 0;
+  }
+  .b27-hero-body { margin-top: 1.4rem; max-width: 600px; }
+  .b27-hero-cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 1.6rem; }
+
+  /* ---- Focus ---- */
+  .b27-focus-body { max-width: 680px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+  .b27-focus-body p { font-family: var(--sans); font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--black-70); text-align: center; margin: 0; }
+  .b27-focus .b27-btn { margin-top: 34px; }
+
+  /* ---- Registration band ---- */
+  .b27-register {
+    box-sizing: border-box; background: var(--pine); border-radius: 14px;
+    max-width: 1100px; width: 100%; padding: 56px 40px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+  }
+  .b27-register .b27-eyebrow { color: var(--white-70); }
+  .b27-register .price { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 36px; letter-spacing: -0.02em; color: var(--white); line-height: 1.1; }
+  .b27-register .note { font-family: var(--sans); color: var(--white-70); font-size: 14px; max-width: 460px; line-height: 1.5; }
+
+  /* ---- To-be-announced cards ---- */
+  .b27-tba {
+    box-sizing: border-box; background: var(--linen); border-radius: 14px;
+    padding: 44px 32px; max-width: 720px; width: 100%; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .b27-tba + .b27-tba { margin-top: 20px; }
+  .b27-pill {
+    display: inline-block; font-family: var(--sans); font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: rgba(5,41,13,0.1); color: var(--pine);
+    border-radius: 100px; padding: 0.25rem 0.65rem;
+  }
+
+  /* ---- Pricing / partnership ---- */
+  .b27-pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; width: 100%; margin-top: 34px; align-items: stretch; }
+  .b27-price-card { box-sizing: border-box; background: var(--linen); border-radius: 14px; padding: 36px 28px; display: flex; flex-direction: column; gap: 6px; position: relative; }
+  .b27-price-card.feat { background: var(--pine); color: var(--white); }
+  .b27-price-card .tier { align-self: flex-start; display: inline-block; font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border-radius: 100px; }
+  .b27-price-card .tier--gold   { background: rgba(242,175,75,0.2);  color: #7a5200; }
+  .b27-price-card .tier--silver { background: rgba(0,0,0,0.08);      color: #444; }
+  .b27-price-card .tier--bronze { background: rgba(205,127,50,0.15); color: #6b3310; }
+  .b27-price-card .tagline { font-family: var(--sans); font-size: 14px; font-weight: 500; letter-spacing: -0.04em; color: var(--black-70); }
+  .b27-price-card.feat .tagline { color: var(--white-70); }
+  .b27-price-card .amt { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 36px; letter-spacing: -0.02em; color: var(--pine); margin: 10px 0 2px; }
+  .b27-price-card.feat .amt { color: var(--white); }
+  .b27-price-card ul { list-style: none; padding: 0; margin: 16px 0 22px; display: flex; flex-direction: column; gap: 11px; }
+  .b27-price-card li { display: flex; gap: 10px; align-items: flex-start; font-family: var(--sans); font-size: 14px; font-weight: 500; line-height: 1.45; letter-spacing: -0.04em; color: var(--black-70); text-align: left; }
+  .b27-price-card.feat li { color: var(--white-70); }
+  .b27-price-card li svg { flex: 0 0 18px; margin-top: 1px; }
+  .b27-price-card .b27-btn, .b27-price-card .b27-btn-outline { margin-top: auto; }
+  .b27-popular {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: var(--white); color: var(--pine); font-family: var(--sans);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.65rem; border-radius: 100px; white-space: nowrap;
+  }
+
+  /* ---- Registration pricing (4-up, dual price) ---- */
+  .b27-pricing-grid--4 { grid-template-columns: repeat(4, 1fr); max-width: 1180px; }
+  .b27-price-card .amt-old {
+    font-family: var(--serif); font-size: 20px; font-weight: 550; font-variation-settings: "wght" 550;
+    letter-spacing: -0.02em; color: var(--black-40); text-decoration: line-through;
+    display: block; margin-top: 10px;
+  }
+  .b27-price-card .amt-old.placeholder { visibility: hidden; }
+  .b27-price-card .amt-new { margin: 2px 0 2px; }
+  .b27-eb-tag {
+    align-self: flex-start; display: inline-block; font-family: var(--sans); font-size: 0.65rem;
+    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    background: rgba(5,41,13,0.1); color: var(--pine);
+    border-radius: 100px; padding: 0.25rem 0.6rem; margin-bottom: 4px;
+  }
+  @media (max-width: 1100px) and (min-width: 810px) {
+    .b27-pricing-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ---- "Looking back" gallery ---- */
+  .b27-gallery { width: 100%; max-width: 1100px; margin: 0 auto; }
+  .b27-gallery-frame {
+    position: relative; width: 100%; height: 461px; border-radius: 12px;
+    overflow: hidden; background: var(--pine);
+  }
+  .b27-gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .b27-gallery-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
+    color: var(--white); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 2; padding: 0; transition: background 0.3s ease;
+  }
+  .b27-gallery-arrow:hover { background: rgba(255,255,255,0.22); }
+  .b27-gallery-arrow.prev { left: 2rem; }
+  .b27-gallery-arrow.next { right: 2rem; }
+  .b27-gallery-counter {
+    position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.45); color: var(--white); font-family: var(--sans);
+    font-size: 13px; padding: 0.25rem 0.75rem; border-radius: 100px; z-index: 2;
+  }
+  .b27-thumbs { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .b27-thumb { width: 80px; height: 54px; border-radius: 6px; overflow: hidden; cursor: pointer; border: 2px solid transparent; padding: 0; background: none; }
+  .b27-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .b27-thumb.active { border-color: var(--pine); }
+  .b27-prev-btn { text-align: center; margin-top: 24px; }
+  @media (max-width: 809px) {
+    .b27-gallery-frame { height: 240px; }
+    .b27-gallery-arrow.prev { left: 1rem; }
+    .b27-gallery-arrow.next { right: 1rem; }
+  }
+
+  /* ---- Venue ---- */
+  .b27-venue-meta { font-family: var(--sans); font-size: 15px; font-weight: 500; letter-spacing: -0.03em; color: var(--pine); margin-top: 6px; }
+  .b27-venue-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1100px; width: 100%; margin-top: 34px; }
+  .b27-venue-grid figure { margin: 0; }
+  .b27-venue-img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;
+    border-radius: 12px; background: var(--pine);
+  }
+  @media (max-width: 809px) {
+    .b27-venue-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 809px) {
+    .b27-pricing-grid { grid-template-columns: 1fr; }
+    .b27-register { padding: 44px 24px; }
+    .b27-section { padding: 3.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body class="boc-page b27-page">
+<header class="boc-header">
+  <a class="boc-logo" href="./" aria-label="Business of Connections — home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="45.51 84.67 245.89 109.33" fill="#000" aria-hidden="true"><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(60 180) scale(0.82) translate(-152 -152)"></path><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(140 180) scale(0.82) translate(-152 -152)"></path><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(220 180) scale(0.82) translate(-152 -152)"></path></svg><span>Business <em>of</em> Connections</span></a>
+  <nav class="boc-nav" data-boc-nav>
+    <a href="./#services-1">About</a>
+    <a href="./bocomp26">Business of Competition</a>
+    <a href="./contact-us">Contact</a>
+    <a class="boc-nav-social" href="https://www.linkedin.com/company/business-of-competition/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <span class="boc-nav-social boc-nav-search" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="18" height="18" fill="currentColor"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"/></svg></span>
+  </nav>
+  <button class="boc-burger" type="button" data-boc-menu-toggle aria-label="Open menu">&#8801;</button>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="b27-section b27-hero" id="hero">
+    <p class="b27-eyebrow">February 18–19, 2027 &nbsp;•&nbsp; Porto, Portugal</p>
+    <h1 class="b27-hero-h"><span class="lead">Business</span> of Class Actions 2027</h1>
+    <p class="b27-hero-sub">1st edition of<br>Class Action Conference</p>
+    <p class="b27-sub b27-hero-body">Two days of insights, networking, and strategic discussions bringing together Europe&rsquo;s leading class-action experts, regulators, and practitioners in Porto.</p>
+    <div class="b27-hero-cta">
+      <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+    </div>
+  </section>
+
+  <!-- Our focus for 2027 -->
+  <section class="b27-section b27-focus" id="boc27-focus">
+    <h2 class="b27-h2">Our goal</h2>
+    <div class="b27-focus-body">
+      <p>The first edition gave us a strong foundation. For 2027, we want to build on it by putting even <em><strong>more care into the programme</strong></em>.</p>
+      <p>We will focus on the topics, speakers, and panels — choosing questions that matter, inviting people who can add real value, and meticulously preparing each session so it leads to a useful discussion.</p>
+      <p>We also want to hear from you. What topics should be part of the 2027 programme? Which speakers would you like to see in Porto?</p>
+    </div>
+    <a class="b27-btn b27-btn--pine" href="./contact-us">Suggest a topic or speaker</a>
+  </section>
+
+  <!-- Registration band -->
+
+  <!-- Registration pricing -->
+  <section class="b27-section" id="boc27-rates">
+    <p class="b27-eyebrow">Registration</p>
+    <h2 class="b27-h2">Conference rates</h2>
+    <p class="b27-sub">Access to all sessions over two days, conference materials, networking coffee breaks &amp; lunches, plus the river cruise and dinner after day one. Book early and save 30% with our early-bird pricing.</p>
+    <div class="b27-pricing-grid b27-pricing-grid--4">
+      <div class="b27-price-card">
+        <div class="tier tier--gold">Standard</div>
+        <div class="tagline">Full conference access</div>
+        <span class="amt-old">EUR 450</span>
+        <span class="b27-eb-tag">Early bird · save 30%</span>
+        <div class="amt amt-new">EUR 315</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Access to all conference sessions over two days</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Conference materials</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Networking coffee breaks &amp; lunches</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>River cruise &amp; dinner after day one</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--silver">Reduced</div>
+        <div class="tagline">Academics &amp; public sector</div>
+        <span class="amt-old">EUR 250</span>
+        <span class="b27-eb-tag">Early bird · save 30%</span>
+        <div class="amt amt-new">EUR 175</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to academics, NGOs, professional associations &amp; public-sector participants</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--bronze">Reduced</div>
+        <div class="tagline">Students &amp; PhD candidates</div>
+        <span class="amt-old">EUR 150</span>
+        <span class="b27-eb-tag">Early bird · save 30%</span>
+        <div class="amt amt-new">EUR 105</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to students &amp; PhD candidates — limited availability</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--silver">Complimentary</div>
+        <div class="tagline">Authorities &amp; regulators</div>
+        <span class="amt-old placeholder">EUR 0</span>
+        <span class="b27-eb-tag">By invitation</span>
+        <div class="amt amt-new">Free</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to competition authorities &amp; other regulatory bodies — limited availability</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+      </div>
+    </div>
+    <p class="b27-sub" style="margin-top:24px; font-size:13px;">Prices exclude VAT (21%). To register, complete the form on the conference website or contact Maria at <a href="mailto:maria@businessofcompetition.eu">maria@businessofcompetition.eu</a>. An invoice will be issued upon registration.</p>
+  </section>
+
+  <!-- Coming soon (combined) -->
+  <section class="b27-section" id="boc27-coming">
+    <div class="b27-tba">
+      <span class="b27-pill">To be announced</span>
+      <h2 class="b27-h4">Program, speakers &amp; partners — coming soon</h2>
+      <p class="b27-sub">We are finalising the full programme, an exceptional line-up of speakers, and our partner roster for the 2027 edition. Register now to be the first to know when they are announced.</p>
+      <div class="b27-btn-row">
+        <button type="button" class="b27-btn b27-btn--pine">Keep me posted</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Venue -->
+  <section class="b27-section" id="boc27-venue">
+    <p class="b27-eyebrow">Conference location</p>
+    <h2 class="b27-h2">World of Wine</h2>
+    <p class="b27-sub">Perched on the south bank of the Douro River in Vila Nova de Gaia, World of Wine (WOW) is one of Porto&rsquo;s most striking cultural districts, with sweeping views across the river to the historic Ribeira and the Luís I Bridge. Opened in 2021 within beautifully converted port-wine cellars, the 55,000&nbsp;m² complex brings together seven museums, a dozen restaurants and bars, a wine school and dedicated event spaces — a fitting setting for two days of class-action discussion. It is roughly 25 minutes by car from the airport.</p>
+    <p class="b27-venue-meta">Rua do Choupelo 39, 4400-088 Vila Nova de Gaia, Portugal</p>
+    <div class="b27-venue-grid">
+      <figure><img class="b27-venue-img" src="boca27/wow1.jpg" alt="World of Wine cultural district in Vila Nova de Gaia, Porto" loading="lazy"></figure>
+      <figure><img class="b27-venue-img" src="boca27/wow2.jpg" alt="World of Wine venue terraces overlooking the Douro River" loading="lazy"></figure>
+      <figure><img class="b27-venue-img" src="boca27/wow3.jpg" alt="Views from World of Wine across to Porto&rsquo;s Ribeira" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <!-- Partnership / pricing -->
+  <section class="b27-section" id="boc27-pricing">
+    <p class="b27-eyebrow">Partnership</p>
+    <h2 class="b27-h2">Become a partner</h2>
+    <p class="b27-sub">Align your brand with Europe&rsquo;s leading competition-law gathering. Choose the package that fits your goals.</p>
+    <div class="b27-pricing-grid">
+      <div class="b27-price-card">
+        <div class="tier tier--bronze">Bronze</div>
+        <div class="tagline">Increase brand visibility</div>
+        <div class="amt">EUR 2.000</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Logo visibility — website, program &amp; stage slides</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Social media promotion</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>1 complimentary delegate pass</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-pricing">Become a partner</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--silver">Silver</div>
+        <div class="tagline">Access key decision makers</div>
+        <div class="amt">EUR 5.000</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Logo visibility — website, program &amp; stage slides</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Social media promotion</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>2 complimentary delegate passes</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Company banner display</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Panel moderation</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-pricing">Become a partner</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--gold">Gold</div>
+        <div class="tagline">Build strategic partnerships</div>
+        <div class="amt">EUR 7.000</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Logo visibility — website, program &amp; stage slides</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Social media promotion</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>4 complimentary delegate passes</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Company banner display</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Keynote speaking slot</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-pricing">Become a partner</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="boc-footwrap">
+<footer class="boc-footer">
+  <div class="boc-foot-brand">
+    <strong>Business of Connections</strong>
+    <p>Business of Connections is a conference brand and services platform built to develop original events, support client conferences, and bring professional audiences together around topics worth discussing.</p>
+  </div>
+  <nav aria-label="Pages">
+    <a href="./">Home</a>
+    <a href="./#services-1">About</a>
+    <a href="./bocomp26">Business of Competition</a>
+    <a href="./contact-us">Contact</a>
+    <a href="./privacy-policy">Privacy</a>
+    <a href="./terms-and-conditions">Terms</a>
+  </nav>
+  <p class="boc-foot-copy">&copy; 2026 Business of Connections. All rights reserved.</p>
+</footer>
+</div>
+
+<script src="js/boc-static.js?v=20260608k" defer></script>
+</body>
+</html>
