@@ -232,6 +232,18 @@
     .b27-gallery-arrow.next { right: 1rem; }
   }
 
+  /* ---- Venue ---- */
+  .b27-venue-meta { font-family: var(--sans); font-size: 15px; font-weight: 500; letter-spacing: -0.03em; color: var(--pine); margin-top: 6px; }
+  .b27-venue-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1100px; width: 100%; margin-top: 34px; }
+  .b27-venue-grid figure { margin: 0; }
+  .b27-venue-img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;
+    border-radius: 12px; background: var(--pine);
+  }
+  @media (max-width: 809px) {
+    .b27-venue-grid { grid-template-columns: 1fr; }
+  }
+
   @media (max-width: 809px) {
     .b27-pricing-grid { grid-template-columns: 1fr; }
     .b27-register { padding: 44px 24px; }
@@ -339,13 +351,26 @@
   <!-- Coming soon (combined) -->
   <section class="b27-section" id="boc27-coming">
     <div class="b27-tba">
-      <span class="b27-pill">Coming soon</span>
+      <span class="b27-pill">To be announced</span>
       <h2 class="b27-h4">Program, speakers &amp; partners — coming soon</h2>
       <p class="b27-sub">We are finalising the full programme, an exceptional line-up of speakers, and our partner roster for the 2027 edition. Register now to be the first to know when they are announced.</p>
       <div class="b27-btn-row">
         <a class="b27-btn b27-btn--pine" href="./bocomp26#schedule">See 2026 program</a>
         <button type="button" class="b27-btn b27-btn--light">Keep me posted</button>
       </div>
+    </div>
+  </section>
+
+  <!-- Venue -->
+  <section class="b27-section" id="boc27-venue">
+    <p class="b27-eyebrow">Conference location</p>
+    <h2 class="b27-h2">Občanská Plovárna</h2>
+    <p class="b27-sub">Set on the banks of the Vltava River with stunning views of Prague Castle, Občanská Plovárna is one of Prague&rsquo;s most iconic riverside venues. The restored historic building blends elegant 19th-century architecture with modern amenities — a fitting setting for two days of competition-law discussion. It is roughly 30 minutes by car or 40 minutes by public transport from the airport.</p>
+    <p class="b27-venue-meta">U Plovárny 1, 118 00 Praha 1</p>
+    <div class="b27-venue-grid">
+      <figure><img class="b27-venue-img" src="venue/11.webp" alt="Občanská Plovárna riverside venue in Prague" loading="lazy"></figure>
+      <figure><img class="b27-venue-img" src="venue/22.webp" alt="Interior of Občanská Plovárna conference venue" loading="lazy"></figure>
+      <figure><img class="b27-venue-img" src="venue/unnamed.jpg" alt="View of Prague Castle from Občanská Plovárna" loading="lazy"></figure>
     </div>
   </section>
 
@@ -395,30 +420,6 @@
     </div>
   </section>
 
-  <!-- Looking back — 1st edition gallery -->
-  <section class="b27-section" id="comparison">
-    <p class="b27-eyebrow">Looking back</p>
-    <h2 class="b27-h2">1st edition · 2026</h2>
-    <p class="b27-sub">A glimpse of the inaugural Business of Competition in Prague.</p>
-    <div class="b27-gallery" data-b27-gallery style="margin-top:32px;">
-      <div class="b27-gallery-frame">
-        <img class="b27-gallery-img" data-gallery-img src="images/ubtbkgzm0utstuodfmwgjuidsi.jpg" alt="Business of Competition 2026 — Prague">
-        <button class="b27-gallery-arrow prev" type="button" data-gallery-prev aria-label="Previous photo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
-        <button class="b27-gallery-arrow next" type="button" data-gallery-next aria-label="Next photo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
-        <div class="b27-gallery-counter" data-gallery-counter>1 / 4</div>
-      </div>
-      <div class="b27-thumbs" data-gallery-thumbs>
-        <button class="b27-thumb active" type="button" data-gallery-thumb><img src="images/ubtbkgzm0utstuodfmwgjuidsi.jpg" alt="" loading="lazy"></button>
-        <button class="b27-thumb" type="button" data-gallery-thumb><img src="images/admdrlvqhoaxd2fkeubrjnmo2y.jpg" alt="" loading="lazy"></button>
-        <button class="b27-thumb" type="button" data-gallery-thumb><img src="images/zab4stflzjhbegtje9nqtqgt6cs.jpg" alt="" loading="lazy"></button>
-        <button class="b27-thumb" type="button" data-gallery-thumb><img src="images/lmagbqmhle5bt8oeiqt2jnqvz8.jpg" alt="" loading="lazy"></button>
-      </div>
-    </div>
-    <div class="b27-prev-btn">
-      <a class="b27-btn-outline" href="./bocomp26">View the 1st edition</a>
-    </div>
-  </section>
-
 </main>
 
 <div class="boc-footwrap">
@@ -440,31 +441,5 @@
 </div>
 
 <script src="js/boc-static.js?v=20260608k" defer></script>
-<script>
-/* "Looking back" gallery — static carousel (no auto-advance). */
-(function () {
-  var root = document.querySelector('[data-b27-gallery]');
-  if (!root) return;
-  var photos = [
-    'images/ubtbkgzm0utstuodfmwgjuidsi.jpg',
-    'images/admdrlvqhoaxd2fkeubrjnmo2y.jpg',
-    'images/zab4stflzjhbegtje9nqtqgt6cs.jpg',
-    'images/lmagbqmhle5bt8oeiqt2jnqvz8.jpg'
-  ];
-  var img = root.querySelector('[data-gallery-img]');
-  var counter = root.querySelector('[data-gallery-counter]');
-  var thumbs = [].slice.call(root.querySelectorAll('[data-gallery-thumb]'));
-  var i = 0;
-  function show(n) {
-    i = (n % photos.length + photos.length) % photos.length;
-    img.src = photos[i];
-    counter.textContent = (i + 1) + ' / ' + photos.length;
-    thumbs.forEach(function (t, j) { t.classList.toggle('active', j === i); });
-  }
-  root.querySelector('[data-gallery-prev]').addEventListener('click', function () { show(i - 1); });
-  root.querySelector('[data-gallery-next]').addEventListener('click', function () { show(i + 1); });
-  thumbs.forEach(function (t, j) { t.addEventListener('click', function () { show(j); }); });
-})();
-</script>
 </body>
 </html>
