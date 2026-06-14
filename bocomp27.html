@@ -84,6 +84,8 @@
   .b27-btn:hover { transform: scale(1.04); }
   .b27-btn:hover::before { transform: scaleX(1); }
   .b27-btn:active { transform: scale(0.99); }
+  .b27-btn-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .b27-btn-row .b27-btn { margin-top: 0; }
   .b27-btn--pine  { background: var(--pine); }
   .b27-btn--pine::before  { background: var(--black); }
   .b27-btn--black { background: var(--black); }
@@ -178,6 +180,25 @@
     padding: 0.25rem 0.65rem; border-radius: 100px; white-space: nowrap;
   }
 
+  /* ---- Registration pricing (4-up, dual price) ---- */
+  .b27-pricing-grid--4 { grid-template-columns: repeat(4, 1fr); max-width: 1180px; }
+  .b27-price-card .amt-old {
+    font-family: var(--serif); font-size: 20px; font-weight: 550; font-variation-settings: "wght" 550;
+    letter-spacing: -0.02em; color: var(--black-40); text-decoration: line-through;
+    display: block; margin-top: 10px;
+  }
+  .b27-price-card .amt-old.placeholder { visibility: hidden; }
+  .b27-price-card .amt-new { margin: 2px 0 2px; }
+  .b27-eb-tag {
+    align-self: flex-start; display: inline-block; font-family: var(--sans); font-size: 0.65rem;
+    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    background: rgba(5,41,13,0.1); color: var(--pine);
+    border-radius: 100px; padding: 0.25rem 0.6rem; margin-bottom: 4px;
+  }
+  @media (max-width: 1100px) and (min-width: 810px) {
+    .b27-pricing-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
   /* ---- "Looking back" gallery ---- */
   .b27-gallery { width: 100%; max-width: 1100px; margin: 0 auto; }
   .b27-gallery-frame {
@@ -240,7 +261,7 @@
     <p class="b27-hero-sub">2nd edition of<br>Competition Law Conference</p>
     <p class="b27-sub b27-hero-body">Two days of insights, networking, and strategic discussions bringing together Europe&rsquo;s leading competition law experts, regulators, and practitioners in Prague.</p>
     <div class="b27-hero-cta">
-      <a class="b27-btn b27-btn--pine" href="#boc27-register">Register interest</a>
+      <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
       <a class="b27-btn b27-btn--black" href="./bocomp26">View 2026 edition</a>
     </div>
   </section>
@@ -257,13 +278,62 @@
   </section>
 
   <!-- Registration band -->
-  <section class="b27-section" id="boc27-register">
-    <div class="b27-register">
-      <p class="b27-eyebrow">Registration open</p>
-      <div class="price">Early bird &nbsp;•&nbsp; €300</div>
-      <p class="note">Limited early-bird tickets — the price increases as the event approaches.</p>
-      <a class="b27-btn b27-btn--light" href="#boc27-register">Register now</a>
+
+  <!-- Registration pricing -->
+  <section class="b27-section" id="boc27-rates">
+    <p class="b27-eyebrow">Registration</p>
+    <h2 class="b27-h2">Conference rates</h2>
+    <p class="b27-sub">Access to all sessions over two days, conference materials, networking coffee breaks &amp; lunches, plus the river cruise and dinner after day one. Book early and save 30% with our early-bird pricing.</p>
+    <div class="b27-pricing-grid b27-pricing-grid--4">
+      <div class="b27-price-card">
+        <div class="tier tier--gold">Standard</div>
+        <div class="tagline">Full conference access</div>
+        <span class="amt-old">EUR 450</span>
+        <span class="b27-eb-tag">Early bird · save 30%</span>
+        <div class="amt amt-new">EUR 315</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Access to all conference sessions over two days</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Conference materials</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Networking coffee breaks &amp; lunches</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>River cruise &amp; dinner after day one</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--silver">Reduced</div>
+        <div class="tagline">Academics &amp; public sector</div>
+        <span class="amt-old">EUR 250</span>
+        <span class="b27-eb-tag">Early bird · save 30%</span>
+        <div class="amt amt-new">EUR 175</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to academics, NGOs, professional associations &amp; public-sector participants</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--bronze">Reduced</div>
+        <div class="tagline">Students &amp; PhD candidates</div>
+        <span class="amt-old">EUR 150</span>
+        <span class="b27-eb-tag">Early bird · save 30%</span>
+        <div class="amt amt-new">EUR 105</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to students &amp; PhD candidates — limited availability</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--silver">Complimentary</div>
+        <div class="tagline">Authorities &amp; regulators</div>
+        <span class="amt-old placeholder">EUR 0</span>
+        <span class="b27-eb-tag">By invitation</span>
+        <div class="amt amt-new">Free</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to competition authorities &amp; other regulatory bodies — limited availability</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-rates">Register</a>
+      </div>
     </div>
+    <p class="b27-sub" style="margin-top:24px; font-size:13px;">Prices exclude VAT (21%). To register, complete the form on the conference website or contact Maria at <a href="mailto:maria@businessofcompetition.eu">maria@businessofcompetition.eu</a>. An invoice will be issued upon registration.</p>
   </section>
 
   <!-- Coming soon (combined) -->
@@ -272,7 +342,10 @@
       <span class="b27-pill">Coming soon</span>
       <h2 class="b27-h4">Program, speakers &amp; partners — coming soon</h2>
       <p class="b27-sub">We are finalising the full programme, an exceptional line-up of speakers, and our partner roster for the 2027 edition. Register now to be the first to know when they are announced.</p>
-      <a class="b27-btn b27-btn--pine" href="#boc27-register">Register — Early bird €300</a>
+      <div class="b27-btn-row">
+        <a class="b27-btn b27-btn--pine" href="./bocomp26#schedule">See 2026 program</a>
+        <button type="button" class="b27-btn b27-btn--light">Keep me posted</button>
+      </div>
     </div>
   </section>
 
