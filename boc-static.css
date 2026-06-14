@@ -243,6 +243,89 @@
 .boc-footwrap .boc-footer .boc-foot-copy { color: rgba(255, 255, 255, 0.7); }
 .boc-footwrap .boc-footer nav a:hover { opacity: 1; color: #fff; }
 
+/* ------------------------------------------------------------------
+   Contact column — injected by boc-static.js into the footer, in the
+   empty space between the brand block and the link columns. Stacked
+   vertically: "Contact us" headline, portrait + name + email, then the
+   round mail / LinkedIn buttons. Colours inherit the footer (white on
+   the pine home/conference footers, dark on the light static footers).
+   ------------------------------------------------------------------ */
+.boc-contact-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  color: #033222;
+  margin-right: 56px;
+}
+/* White text on the pine home/conference footers. */
+.framer-5QXa6 .boc-contact-col,
+.boc-footwrap .boc-contact-col { color: #fff; }
+.boc-contact-label {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.64px;
+  line-height: 24px;
+}
+.boc-contact-person {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.boc-contact-photo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 22%;
+  flex-shrink: 0;
+}
+.boc-contact-name { font-weight: 600; font-size: 1rem; line-height: 1.35; }
+.boc-contact-email {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  text-decoration: none;
+  color: inherit;
+}
+.boc-contact-email:hover { opacity: 1; }
+.boc-contact-actions { display: flex; gap: 0.75rem; }
+.boc-contact-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #05290d;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+.boc-contact-btn:hover { transform: scale(1.08); }
+/* On the pine footers, invert the buttons to a white circle with a pine icon. */
+.framer-5QXa6 .boc-contact-btn,
+.boc-footwrap .boc-contact-btn { background: #fff; color: #05290d; }
+
+@media (max-width: 809px) {
+  .boc-contact-col { margin-right: 0; }
+}
+
+/* Keep each footer "Pages" link on a single line (Framer ships the column at
+   width:min-content, which wraps the longer event names). */
+.framer-141ncpi { width: auto !important; }
+.framer-141ncpi p { white-space: nowrap; }
+
+/* Narrow the footer brand description (Framer hardcodes it to 496px, which
+   overflows into the injected Contact us column). */
+.framer-5QXa6 .framer-1cwkjng { width: 340px !important; max-width: 100% !important; }
+
+/* Top-align the footer columns so the "Contact us", "Pages" and "Info"
+   headings sit on the same line (the row ships centered by default). */
+.framer-5QXa6 .framer-xi07ez { align-items: flex-start !important; }
+
 /* ============================================================
    Reimplemented Framer-runtime effects (hover + photo marquees)
    ============================================================ */

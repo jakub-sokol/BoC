@@ -286,7 +286,58 @@
     sec.appendChild(marquee);
   }
 
+  // Inject the shared "Contact us" column into the footer on every page. It sits
+  // in the empty space between the brand block and the link columns. Stacked
+  // vertically: "Contact us" headline, then Maria's portrait + name + email,
+  // then the round mail / LinkedIn buttons. On the home page the Framer footer
+  // ships three responsive twins (Desktop/Tablet/Phone), so inject into each
+  // content row; the rebuilt static pages have a single .boc-footer.
+  function buildContactBand() {
+    var MAIL = 'mailto:maria@businessofcompetition.com';
+    var mailIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
+    var liIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>';
+
+    function makeCol() {
+      var col = document.createElement('div');
+      col.className = 'boc-contact-col';
+      col.setAttribute('aria-label', 'Contact us');
+      col.innerHTML =
+        '<span class="boc-contact-label">Contact us</span>' +
+        '<div class="boc-contact-person">' +
+          '<img class="boc-contact-photo" src="images/maria-babenkova.jpg" alt="Maria Babenkova" loading="lazy">' +
+          '<div>' +
+            '<div class="boc-contact-name">Maria Babenkova</div>' +
+            '<a class="boc-contact-email" href="' + MAIL + '">maria@businessofcompetition.com</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="boc-contact-actions">' +
+          '<a class="boc-contact-btn" href="' + MAIL + '" aria-label="Email Maria Babenkova">' + mailIcon + '</a>' +
+          '<a class="boc-contact-btn" href="' + LINKEDIN + '" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">' + liIcon + '</a>' +
+        '</div>';
+      return col;
+    }
+
+    // Home page: Framer footer content rows (one per responsive twin).
+    var contents = document.querySelectorAll('footer .framer-xi07ez');
+    if (contents.length) {
+      contents.forEach(function (content) {
+        if (content.querySelector('.boc-contact-col')) return;
+        var nav = content.querySelector('.framer-13o9k3r'); // link-columns group
+        content.insertBefore(makeCol(), nav || null);
+      });
+      return;
+    }
+
+    // Rebuilt static pages: insert between the brand block and the page nav.
+    var footer = document.querySelector('.boc-footer');
+    if (footer && !footer.querySelector('.boc-contact-col')) {
+      var brand = footer.querySelector('.boc-foot-brand');
+      footer.insertBefore(makeCol(), brand ? brand.nextSibling : footer.firstChild);
+    }
+  }
+
   ready(buildMenu);
+  ready(buildContactBand);
   ready(revealAppear);
   ready(buildHeroMarquee);
   ready(initHelpCards);
