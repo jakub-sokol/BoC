@@ -102,17 +102,14 @@
   // Rebuild the hero "rolling photos" band as a CSS marquee. The original was a
   // Framer Ticker (runtime-driven) that collapses to 0px without the runtime;
   // its source images live in a now-hidden container (.framer-12ow6ey).
-  // Real Business of Competition event photos (the originals were CMS-injected
-  // into a Framer Ticker that collapses to 0px without the runtime).
+  // Photos are served in name order from the hero-photos/ folder.
   var HERO_PHOTOS = [
-    'images/ubtbkgzm0utstuodfmwgjuidsi.jpg',
-    'gallery/bocomp26/businessofcompetitionP1557315.jpg',
-    'images/zab4stflzjhbegtje9nqtqgt6cs.jpg',
-    'gallery/bocomp26/businessofcompetitionP1557510.jpg',
-    'gallery/bocomp26/businessofcompetitionP1557639.jpg',
-    'images/lmagbqmhle5bt8oeiqt2jnqvz8.jpg',
-    'gallery/bocomp26/businessofcompetitionP1568206.jpg',
-    'gallery/bocomp26/businessofcompetitionP1557549.jpg'
+    'hero-photos/hero-1.jpg',
+    'hero-photos/hero-2.jpg',
+    'hero-photos/hero-3.jpg',
+    'hero-photos/hero-4.jpg',
+    'hero-photos/hero-5.jpg',
+    'hero-photos/hero-6.jpg'
   ];
 
   function buildHeroMarquee() {
