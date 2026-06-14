@@ -158,8 +158,10 @@
   .b27-pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; width: 100%; margin-top: 34px; align-items: stretch; }
   .b27-price-card { box-sizing: border-box; background: var(--linen); border-radius: 14px; padding: 36px 28px; display: flex; flex-direction: column; gap: 6px; position: relative; }
   .b27-price-card.feat { background: var(--pine); color: var(--white); }
-  .b27-price-card .tier { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 24px; color: var(--pine); }
-  .b27-price-card.feat .tier { color: var(--white); }
+  .b27-price-card .tier { align-self: flex-start; display: inline-block; font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border-radius: 100px; }
+  .b27-price-card .tier--gold   { background: rgba(242,175,75,0.2);  color: #7a5200; }
+  .b27-price-card .tier--silver { background: rgba(0,0,0,0.08);      color: #444; }
+  .b27-price-card .tier--bronze { background: rgba(205,127,50,0.15); color: #6b3310; }
   .b27-price-card .tagline { font-family: var(--sans); font-size: 14px; font-weight: 500; letter-spacing: -0.04em; color: var(--black-70); }
   .b27-price-card.feat .tagline { color: var(--white-70); }
   .b27-price-card .amt { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 36px; letter-spacing: -0.02em; color: var(--pine); margin: 10px 0 2px; }
@@ -281,7 +283,18 @@
     <p class="b27-sub">Align your brand with Europe&rsquo;s leading competition-law gathering. Choose the package that fits your goals.</p>
     <div class="b27-pricing-grid">
       <div class="b27-price-card">
-        <div class="tier">Silver</div>
+        <div class="tier tier--bronze">Bronze</div>
+        <div class="tagline">Increase brand visibility</div>
+        <div class="amt">EUR 2.000</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Logo visibility — website, program &amp; stage slides</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Social media promotion</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>1 complimentary delegate pass</span></li>
+        </ul>
+        <a class="b27-btn b27-btn--pine" href="#boc27-pricing">Become a partner</a>
+      </div>
+      <div class="b27-price-card">
+        <div class="tier tier--silver">Silver</div>
         <div class="tagline">Access key decision makers</div>
         <div class="amt">EUR 5.000</div>
         <ul>
@@ -293,27 +306,16 @@
         </ul>
         <a class="b27-btn b27-btn--pine" href="#boc27-pricing">Become a partner</a>
       </div>
-      <div class="b27-price-card feat">
-        <div class="tier">Gold</div>
+      <div class="b27-price-card">
+        <div class="tier tier--gold">Gold</div>
         <div class="tagline">Build strategic partnerships</div>
         <div class="amt">EUR 7.000</div>
         <ul>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#fff"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#05290d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Logo visibility — website, program &amp; stage slides</span></li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#fff"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#05290d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Social media promotion</span></li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#fff"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#05290d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>4 complimentary delegate passes</span></li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#fff"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#05290d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Company banner display</span></li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#fff"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#05290d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Keynote speaking slot</span></li>
-        </ul>
-        <a class="b27-btn b27-btn--light" href="#boc27-pricing">Become a partner</a>
-      </div>
-      <div class="b27-price-card">
-        <div class="tier">Bronze</div>
-        <div class="tagline">Increase brand visibility</div>
-        <div class="amt">EUR 2.000</div>
-        <ul>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Logo visibility — website, program &amp; stage slides</span></li>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Social media promotion</span></li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>1 complimentary delegate pass</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>4 complimentary delegate passes</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Company banner display</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Keynote speaking slot</span></li>
         </ul>
         <a class="b27-btn b27-btn--pine" href="#boc27-pricing">Become a partner</a>
       </div>
