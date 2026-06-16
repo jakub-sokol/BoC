@@ -216,6 +216,30 @@
     });
   }
 
+  // Hero CTAs: the original Framer buttons ship a layered filled/outlined mask
+  // structure whose hover (colour wipe + scale) doesn't survive the static export.
+  // Rebuild them as the shared style-guide button (.boc-btn) so they get the same
+  // hover treatment as every other CTA on the site. Same 48px size, so layout is
+  // unchanged. "Explore conferences" → pine (wipes to black); "Contact us" → black
+  // (wipes to pine), matching their current base colours.
+  function initHeroButtons() {
+    var hero = document.getElementById('hero');
+    if (!hero) return;
+    // The Framer markup duplicates the label across filled + outlined layers, so
+    // textContent would read it twice — map label + colour by href instead.
+    var variants = {
+      './#works':     { cls: 'boc-btn boc-btn--pine',  label: 'Explore conferences' },
+      './contact-us': { cls: 'boc-btn boc-btn--black', label: 'Contact us' }
+    };
+    hero.querySelectorAll('a.framer-E5NUw').forEach(function (a) {
+      var v = variants[a.getAttribute('href')];
+      if (!v) return;
+      a.className = v.cls;
+      a.removeAttribute('style');
+      a.innerHTML = '<span>' + v.label + '</span>';
+    });
+  }
+
   // Re-add the hover lift on conference project cards (was a Framer hover variant).
   function addCardHovers() {
     document.querySelectorAll('[data-framer-name^="Project Card"]').forEach(function (card) {
@@ -337,6 +361,7 @@
   ready(buildContactBand);
   ready(revealAppear);
   ready(buildHeroMarquee);
+  ready(initHeroButtons);
   ready(initHelpCards);
   ready(addCardHovers);
   ready(buildTestimonialMarquee);
