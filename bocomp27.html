@@ -251,22 +251,23 @@
   }
 
   /* ---- Registration modal ---- (mirrors the speaker-bio modal in bocomp26) */
-  #b27-modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; background: rgba(0,0,0,0.45); padding: 20px; }
-  #b27-modal.open { display: flex; }
-  #b27-modal-card { background: var(--linen); border-radius: 16px; max-width: 520px; width: 100%; padding: 36px 36px 32px; box-shadow: 0 24px 64px rgba(0,0,0,0.18); position: relative; font-family: var(--sans); animation: bocSlideUp 0.25s cubic-bezier(.22,.68,0,1.2) both; max-height: 88vh; overflow-y: auto; }
+  #b27-modal, #b27-suggest-modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; background: rgba(0,0,0,0.45); padding: 20px; }
+  #b27-modal.open, #b27-suggest-modal.open { display: flex; }
+  #b27-modal-card, #b27-suggest-card { background: var(--linen); border-radius: 16px; max-width: 520px; width: 100%; padding: 36px 36px 32px; box-shadow: 0 24px 64px rgba(0,0,0,0.18); position: relative; font-family: var(--sans); animation: bocSlideUp 0.25s cubic-bezier(.22,.68,0,1.2) both; max-height: 88vh; overflow-y: auto; }
   @keyframes bocSlideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-  #b27-modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--white); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--black); transition: background 0.15s; }
-  #b27-modal-close:hover { background: rgba(0,0,0,0.08); }
-  #b27-modal-eyebrow { font-family: var(--sans); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--black-70); margin: 0 0 0.4rem; }
-  #b27-modal-title { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 24px; line-height: 1.2; letter-spacing: -0.02em; color: var(--black); margin: 0 0 0.4rem; text-align: left; }
-  #b27-modal-intro { font-family: var(--sans); font-size: 14px; line-height: 1.6; color: var(--black-70); margin: 0 0 22px; }
+  #b27-modal-close, #b27-suggest-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--white); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--black); transition: background 0.15s; }
+  #b27-modal-close:hover, #b27-suggest-close:hover { background: rgba(0,0,0,0.08); }
+  #b27-modal-eyebrow, #b27-suggest-eyebrow { font-family: var(--sans); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--black-70); margin: 0 0 0.4rem; }
+  #b27-modal-title, #b27-suggest-title { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 24px; line-height: 1.2; letter-spacing: -0.02em; color: var(--black); margin: 0 0 0.4rem; text-align: left; }
+  #b27-modal-intro, #b27-suggest-intro { font-family: var(--sans); font-size: 14px; line-height: 1.6; color: var(--black-70); margin: 0 0 22px; }
 
   /* Form */
-  #b27-reg-form { display: flex; flex-direction: column; gap: 14px; }
+  #b27-reg-form, #b27-suggest-form { display: flex; flex-direction: column; gap: 14px; }
   .b27-field { display: flex; flex-direction: column; gap: 0.4rem; }
   .b27-field > span { font-size: 0.85rem; font-weight: 500; color: var(--black); }
   .b27-field .opt { color: var(--black-70); font-weight: 500; }
-  #b27-reg-form input:not([type=checkbox]), #b27-reg-form select, #b27-reg-form textarea {
+  #b27-reg-form input:not([type=checkbox]), #b27-reg-form select, #b27-reg-form textarea,
+  #b27-suggest-form input:not([type=checkbox]), #b27-suggest-form select, #b27-suggest-form textarea {
     font: inherit; font-size: 15px; width: 100%; box-sizing: border-box;
     padding: 0.7rem 0.9rem; border: 1px solid rgba(0,0,0,0.2); border-radius: 10px;
     background: var(--white); color: var(--black); transition: border-color 0.15s;
@@ -274,8 +275,9 @@
   #b27-reg-form select { cursor: pointer; appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23000' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat; background-position: right 0.9rem center; padding-right: 2.4rem; }
-  #b27-reg-form textarea { min-height: 84px; resize: vertical; }
-  #b27-reg-form input:focus, #b27-reg-form select:focus, #b27-reg-form textarea:focus { outline: none; border-color: var(--pine); }
+  #b27-reg-form textarea, #b27-suggest-form textarea { min-height: 84px; resize: vertical; }
+  #b27-reg-form input:focus, #b27-reg-form select:focus, #b27-reg-form textarea:focus,
+  #b27-suggest-form input:focus, #b27-suggest-form textarea:focus { outline: none; border-color: var(--pine); }
   .b27-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
   /* Invoicing fieldset (conditional) */
@@ -287,14 +289,14 @@
 
   #b27-terms { font-size: 13px; line-height: 1.55; color: var(--black-70); margin: 2px 0 0; }
   #b27-terms a { color: var(--pine); font-weight: 600; text-decoration: underline; }
-  #b27-reg-form .b27-btn { width: 100%; margin-top: 4px; }
+  #b27-reg-form .b27-btn, #b27-suggest-form .b27-btn { width: 100%; margin-top: 4px; }
 
   /* Success state */
-  #b27-reg-success { display: none; text-align: center; padding: 12px 4px 4px; }
-  #b27-reg-success.is-open { display: block; }
-  #b27-reg-success .ok { width: 56px; height: 56px; border-radius: 50%; background: var(--pine); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
-  #b27-reg-success h3 { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 24px; letter-spacing: -0.02em; color: var(--black); margin: 0 0 8px; }
-  #b27-reg-success p { font-family: var(--sans); font-size: 14px; line-height: 1.6; color: var(--black-70); margin: 0 auto; max-width: 380px; }
+  #b27-reg-success, #b27-suggest-success { display: none; text-align: center; padding: 12px 4px 4px; }
+  #b27-reg-success.is-open, #b27-suggest-success.is-open { display: block; }
+  #b27-reg-success .ok, #b27-suggest-success .ok { width: 56px; height: 56px; border-radius: 50%; background: var(--pine); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+  #b27-reg-success h3, #b27-suggest-success h3 { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 24px; letter-spacing: -0.02em; color: var(--black); margin: 0 0 8px; }
+  #b27-reg-success p, #b27-suggest-success p { font-family: var(--sans); font-size: 14px; line-height: 1.6; color: var(--black-70); margin: 0 auto; max-width: 380px; }
 
   @media (max-width: 480px) { .b27-field-row { grid-template-columns: 1fr; } }
   @media (prefers-reduced-motion: reduce) { #b27-modal-card { animation: none; } }
@@ -335,7 +337,7 @@
       <p>We will focus on the topics, speakers, and panels — choosing questions that matter, inviting people who can add real value, and meticulously preparing each session so it leads to a useful discussion.</p>
       <p>We also want to hear from you. What topics should be part of the 2027 programme? Which speakers would you like to see in Prague?</p>
     </div>
-    <a class="b27-btn b27-btn--pine" href="./contact-us">Suggest a topic or speaker</a>
+    <a class="b27-btn b27-btn--pine" href="#" data-suggest-open>Suggest a topic or speaker</a>
   </section>
 
   <!-- Registration band -->
@@ -588,6 +590,112 @@
     </div>
   </div>
 </div>
+
+<!-- Suggest a topic or speaker modal -->
+<div id="b27-suggest-modal" role="dialog" aria-modal="true" aria-labelledby="b27-suggest-title">
+  <div id="b27-suggest-card">
+    <button id="b27-suggest-close" type="button" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="1" y1="1" x2="13" y2="13"/>
+        <line x1="13" y1="1" x2="1" y2="13"/>
+      </svg>
+    </button>
+
+    <p id="b27-suggest-eyebrow">Help shape 2027</p>
+    <h2 id="b27-suggest-title">Suggest a topic or speaker</h2>
+    <form id="b27-suggest-form" novalidate>
+      <label class="b27-field">
+        <span>Name</span>
+        <input type="text" name="name" autocomplete="name" required>
+      </label>
+
+      <label class="b27-field">
+        <span>Email</span>
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+
+      <label class="b27-field">
+        <span>Suggest a topic</span>
+        <textarea name="topic" placeholder="A question or theme you’d like the programme to cover…"></textarea>
+      </label>
+
+      <label class="b27-field">
+        <span>Suggest a speaker <span class="opt">(Do not be humble, feel free to suggest yourself :))</span></span>
+        <textarea name="speaker" placeholder="Who would you like to see on stage?"></textarea>
+      </label>
+
+      <button class="b27-btn b27-btn--pine" type="submit">Send suggestion</button>
+    </form>
+
+    <div id="b27-suggest-success">
+      <div class="ok">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Thank you</h3>
+      <p>We’ve received your suggestion — thank you for helping us shape the 2027 programme.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Suggest a topic or speaker modal — open/close, submit. */
+(function () {
+  var modal    = document.getElementById('b27-suggest-modal');
+  if (!modal) return;
+  var card     = document.getElementById('b27-suggest-card');
+  var closeBtn = document.getElementById('b27-suggest-close');
+  var form     = document.getElementById('b27-suggest-form');
+  var success  = document.getElementById('b27-suggest-success');
+  var triggers = document.querySelectorAll('[data-suggest-open]');
+  var lastFocus = null;
+
+  function openModal(e) {
+    if (e) e.preventDefault();
+    lastFocus = e ? e.currentTarget : document.activeElement;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var first = form.querySelector('input, textarea');
+    if (first) first.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  }
+
+  triggers.forEach(function (btn) {
+    btn.addEventListener('click', function (e) { openModal(e); });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    // At least one of topic / speaker should be filled.
+    var topic   = form.querySelector('[name="topic"]');
+    var speaker = form.querySelector('[name="speaker"]');
+    if (!topic.value.trim() && !speaker.value.trim()) {
+      speaker.setCustomValidity('Please suggest a topic or a speaker.');
+    } else {
+      speaker.setCustomValidity('');
+    }
+    if (!form.reportValidity()) return;
+    // TODO: POST the collected data to the suggestion email endpoint (address TBD).
+    form.style.display = 'none';
+    var eyebrow = document.getElementById('b27-suggest-eyebrow');
+    var title   = document.getElementById('b27-suggest-title');
+    if (eyebrow) eyebrow.style.display = 'none';
+    if (title) title.style.display = 'none';
+    success.classList.add('is-open');
+    card.scrollTop = 0;
+  });
+})();
+</script>
 
 <script>
 /* Registration modal — open/close, ticket pre-select, conditional invoicing, submit. */
