@@ -386,24 +386,6 @@
     width: 100% !important;
     flex: 0 0 auto;
   }
-  /* Accordion: Framer JS manages height/opacity inline; min-height beats inline height,
-     and we show the abs-positioned content panel by overriding its opacity. */
-  #services-1 [data-framer-name="Closed"] {
-    min-height: 280px !important;
-    overflow: visible !important;
-    justify-content: flex-start !important; /* prevent heading centering within expanded card */
-  }
-  #services-1 [data-framer-name="Closed"] .framer-s70gv8 {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    width: calc(100% - 48px) !important; /* match open-card: 24px padding each side */
-    right: auto !important;
-    top: 60px !important; /* pin below heading row; Framer recomputes top from offsetHeight */
-  }
-  #services-1 [data-framer-name="Closed"] .framer-1uwmrlj {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
 }
 
 /* Generic card lift for conference/works cards */
@@ -597,6 +579,30 @@
 
   /* Footer: brand description overflows its 325px parent at 340px hard-coded width */
   .framer-5QXa6 .framer-1cwkjng { width: 100% !important; }
-  /* Footer: Pages nav — stack links vertically instead of one unscrollable row */
-  .framer-5QXa6 .framer-141ncpi { flex-direction: column !important; }
+  /* Footer: Pages nav — stack links vertically and left-align all entries */
+  .framer-5QXa6 .framer-141ncpi {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* About (#quote) stats row: 3 items in a 600px flex row, clipped to 375px.
+     Stack vertically so all three numbers are visible. */
+  #quote .framer-19xz1a9 {
+    flex-direction: column !important;
+    width: 100% !important;
+    align-items: center !important;
+    gap: 32px !important;
+  }
+  #quote .framer-66ssig,
+  #quote .framer-4iv18y,
+  #quote .framer-xrzc0s {
+    width: 100% !important;
+    align-items: center !important;
+  }
+
+  /* Testimonials: the Framer mobile variant (.framer-bd9a9x-container) is an
+     additional SSR block that stays visible on mobile and adds ~350px of dead
+     space below our custom carousel. Hide it — our carousel replaces it. */
+  #testimonials .framer-bd9a9x-container { display: none !important; }
+  #testimonials { height: auto !important; padding-bottom: 16px !important; }
 }
