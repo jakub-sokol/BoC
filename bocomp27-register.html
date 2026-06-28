@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Register — Business of Connections</title>
-<meta name="description" content="Register for Business of Competition 2027 or Business of Class Actions 2027 — two-day conferences bringing together Europe's leading legal experts.">
+<title>Register — Business of Competition 2027</title>
+<meta name="description" content="Register for Business of Competition 2027 — April 8–9, 2027, Prague. Two days of competition law insights, networking, and strategic discussion.">
 <link rel="icon" href="images/atv4soethwqm06m3jp5rjcih0e-1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,6 @@
     --white:    #ffffff;
     --pine:     #05290D;
     --linen:    #F3F2F0;
-    --yellow:   #F2AF4B;
     --black-70: rgba(0,0,0,0.7);
     --white-70: rgba(255,255,255,0.7);
     --hairline: rgba(0,0,0,0.1);
@@ -44,30 +43,13 @@
   /* Page header */
   .reg-page-eyebrow { font-family: var(--sans); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--black-70); margin: 0 0 0.5rem; }
   .reg-page-title { font-family: var(--serif); font-weight: 600; font-variation-settings: "wght" 600; font-size: clamp(2rem, 4vw, 48px); line-height: 1.05; letter-spacing: -0.02em; color: var(--black); margin: 0 0 0.6rem; }
-  .reg-page-intro { font-family: var(--sans); font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--black-70); margin: 0 0 2rem; max-width: 560px; }
-
-  /* Conference switcher */
-  .conf-switcher { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 2.5rem; }
-  .conf-btn {
-    display: flex; flex-direction: column; align-items: flex-start;
-    padding: 14px 20px; border-radius: 12px; border: 1.5px solid var(--hairline);
-    background: var(--white); cursor: pointer; text-align: left;
-    transition: border-color 0.15s, background 0.15s;
-    font-family: var(--sans);
-  }
-  .conf-btn:hover { border-color: rgba(5,41,13,0.35); background: rgba(5,41,13,0.02); }
-  .conf-btn.active { border-color: var(--pine); background: rgba(5,41,13,0.04); }
-  .conf-btn-name { font-size: 14px; font-weight: 600; color: var(--black); letter-spacing: -0.02em; line-height: 1.3; }
-  .conf-btn-meta { font-size: 12px; font-weight: 500; color: var(--black-70); margin-top: 2px; }
+  .reg-page-intro { font-family: var(--sans); font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--black-70); margin: 0 0 2.5rem; max-width: 560px; }
 
   /* Two-column layout */
   .reg-layout { display: grid; grid-template-columns: 340px 1fr; gap: 32px; align-items: start; }
 
   /* Info card (left) */
-  .reg-info {
-    background: var(--pine); border-radius: 16px; padding: 32px 28px;
-    position: sticky; top: 24px; color: var(--white);
-  }
+  .reg-info { background: var(--pine); border-radius: 16px; padding: 32px 28px; position: sticky; top: 24px; color: var(--white); }
   .reg-info-eyebrow { font-family: var(--sans); font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--white-70); margin: 0 0 0.5rem; }
   .reg-info-name { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 26px; line-height: 1.15; letter-spacing: -0.02em; color: var(--white); margin: 0 0 4px; }
   .reg-info-date { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--white-70); margin: 0 0 24px; }
@@ -78,12 +60,11 @@
   .reg-info-includes li svg { flex-shrink: 0; margin-top: 1px; }
   .reg-info-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--white-70); text-decoration: none; transition: color 0.15s; }
   .reg-info-link:hover { color: var(--white); }
-  .reg-info-link svg { transition: transform 0.15s; }
   .reg-info-link:hover svg { transform: translateX(2px); }
+  .reg-info-link svg { transition: transform 0.15s; }
 
   /* Form card (right) */
   .reg-form-card { background: var(--linen); border-radius: 16px; padding: 36px; }
-  .reg-form-section-title { font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550; font-size: 20px; letter-spacing: -0.02em; color: var(--black); margin: 0 0 16px; }
 
   /* Form fields */
   .reg-form { display: flex; flex-direction: column; gap: 14px; }
@@ -147,7 +128,6 @@
   @media (max-width: 560px) {
     .reg-form-card { padding: 24px 20px; }
     .reg-field-row { grid-template-columns: 1fr; }
-    .conf-btn { padding: 12px 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .reg-btn, .reg-btn::before { transition: none; }
@@ -172,37 +152,25 @@
 <div class="reg-page">
 
   <p class="reg-page-eyebrow">Conference registration</p>
-  <h1 class="reg-page-title">Register for the conference</h1>
+  <h1 class="reg-page-title">Register for BoC 2027</h1>
   <p class="reg-page-intro">Fill in your details below and we'll confirm your place and send an invoice by email. Prices exclude VAT (21%).</p>
-
-  <!-- Conference switcher -->
-  <div class="conf-switcher" role="group" aria-label="Select conference">
-    <button class="conf-btn active" data-conf="bocomp27" type="button">
-      <span class="conf-btn-name">Business of Competition 2027</span>
-      <span class="conf-btn-meta">April 8–9 &nbsp;·&nbsp; Prague, Czech Republic</span>
-    </button>
-    <button class="conf-btn" data-conf="boca27" type="button">
-      <span class="conf-btn-name">Business of Class Actions 2027</span>
-      <span class="conf-btn-meta">February 18–19 &nbsp;·&nbsp; Porto, Portugal</span>
-    </button>
-  </div>
 
   <div class="reg-layout">
 
-    <!-- Info card (updates with conference) -->
-    <aside class="reg-info" aria-live="polite">
-      <p class="reg-info-eyebrow" id="ri-eyebrow">2nd edition</p>
-      <p class="reg-info-name" id="ri-name">Business of Competition 2027</p>
-      <p class="reg-info-date" id="ri-date">April 8–9, 2027 &nbsp;·&nbsp; Prague</p>
+    <!-- Info card -->
+    <aside class="reg-info">
+      <p class="reg-info-eyebrow">2nd edition</p>
+      <p class="reg-info-name">Business of Competition 2027</p>
+      <p class="reg-info-date">April 8–9, 2027 &nbsp;·&nbsp; Prague</p>
       <div class="reg-info-divider"></div>
       <p class="reg-info-label">What's included</p>
-      <ul class="reg-info-includes" id="ri-includes">
+      <ul class="reg-info-includes">
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Access to all sessions over two days</li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Conference materials</li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Networking coffee breaks &amp; lunches</li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>River cruise &amp; dinner after day one</li>
       </ul>
-      <a class="reg-info-link" id="ri-link" href="./bocomp27">
+      <a class="reg-info-link" href="./bocomp27">
         Conference page
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
       </a>
@@ -212,7 +180,6 @@
     <div class="reg-form-card">
 
       <form class="reg-form" id="reg-form" novalidate>
-        <input type="hidden" name="conference" id="reg-conference-input" value="bocomp27">
 
         <label class="reg-field">
           <span>Full name</span>
@@ -294,8 +261,8 @@
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h2>You're registered</h2>
-        <p>Thank you — we've received your registration. We'll confirm your place and send an invoice to your email shortly.</p>
-        <a class="back-link" id="reg-back-link" href="./bocomp27">
+        <p>Thank you — we've received your registration for Business of Competition 2027. We'll confirm your place and send an invoice to your email shortly.</p>
+        <a class="back-link" href="./bocomp27">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 7H2M6 3L2 7l4 4"/></svg>
           Back to conference page
         </a>
@@ -307,6 +274,7 @@
 </div>
 </main>
 
+<div class="boc-footwrap">
 <footer class="boc-footer">
   <div class="boc-foot-brand">
     <strong>Business of Connections</strong>
@@ -323,90 +291,28 @@
   </nav>
   <p class="boc-foot-copy">&copy; 2026 Business of Connections. All rights reserved.</p>
 </footer>
+</div>
 
 <script src="js/boc-static.js?v=20260608k" defer></script>
 <script>
 (function () {
-  /* Conference data */
-  var CONF = {
-    bocomp27: {
-      edition:  '2nd edition',
-      name:     'Business of Competition 2027',
-      date:     'April 8–9, 2027 · Prague',
-      link:     './bocomp27',
-      tickets:  ['General', 'Academic & public sector', 'Students & PhD candidates', 'Authorities & regulators']
-    },
-    boca27: {
-      edition:  '1st edition',
-      name:     'Business of Class Actions 2027',
-      date:     'February 18–19, 2027 · Porto',
-      link:     './boca27',
-      tickets:  ['Standard', 'Academic & public sector', 'Students & PhD candidates', 'Authorities & regulators']
-    }
-  };
+  var invToggle = document.getElementById('reg-invoice-toggle');
+  var invFields = document.getElementById('reg-invoice-fields');
+  var form      = document.getElementById('reg-form');
+  var success   = document.getElementById('reg-success');
 
-  var activeConf = 'bocomp27';
-
-  /* Elements */
-  var confBtns       = document.querySelectorAll('.conf-btn');
-  var riEyebrow      = document.getElementById('ri-eyebrow');
-  var riName         = document.getElementById('ri-name');
-  var riDate         = document.getElementById('ri-date');
-  var riLink         = document.getElementById('ri-link');
-  var confInput      = document.getElementById('reg-conference-input');
-  var ticketSel      = document.getElementById('reg-ticket-select');
-  var invToggle      = document.getElementById('reg-invoice-toggle');
-  var invFields      = document.getElementById('reg-invoice-fields');
-  var form           = document.getElementById('reg-form');
-  var success        = document.getElementById('reg-success');
-  var backLink       = document.getElementById('reg-back-link');
-
-  function setConference(key, preTicket) {
-    var c = CONF[key];
-    if (!c) return;
-    activeConf = key;
-
-    /* Switcher buttons */
-    confBtns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-conf') === key); });
-
-    /* Info card */
-    riEyebrow.textContent = c.edition;
-    riName.textContent    = c.name;
-    riDate.textContent    = c.date;
-    riLink.href           = c.link;
-    riLink.firstChild.nodeValue = 'Conference page ';
-    backLink.href         = c.link;
-
-    /* Hidden input */
-    confInput.value = key;
-
-    /* Ticket options */
-    var current = ticketSel.value;
-    while (ticketSel.options.length > 1) ticketSel.remove(1);
-    c.tickets.forEach(function (t) {
-      var opt = document.createElement('option');
-      opt.value = t; opt.textContent = t; ticketSel.appendChild(opt);
-    });
-    if (preTicket && c.tickets.indexOf(preTicket) !== -1) {
-      ticketSel.value = preTicket;
-    } else if (c.tickets.indexOf(current) !== -1) {
-      ticketSel.value = current;
-    } else {
-      ticketSel.value = '';
-    }
+  /* Pre-select ticket from ?ticket= param */
+  var ticket = new URLSearchParams(window.location.search).get('ticket');
+  if (ticket) {
+    var sel = document.getElementById('reg-ticket-select');
+    var opt = sel.querySelector('option[value="' + ticket.replace(/"/g, '\\"') + '"]');
+    if (opt) sel.value = ticket;
   }
 
-  /* Switcher clicks */
-  confBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () { setConference(btn.getAttribute('data-conf')); });
-  });
-
-  /* Invoicing toggle */
   invToggle.addEventListener('change', function () {
     invFields.classList.toggle('is-open', invToggle.checked);
   });
 
-  /* Submit */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.reportValidity()) return;
@@ -415,14 +321,6 @@
     success.classList.add('is-open');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-
-  /* Read URL params — ?event=bocomp27&ticket=General */
-  var params = new URLSearchParams(window.location.search);
-  var ev     = params.get('event');
-  var ticket = params.get('ticket');
-  if (ev && CONF[ev]) {
-    setConference(ev, ticket);
-  }
 })();
 </script>
 </body>
