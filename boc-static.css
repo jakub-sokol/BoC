@@ -386,6 +386,24 @@
     width: 100% !important;
     flex: 0 0 auto;
   }
+  /* Accordion: Framer JS manages height/opacity inline; min-height beats inline height,
+     and we show the abs-positioned content panel by overriding its opacity. */
+  #services-1 [data-framer-name="Closed"] {
+    min-height: 280px !important;
+    overflow: visible !important;
+    justify-content: flex-start !important; /* prevent heading centering within expanded card */
+  }
+  #services-1 [data-framer-name="Closed"] .framer-s70gv8 {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    width: calc(100% - 48px) !important; /* match open-card: 24px padding each side */
+    right: auto !important;
+    top: 60px !important; /* pin below heading row; Framer recomputes top from offsetHeight */
+  }
+  #services-1 [data-framer-name="Closed"] .framer-1uwmrlj {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 }
 
 /* Generic card lift for conference/works cards */
@@ -576,4 +594,9 @@
   }
   /* Hide the duplicate set used for the desktop infinite loop. */
   .boc-testi-track .boc-testi-card:nth-child(n+7) { display: none; }
+
+  /* Footer: brand description overflows its 325px parent at 340px hard-coded width */
+  .framer-5QXa6 .framer-1cwkjng { width: 100% !important; }
+  /* Footer: Pages nav — stack links vertically instead of one unscrollable row */
+  .framer-5QXa6 .framer-141ncpi { flex-direction: column !important; }
 }
