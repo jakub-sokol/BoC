@@ -173,6 +173,15 @@
   #b26-testi .b26-testi-initials { width:44px; height:44px; border-radius:99px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--pine); color:var(--white); font-weight:600; font-size:.95rem; letter-spacing:.02em; }
 
   @media (max-width:809px){ .b26-section{ padding:3.5rem 1.25rem; } }
+  @media (max-width:809px){
+    #testimonials{ position:relative; }
+    #b26-testi .boc-testi-card {
+      width: calc(100vw - 40px) !important;
+      flex: 0 0 calc(100vw - 40px) !important;
+      box-sizing: border-box !important;
+      min-width: 0 !important;
+    }
+  }
 
   /* Footer uses the shared .boc-footwrap treatment (see boc-static.css). */
 </style>
@@ -608,6 +617,75 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
+})();
+</script>
+<script>
+// Mobile testimonials carousel — arrow nav (arrows injected by JS, hidden on desktop via CSS)
+(function () {
+  function chev(dir) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+      'stroke-linecap="round" stroke-linejoin="round"><polyline points="' +
+      (dir < 0 ? '15 18 9 12 15 6' : '9 18 15 12 9 6') + '"/></svg>';
+  }
+  var placements = [];
+  function placeNav(anchor, nav, host) {
+    if (getComputedStyle(nav).display === 'none') return;
+    var a = anchor.getBoundingClientRect();
+    var h = host.getBoundingClientRect();
+    nav.style.top = (a.bottom - h.top - nav.offsetHeight - 12) + 'px';
+  }
+  function visibleCards(track, sel) {
+    return [].filter.call(track.querySelectorAll(sel), function (c) {
+      return c.offsetParent !== null;
+    });
+  }
+  function buildNav(id, track, anchor, host, cardSelector) {
+    if (!track || !anchor || !host) return;
+    var index = 0;
+    var nav = document.createElement('div');
+    nav.className = 'boc-carousel-nav';
+    nav.id = id;
+    nav.innerHTML =
+      '<button type="button" class="boc-carousel-arrow" data-dir="-1" aria-label="Previous">' + chev(-1) + '</button>' +
+      '<button type="button" class="boc-carousel-arrow" data-dir="1" aria-label="Next">' + chev(1) + '</button>';
+    function stride() {
+      var cards = visibleCards(track, cardSelector);
+      return cards.length > 1
+        ? cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left
+        : (cards[0] ? cards[0].getBoundingClientRect().width : 0);
+    }
+    function apply() {
+      if (getComputedStyle(nav).display === 'none') { track.style.transform = ''; return; }
+      track.style.transform = 'translateX(' + (-index * stride()) + 'px)';
+    }
+    nav.addEventListener('click', function (e) {
+      var btn = e.target.closest('.boc-carousel-arrow');
+      if (!btn) return;
+      var dir = parseInt(btn.getAttribute('data-dir'), 10);
+      var last = Math.max(0, visibleCards(track, cardSelector).length - 1);
+      index = Math.max(0, Math.min(last, index + dir));
+      apply();
+    });
+    host.appendChild(nav);
+    placements.push(function () { index = 0; apply(); placeNav(anchor, nav, host); });
+    placeNav(anchor, nav, host);
+  }
+  function initCarousel() {
+    var testiMarquee = document.querySelector('section#testimonials .boc-testi-marquee');
+    buildNav('boc-testi-nav',
+      testiMarquee && testiMarquee.querySelector('.boc-testi-track'),
+      testiMarquee,
+      testiMarquee && testiMarquee.parentElement,
+      '.boc-testi-card');
+    var rafId;
+    window.addEventListener('resize', function () {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(function () { placements.forEach(function (fn) { fn(); }); });
+    });
+    window.addEventListener('load', function () { placements.forEach(function (fn) { fn(); }); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCarousel);
+  else initCarousel();
 })();
 </script>
 </body>
