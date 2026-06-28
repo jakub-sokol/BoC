@@ -354,6 +354,89 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.framer-11wsp9d-container .framer-vty118').forEach(function (el) {
     el.style.setProperty('transform', 'none', 'important');
   });
+
+  // Mobile carousel arrows (events + testimonials). Hidden on desktop via CSS.
+  (function () {
+    function chev(dir) {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+        'stroke-linecap="round" stroke-linejoin="round"><polyline points="' +
+        (dir < 0 ? '15 18 9 12 15 6' : '9 18 15 12 9 6') + '"/></svg>';
+    }
+    var placements = [];
+    function placeNav(anchor, nav, host) {
+      if (getComputedStyle(nav).display === 'none') return; // desktop: nav hidden
+      var a = anchor.getBoundingClientRect();
+      var h = host.getBoundingClientRect();
+      // Anchor to the carousel's bottom-right so the arrows overlap the card,
+      // regardless of any content below the carousel in the host section.
+      nav.style.top = (a.bottom - h.top - nav.offsetHeight - 12) + 'px';
+    }
+    // Native horizontal scroll is unreliable on these Framer flex rows, so the
+    // carousel is driven by translating the track. `track` is the moved element,
+    // `anchor` is the visible card box used to place the arrows.
+    function visibleCards(track, sel) {
+      return [].filter.call(track.querySelectorAll(sel), function (c) {
+        return c.offsetParent !== null;
+      });
+    }
+    function buildNav(id, track, anchor, host, cardSelector) {
+      if (!track || !anchor || !host) return;
+      var index = 0;
+      var nav = document.createElement('div');
+      nav.className = 'boc-carousel-nav';
+      nav.id = id;
+      nav.innerHTML =
+        '<button type="button" class="boc-carousel-arrow" data-dir="-1" aria-label="Previous">' + chev(-1) + '</button>' +
+        '<button type="button" class="boc-carousel-arrow" data-dir="1" aria-label="Next">' + chev(1) + '</button>';
+      function stride() {
+        var cards = visibleCards(track, cardSelector);
+        // getBoundingClientRect diff is transform-invariant (both cards shift equally).
+        return cards.length > 1
+          ? cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left
+          : (cards[0] ? cards[0].getBoundingClientRect().width : 0);
+      }
+      function apply() {
+        // Desktop: clear the inline transform so the original layout / marquee
+        // animation is restored (nav is hidden there).
+        if (getComputedStyle(nav).display === 'none') { track.style.transform = ''; return; }
+        track.style.transform = 'translateX(' + (-index * stride()) + 'px)';
+      }
+      nav.addEventListener('click', function (e) {
+        var btn = e.target.closest('.boc-carousel-arrow');
+        if (!btn) return;
+        var dir = parseInt(btn.getAttribute('data-dir'), 10);
+        var last = Math.max(0, visibleCards(track, cardSelector).length - 1);
+        index = Math.max(0, Math.min(last, index + dir));
+        apply();
+      });
+      host.appendChild(nav);
+      placements.push(function () { index = 0; apply(); placeNav(anchor, nav, host); });
+      placeNav(anchor, nav, host);
+    }
+    var eventsTrack = document.querySelector('.framer-n69792');
+    buildNav('boc-events-nav',
+      eventsTrack, eventsTrack,
+      document.querySelector('.framer-rjy126'),
+      'a[data-framer-name="Blog post"]');
+    var testiMarquee = document.querySelector('section#testimonials .boc-testi-marquee');
+    buildNav('boc-testi-nav',
+      testiMarquee && testiMarquee.querySelector('.boc-testi-track'),
+      testiMarquee,
+      testiMarquee && testiMarquee.parentElement,
+      '.boc-testi-card');
+
+    var rafId;
+    window.addEventListener('resize', function () {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(function () {
+        placements.forEach(function (fn) { fn(); });
+      });
+    });
+    // Re-place once images/fonts settle the card heights.
+    window.addEventListener('load', function () {
+      placements.forEach(function (fn) { fn(); });
+    });
+  })();
 });
 </script>
 </body>

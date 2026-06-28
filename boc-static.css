@@ -368,6 +368,26 @@
    pill shrinks. Lock to the original width. */
 #services-1 a[data-framer-name="Small"] { min-width: 182px; justify-content: center; }
 
+/* Mobile: the section ships as a two-column row (cards | image) that squashes
+   into two narrow 148px columns on phones. Restack it like the original
+   template — image on top, cards stacked vertically below. */
+@media (max-width: 809px) {
+  #services-1 .framer-12bsln0 { flex-direction: column; }
+  #services-1 .framer-xn3q08 {            /* Visual / image */
+    order: -1;                            /* move above the cards */
+    width: 100% !important;
+    flex: 0 0 auto;
+    height: auto;
+    aspect-ratio: 1232 / 928;            /* native crop ratio of the photos */
+    transform: none !important;          /* drop the desktop translateX offset */
+    margin-bottom: 16px;
+  }
+  #services-1 .framer-ugpqt4 {           /* cards column */
+    width: 100% !important;
+    flex: 0 0 auto;
+  }
+}
+
 /* Generic card lift for conference/works cards */
 .boc-hover-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
 .boc-hover-lift:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(3, 50, 34, 0.14); }
@@ -479,4 +499,81 @@
   font-family: "DM Sans", "DM Sans Placeholder", sans-serif;
   font-size: 16px; font-weight: 500; letter-spacing: -0.64px; line-height: 24px;
   color: rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================
+   Mobile carousels: full-width cards + bottom-right arrow nav
+   (events "Examples of our events" + testimonials marquee)
+   Desktop is untouched — nav is hidden and the layouts keep their
+   original grid / auto-scroll behaviour above 810px.
+   ============================================================ */
+
+/* Pine circular arrow buttons (injected by JS) — mobile only. */
+.boc-carousel-nav { display: none; }
+.boc-carousel-arrow {
+  width: 40px; height: 40px; padding: 0;
+  border: none; border-radius: 99px; cursor: pointer;
+  background: #05290d; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 16px rgba(3, 50, 34, 0.28);
+  transition: transform 0.2s ease;
+}
+.boc-carousel-arrow:hover  { transform: scale(1.08); }
+.boc-carousel-arrow:active { transform: scale(0.96); }
+.boc-carousel-arrow svg { width: 18px; height: 18px; display: block; }
+
+@media (max-width: 809px) {
+  .boc-carousel-nav {
+    display: flex; gap: 8px;
+    position: absolute; right: 28px; z-index: 6;
+  }
+
+  /* --- Events: "Examples of our events" --- */
+  .framer-rjy126 {
+    position: relative;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .framer-n69792 {
+    padding-left: 0 !important; padding-right: 0 !important;
+    gap: 16px !important;
+    height: auto !important;           /* hug the (now uniform) card height */
+    align-items: flex-start !important;
+    overflow: visible !important;      /* cards spill; .framer-rjy126 (overflow:clip) masks them */
+    transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: transform;
+  }
+  .framer-n69792 > .ssr-variant > div {   /* the 4 card wrappers (unique classes) */
+    width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+    flex: 0 0 calc(100vw - 32px) !important;
+    height: auto !important;
+  }
+  /* Let the card grow to fit image + title. Framer ships it as a fixed-height
+     column with flex-wrap:wrap; at full mobile width the title can't fit under
+     the image so it wraps into a second (overlapping) column. Force a normal
+     stacked column instead. */
+  .framer-n69792 a[data-framer-name="Blog post"] {
+    height: auto !important;
+    flex-wrap: nowrap !important;
+  }
+
+  /* --- Testimonials: page one card at a time (kill the auto-marquee) --- */
+  .framer-1rorfc0 { padding-left: 16px !important; padding-right: 16px !important; }
+  .boc-testi-marquee {
+    overflow: hidden;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .boc-testi-track {
+    animation: none !important;
+    gap: 16px;
+    transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: transform;
+  }
+  .boc-testi-card {
+    width: calc(100vw - 32px) !important;
+    flex: 0 0 calc(100vw - 32px) !important;
+  }
+  /* Hide the duplicate set used for the desktop infinite loop. */
+  .boc-testi-track .boc-testi-card:nth-child(n+7) { display: none; }
 }
