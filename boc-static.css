@@ -606,3 +606,15 @@
   #testimonials .framer-bd9a9x-container { display: none !important; }
   #testimonials { height: auto !important; padding-bottom: 16px !important; }
 }
+
+/* ============================================================
+   index.html nav breakpoint variants (Framer SSR nav switching)
+   These drive .hidden-twin75/.hidden-ijn8p5 etc. on the home
+   page nav until index.html is rebuilt in Phase 4.
+   ============================================================ */
+@media(min-width: 1200px){.hidden-12vhzpc{display:none!important}}
+@media(min-width: 810px) and (max-width: 1199.98px){.hidden-1fho3ky{display:none!important}}
+@media(max-width: 809.98px){.hidden-ijn8p5{display:none!important}}
+@media(min-width: 1200px){.hidden-10go4yd{display:none!important}}
+@media(min-width: 810px) and (max-width: 1199.98px){.hidden-19ly621{display:none!important}}
+@media(max-width: 809.98px){.hidden-twin75{display:none!important}}
