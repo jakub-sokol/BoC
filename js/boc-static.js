@@ -99,9 +99,7 @@
     });
   }
 
-  // Rebuild the hero "rolling photos" band as a CSS marquee. The original was a
-  // Framer Ticker (runtime-driven) that collapses to 0px without the runtime;
-  // its source images live in a now-hidden container (.framer-12ow6ey).
+  // Rebuild the hero "rolling photos" band as a CSS marquee.
   // Photos are served in name order from the hero-photos/ folder.
   var HERO_PHOTOS = [
     'hero-photos/hero-1.jpg',
