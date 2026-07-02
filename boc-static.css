@@ -208,6 +208,8 @@
 @media (prefers-reduced-motion: reduce) {
   .boc-btn, .boc-btn::before { transition: none; }
 }
+/* Anchor specificity fix: .boc-page a (0,1,1) overrides .boc-btn (0,1,0). */
+.boc-page a.boc-btn { color: #fff; }
 
 /* Help-card titles → style guide h4 preset (Erode 24px / 550). Overrides the
    original Framer heading preset so the "How can I help" cards match the system. */
@@ -283,7 +285,6 @@
   margin-right: 56px;
 }
 /* White text on the pine home/conference footers. */
-.framer-5QXa6 .boc-contact-col,
 .boc-footwrap .boc-contact-col { color: #fff; }
 .boc-contact-label {
   font-family: "DM Sans", sans-serif;
@@ -329,64 +330,15 @@
 }
 .boc-contact-btn:hover { transform: scale(1.08); }
 /* On the pine footers, invert the buttons to a white circle with a pine icon. */
-.framer-5QXa6 .boc-contact-btn,
 .boc-footwrap .boc-contact-btn { background: #fff; color: #05290d; }
 
 @media (max-width: 809px) {
   .boc-contact-col { margin-right: 0; }
 }
 
-/* Keep each footer "Pages" link on a single line (Framer ships the column at
-   width:min-content, which wraps the longer event names). */
-.framer-141ncpi { width: auto !important; }
-.framer-141ncpi p { white-space: nowrap; }
-
-/* Narrow the footer brand description (Framer hardcodes it to 496px, which
-   overflows into the injected Contact us column). */
-.framer-5QXa6 .framer-1cwkjng { width: 340px !important; max-width: 100% !important; }
-
-/* Top-align the footer columns so the "Contact us", "Pages" and "Info"
-   headings sit on the same line (the row ships centered by default). */
-.framer-5QXa6 .framer-xi07ez { align-items: flex-start !important; }
-
 /* ============================================================
-   Reimplemented Framer-runtime effects (hover + photo marquees)
+   Reimplemented hover + photo marquees
    ============================================================ */
-
-/* "How can I help" cards */
-
-/* Background colour driven by [data-framer-name] attribute (toggled by JS).
-   This beats the Framer inline style that setProperty couldn't override. */
-#services-1 [data-framer-name="Open"]   { background-color: #F3F2F0 !important; transition: background-color 0.5s ease; }
-#services-1 [data-framer-name="Closed"] { background-color: rgb(255,255,255) !important; transition: background-color 0.5s ease; }
-
-/* Button text: force white — browser default link-blue bleeds through without
-   the Framer runtime, which used to set color via JS. */
-#services-1 a[data-framer-name="Small"],
-#services-1 a[data-framer-name="Small"] * { color: #fff !important; }
-/* Button min-width: "Contact us" is shorter than "Explore conferences" so the
-   pill shrinks. Lock to the original width. */
-#services-1 a[data-framer-name="Small"] { min-width: 182px; justify-content: center; }
-
-/* Mobile: the section ships as a two-column row (cards | image) that squashes
-   into two narrow 148px columns on phones. Restack it like the original
-   template — image on top, cards stacked vertically below. */
-@media (max-width: 809px) {
-  #services-1 .framer-12bsln0 { flex-direction: column; }
-  #services-1 .framer-xn3q08 {            /* Visual / image */
-    order: -1;                            /* move above the cards */
-    width: 100% !important;
-    flex: 0 0 auto;
-    height: auto;
-    aspect-ratio: 1232 / 928;            /* native crop ratio of the photos */
-    transform: none !important;          /* drop the desktop translateX offset */
-    margin-bottom: 16px;
-  }
-  #services-1 .framer-ugpqt4 {           /* cards column */
-    width: 100% !important;
-    flex: 0 0 auto;
-  }
-}
 
 /* Generic card lift for conference/works cards */
 .boc-hover-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
@@ -525,41 +477,10 @@
 @media (max-width: 809px) {
   .boc-carousel-nav {
     display: flex; gap: 8px;
-    position: absolute; right: 28px; z-index: 6;
+    position: absolute; z-index: 6;
   }
 
-  /* --- Events: "Examples of our events" --- */
-  .framer-rjy126 {
-    position: relative;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-  .framer-n69792 {
-    padding-left: 0 !important; padding-right: 0 !important;
-    gap: 16px !important;
-    height: auto !important;           /* hug the (now uniform) card height */
-    align-items: flex-start !important;
-    overflow: visible !important;      /* cards spill; .framer-rjy126 (overflow:clip) masks them */
-    transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
-    will-change: transform;
-  }
-  .framer-n69792 > .ssr-variant > div {   /* the 4 card wrappers (unique classes) */
-    width: calc(100vw - 32px) !important;
-    max-width: calc(100vw - 32px) !important;
-    flex: 0 0 calc(100vw - 32px) !important;
-    height: auto !important;
-  }
-  /* Let the card grow to fit image + title. Framer ships it as a fixed-height
-     column with flex-wrap:wrap; at full mobile width the title can't fit under
-     the image so it wraps into a second (overlapping) column. Force a normal
-     stacked column instead. */
-  .framer-n69792 a[data-framer-name="Blog post"] {
-    height: auto !important;
-    flex-wrap: nowrap !important;
-  }
-
-  /* --- Testimonials: page one card at a time (kill the auto-marquee) --- */
-  .framer-1rorfc0 { padding-left: 16px !important; padding-right: 16px !important; }
+  /* --- Testimonials: page one card at a time on mobile (kill the auto-marquee) --- */
   .boc-testi-marquee {
     overflow: hidden;
     -webkit-mask-image: none; mask-image: none;
@@ -571,50 +492,9 @@
     will-change: transform;
   }
   .boc-testi-card {
-    width: calc(100vw - 32px) !important;
-    flex: 0 0 calc(100vw - 32px) !important;
+    padding-bottom: 4rem;
   }
   /* Hide the duplicate set used for the desktop infinite loop. */
   .boc-testi-track .boc-testi-card:nth-child(n+7) { display: none; }
 
-  /* Footer: brand description overflows its 325px parent at 340px hard-coded width */
-  .framer-5QXa6 .framer-1cwkjng { width: 100% !important; }
-  /* Footer: Pages nav — stack links vertically and left-align all entries */
-  .framer-5QXa6 .framer-141ncpi {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-  }
-
-  /* About (#quote) stats row: 3 items in a 600px flex row, clipped to 375px.
-     Stack vertically so all three numbers are visible. */
-  #quote .framer-19xz1a9 {
-    flex-direction: column !important;
-    width: 100% !important;
-    align-items: center !important;
-    gap: 32px !important;
-  }
-  #quote .framer-66ssig,
-  #quote .framer-4iv18y,
-  #quote .framer-xrzc0s {
-    width: 100% !important;
-    align-items: center !important;
-  }
-
-  /* Testimonials: the Framer mobile variant (.framer-bd9a9x-container) is an
-     additional SSR block that stays visible on mobile and adds ~350px of dead
-     space below our custom carousel. Hide it — our carousel replaces it. */
-  #testimonials .framer-bd9a9x-container { display: none !important; }
-  #testimonials { height: auto !important; padding-bottom: 16px !important; }
 }
-
-/* ============================================================
-   index.html nav breakpoint variants (Framer SSR nav switching)
-   These drive .hidden-twin75/.hidden-ijn8p5 etc. on the home
-   page nav until index.html is rebuilt in Phase 4.
-   ============================================================ */
-@media(min-width: 1200px){.hidden-12vhzpc{display:none!important}}
-@media(min-width: 810px) and (max-width: 1199.98px){.hidden-1fho3ky{display:none!important}}
-@media(max-width: 809.98px){.hidden-ijn8p5{display:none!important}}
-@media(min-width: 1200px){.hidden-10go4yd{display:none!important}}
-@media(min-width: 810px) and (max-width: 1199.98px){.hidden-19ly621{display:none!important}}
-@media(max-width: 809.98px){.hidden-twin75{display:none!important}}
