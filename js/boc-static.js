@@ -82,12 +82,12 @@
 
   // Rebuild the hero "rolling photos" band as a CSS marquee.
   var HERO_PHOTOS = [
-    'hero-photos/hero-1.jpg',
-    'hero-photos/hero-2.jpg',
-    'hero-photos/hero-3.jpg',
-    'hero-photos/hero-4.jpg',
-    'hero-photos/hero-5.jpg',
-    'hero-photos/hero-6.jpg'
+    'hero-photos/hero-1.webp',
+    'hero-photos/hero-2.webp',
+    'hero-photos/hero-3.webp',
+    'hero-photos/hero-4.webp',
+    'hero-photos/hero-5.webp',
+    'hero-photos/hero-6.webp'
   ];
 
   function buildHeroMarquee() {
@@ -169,12 +169,12 @@
   // home page and the event page stay in sync (same people, text and style).
   // Cards without a photo render an initials avatar (see .boc-testi-initials).
   var TESTIMONIALS = [
-    { quote: 'It was really a great event with excellent panels! I hope we will have the chance to work again together next year.', name: 'Alexandre Lercher', title: 'IVO Capital', avatar: 'testimonials/optimized/alexandre-lercher.jpg' },
-    { quote: 'Thank you for the hospitality and perfect organisation of this memorable event. I so much appreciate meeting old friends and making new ones. I hope this Conference is the first one in a row of the next to come. I am already looking forward to enrolling.', name: 'Jaroslaw Sroczyński', title: 'Markiewicz Sroczyński Mioduszewski GP', avatar: 'testimonials/optimized/jaroslaw-sroczynski.jpg' },
-    { quote: 'It was such a nice conference and you have organised everything with so much passion! Congrats', name: 'Lars Maritzen', title: 'Schalast', avatar: 'testimonials/optimized/lars-maritzen.jpg' },
-    { quote: 'I was really impressed by everything you put together. Everything, from the topics to the speakers, the venue and the boat trip was so well organised. It was also a real pleasure working with you.', name: 'Helene Andersson', title: 'Delphi', avatar: 'testimonials/optimized/helene-andersson.jpg' },
-    { quote: 'I would like to congratulate you on a wonderful event, which was both highly insightful and a great opportunity to connect with fellow professionals.', name: 'Ivana Halamova-Dobiskova', title: 'A&O Shearman', avatar: 'testimonials/optimized/ivana-halamova-dobiskova.jpg' },
-    { quote: 'Thank you for a fantastic conference and all your efforts in organising it — it really showed. I thoroughly enjoyed the event and found the discussions very valuable.', name: 'Lukas Cavada', title: 'Austrian Federal Competition Authority', avatar: 'testimonials/optimized/lukas-cavada.jpg' }
+    { quote: 'It was really a great event with excellent panels! I hope we will have the chance to work again together next year.', name: 'Alexandre Lercher', title: 'IVO Capital', avatar: 'testimonials/optimized/alexandre-lercher.webp' },
+    { quote: 'Thank you for the hospitality and perfect organisation of this memorable event. I so much appreciate meeting old friends and making new ones. I hope this Conference is the first one in a row of the next to come. I am already looking forward to enrolling.', name: 'Jaroslaw Sroczyński', title: 'Markiewicz Sroczyński Mioduszewski GP', avatar: 'testimonials/optimized/jaroslaw-sroczynski.webp' },
+    { quote: 'It was such a nice conference and you have organised everything with so much passion! Congrats', name: 'Lars Maritzen', title: 'Schalast', avatar: 'testimonials/optimized/lars-maritzen.webp' },
+    { quote: 'I was really impressed by everything you put together. Everything, from the topics to the speakers, the venue and the boat trip was so well organised. It was also a real pleasure working with you.', name: 'Helene Andersson', title: 'Delphi', avatar: 'testimonials/optimized/helene-andersson.webp' },
+    { quote: 'I would like to congratulate you on a wonderful event, which was both highly insightful and a great opportunity to connect with fellow professionals.', name: 'Ivana Halamova-Dobiskova', title: 'A&O Shearman', avatar: 'testimonials/optimized/ivana-halamova-dobiskova.webp' },
+    { quote: 'Thank you for a fantastic conference and all your efforts in organising it — it really showed. I thoroughly enjoyed the event and found the discussions very valuable.', name: 'Lukas Cavada', title: 'Austrian Federal Competition Authority', avatar: 'testimonials/optimized/lukas-cavada.webp' }
   ];
 
   function testiInitials(name) {
@@ -230,7 +230,7 @@
       col.innerHTML =
         '<span class="boc-contact-label">Contact us</span>' +
         '<div class="boc-contact-person">' +
-          '<img class="boc-contact-photo" src="images/maria-babenkova.jpg" alt="Maria Babenkova" loading="lazy">' +
+          '<img class="boc-contact-photo" src="images/maria-babenkova.webp" alt="Maria Babenkova" loading="lazy">' +
           '<div>' +
             '<div class="boc-contact-name">Maria Babenkova</div>' +
             '<a class="boc-contact-email" href="' + MAIL + '">maria@businessofcompetition.com</a>' +
