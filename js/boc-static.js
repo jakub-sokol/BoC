@@ -10,6 +10,21 @@
     else document.addEventListener('DOMContentLoaded', fn);
   }
 
+  // Keep non-production hosts (e.g. *.vercel.app previews, localhost) out of
+  // search indexes so the throwaway preview URL isn't crawled/duplicated before
+  // launch. Auto-disables on the live domain, so go-live needs no code change.
+  function guardPreviewIndexing() {
+    var host = location.hostname;
+    if (host === 'businessofconnections.com' || host === 'www.businessofconnections.com') return;
+    if (document.querySelector('meta[data-preview-guard]')) return;
+    var m = document.createElement('meta');
+    m.name = 'robots';
+    m.content = 'noindex, nofollow';
+    m.setAttribute('data-preview-guard', '');
+    (document.head || document.documentElement).appendChild(m);
+  }
+  guardPreviewIndexing();
+
   // Collect nav links, deduped by href. Works with [data-boc-nav] (rebuilt pages)
   // or a plain nav fallback.
   function collectLinks() {
@@ -119,39 +134,45 @@
     var cards = [].slice.call(sec.querySelectorAll('.home-help-card'));
     if (!cards.length) return;
     var imgs = [].slice.call(sec.querySelectorAll('.home-help-card-img'));
-
-    // Measure natural heights from the initial HTML state (card[0] open, rest closed).
-    var openH   = Math.round(cards[0].getBoundingClientRect().height);
-    var closedH = cards[1] ? Math.round(cards[1].getBoundingClientRect().height) : openH;
-    if (!openH) return;
-
-    // Lock heights and add spring-equivalent CSS transition.
     var SPRING = 'height 0.7s cubic-bezier(0.33, 1, 0.68, 1)';
-    cards.forEach(function (c) {
-      var isOpen = c.getAttribute('data-card-state') === 'open';
-      c.style.height     = (isOpen ? openH : closedH) + 'px';
-      c.style.overflow   = 'clip';
-      c.style.transition = SPRING;
-      c.style.cursor     = 'pointer';
-      var body = c.querySelector('.home-help-card-body');
-      if (body) {
-        body.style.opacity      = isOpen ? '1' : '0';
-        body.style.transition   = 'opacity 0.3s ease';
-        body.style.pointerEvents = isOpen ? '' : 'none';
-      }
-    });
+    var openH = 0, closedH = 0, activeIdx = 0;
 
-    function activate(idx) {
+    // Measure each card's natural (unlocked) height and take the max across cards,
+    // so the shared open/closed height fits every card's content, not just the one
+    // that happened to be open at measurement time.
+    function measure() {
+      openH = 0; closedH = 0;
+      cards.forEach(function (c) {
+        var prev = c.style.height;
+        c.style.height = '';
+        var h = Math.round(c.getBoundingClientRect().height);
+        var isOpen = c.getAttribute('data-card-state') === 'open';
+        if (isOpen) { if (h > openH) openH = h; }
+        else { if (h > closedH) closedH = h; }
+        c.style.height = prev;
+      });
+    }
+
+    function apply() {
       cards.forEach(function (c, i) {
-        var isOpen = (i === idx);
-        c.style.height = (isOpen ? openH : closedH) + 'px';
+        var isOpen = i === activeIdx;
+        c.style.height     = (isOpen ? openH : closedH) + 'px';
+        c.style.overflow   = 'clip';
+        c.style.transition = SPRING;
+        c.style.cursor     = 'pointer';
         c.setAttribute('data-card-state', isOpen ? 'open' : 'closed');
         var body = c.querySelector('.home-help-card-body');
         if (body) {
           body.style.opacity       = isOpen ? '1' : '0';
+          body.style.transition    = 'opacity 0.3s ease';
           body.style.pointerEvents = isOpen ? '' : 'none';
         }
       });
+    }
+
+    function activate(idx) {
+      activeIdx = idx;
+      apply();
       imgs.forEach(function (img, i) {
         img.style.zIndex     = i === idx ? '2' : '1';
         img.style.opacity    = i === idx ? '1' : '0';
@@ -159,10 +180,23 @@
       });
     }
 
+    measure();
+    if (!openH) return;
     activate(0); // sync image stack to default open card
+
     cards.forEach(function (card, idx) {
       card.addEventListener('mouseenter', function () { activate(idx); });
     });
+
+    // Web fonts can swap in after this first measurement (font-display: swap),
+    // changing line-wrapping and therefore the natural card height. Re-measure
+    // once fonts are ready and reapply without disturbing which card is open.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        measure();
+        apply();
+      });
+    }
   }
 
   // Real BoC 2026 testimonials. Mirrors the set rendered on bocomp26.html so the
