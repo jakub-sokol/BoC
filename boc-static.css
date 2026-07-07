@@ -95,7 +95,7 @@
   color: #000;
   white-space: nowrap;
 }
-.boc-logo em { font-style: italic; font-weight: 600; }
+.boc-logo em { font-style: normal; font-weight: 400; font-variation-settings: "wght" 400; }
 .boc-logo svg { height: 22px; width: auto; flex-shrink: 0; fill: #000; }
 .boc-nav { display: flex; gap: 25px; align-items: center; }
 .boc-nav a { text-decoration: none; font-size: 15px; font-weight: 500; color: #000; }
