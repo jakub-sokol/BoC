@@ -7,7 +7,6 @@ cat \
   "$SCRIPT_DIR/sections/01-cover.html" \
   "$SCRIPT_DIR/sections/02-about.html" \
   "$SCRIPT_DIR/sections/03-programme-day1.html" \
-  "$SCRIPT_DIR/sections/04-programme-day2.html" \
   "$SCRIPT_DIR/sections/05-registration.html" \
   "$SCRIPT_DIR/sections/07-partnership.html" \
   "$SCRIPT_DIR/sections/08-porto.html" \
