@@ -9,7 +9,6 @@ cat \
   "$SCRIPT_DIR/sections/03-programme-day1.html" \
   "$SCRIPT_DIR/sections/05-registration.html" \
   "$SCRIPT_DIR/sections/07-partnership.html" \
-  "$SCRIPT_DIR/sections/08-porto.html" \
   "$SCRIPT_DIR/sections/09-back-cover.html" \
   "$SCRIPT_DIR/_foot.html" \
   > "$SCRIPT_DIR/brochure.html"
