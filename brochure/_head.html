@@ -374,20 +374,52 @@
   .audience-card p { font-size: 9pt; color: var(--black70); line-height: 1.65; }
 
   /* porto page */
-  .porto-split { display: flex; gap: 8mm; margin-top: 6mm; }
-  .porto-text { flex: 1; }
-  .porto-img-col { width: 72mm; flex-shrink: 0; }
-  .porto-img-col img {
-    width: 100%; height: 58mm; object-fit: cover; border-radius: 12px; display: block;
+  .porto-hero {
+    position: relative; margin: -8mm -8mm 0; width: calc(100% + 16mm);
+    overflow: hidden; background: var(--pine);
   }
-  .porto-img-col img + img { margin-top: 3mm; }
-  .why-list { list-style: none; margin-top: 4mm; }
-  .why-list li {
-    font-size: 9.5pt; color: var(--black70); padding: 2.5mm 0;
-    border-bottom: 1px solid var(--hairline); line-height: 1.55;
+  .porto-hero svg { display: block; width: 100%; }
+  .porto-hero-quote {
+    position: absolute; bottom: 5mm; left: 8mm;
+    font-family: 'Erode', serif; font-style: italic; font-size: 11pt;
+    color: #fff; max-width: 160mm;
   }
-  .why-list li:last-child { border-bottom: none; }
-  .why-list li strong { color: var(--black); display: block; font-size: 10pt; margin-bottom: 0.5mm; }
+  .porto-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 5mm; }
+  .porto-feature {
+    padding: 4mm 5mm 4mm 0; border-bottom: 1px solid var(--hairline);
+    font-size: 9pt; color: var(--black70); line-height: 1.6;
+  }
+  .porto-feature:nth-child(odd) { border-right: 1px solid var(--hairline); padding-right: 5mm; }
+  .porto-feature:nth-child(even) { padding-left: 5mm; }
+  .porto-feature:nth-child(3), .porto-feature:nth-child(4) { border-bottom: none; }
+  .porto-feature strong { display: block; font-size: 10pt; color: var(--black); margin-bottom: 1mm; }
+  .porto-hotels-label {
+    font-size: 7.5pt; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--black70); margin: 5mm 0 2.5mm; font-weight: 600;
+  }
+  .porto-hotels { display: grid; grid-template-columns: repeat(3,1fr); gap: 3mm; }
+  .porto-hotel {
+    border: 1px solid var(--hairline); border-radius: 8px; padding: 4mm;
+    font-size: 8.5pt; color: var(--black70); line-height: 1.5;
+  }
+  .porto-hotel strong { display: block; font-size: 9.5pt; color: var(--black); margin-bottom: 1mm; }
+  .porto-info { display: grid; grid-template-columns: repeat(3,1fr); gap: 3mm; margin-top: 3mm; }
+  .porto-info-box {
+    background: var(--pine); border-radius: 8px; padding: 4mm;
+    color: var(--white70); font-size: 8pt; line-height: 1.5;
+  }
+  .porto-info-box .info-label {
+    font-size: 7pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--yellow); font-weight: 700; margin-bottom: 1.5mm;
+  }
+  .porto-info-box .info-value {
+    font-family: 'Erode', serif; font-size: 20pt; color: #fff;
+    font-weight: 700; line-height: 1.1; margin-bottom: 1.5mm; display: block;
+  }
+  .porto-photos { display: grid; grid-template-columns: repeat(3,1fr); gap: 3mm; margin-top: 3mm; }
+  .porto-photos img {
+    width: 100%; height: 32mm; object-fit: cover; border-radius: 8px; display: block;
+  }
 
   /* back cover contact block */
   .contact-block { margin-top: 10mm; }
