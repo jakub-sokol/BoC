@@ -26,6 +26,12 @@
       ]
     },
     {
+      "source": "/boca-brochure",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+      ]
+    },
+    {
       "source": "/boca27/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
@@ -69,6 +75,7 @@
     { "source": "/bocomp26",             "destination": "/bocomp26.html" },
     { "source": "/bocomp27",             "destination": "/bocomp27.html" },
     { "source": "/boca27",               "destination": "/boca27.html" },
+    { "source": "/boca-brochure",        "destination": "/boca-brochure.html" },
     { "source": "/style-guide",          "destination": "/style-guide.html" },
     { "source": "/:path*",               "destination": "/index.html" }
   ]
