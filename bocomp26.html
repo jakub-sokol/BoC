@@ -6,11 +6,51 @@
 <base href="/">
 <title>Business of Competition 2026 — Competition Law Conference, Prague</title>
 <meta name="description" content="Business of Competition 2026 — the Competition Law Conference. April 9–10, 2026, Prague. Two days of insights, networking and strategic discussion for Europe's leading competition-law community.">
+<link rel="canonical" href="https://businessofconnections.com/bocomp26">
+<meta property="og:title" content="Business of Competition 2026 — Competition Law Conference, Prague">
+<meta property="og:description" content="Business of Competition 2026 — the Competition Law Conference. April 9–10, 2026, Prague. Two days of insights, networking and strategic discussion for Europe's leading competition-law community.">
+<meta property="og:image" content="https://businessofconnections.com/images/mmzws85wdusqrs8ii3mgqcgccye.webp">
+<meta property="og:url" content="https://businessofconnections.com/bocomp26">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Business of Connections">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Business of Competition 2026 — Competition Law Conference, Prague">
+<meta name="twitter:description" content="Business of Competition 2026 — the Competition Law Conference. April 9–10, 2026, Prague.">
+<meta name="twitter:image" content="https://businessofconnections.com/images/mmzws85wdusqrs8ii3mgqcgccye.webp">
 <link rel="icon" href="images/atv4soethwqm06m3jp5rjcih0e-1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="boc-static.css?v=20260608k">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="boc-static.css?v=20260708">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Business of Competition 2026",
+  "description": "The Competition Law Conference — two days of insights, networking and strategic discussion for Europe's leading competition-law community.",
+  "startDate": "2026-04-09",
+  "endDate": "2026-04-10",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Prague, Czech Republic",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Prague",
+      "addressCountry": "CZ"
+    }
+  },
+  "image": "https://businessofconnections.com/images/mmzws85wdusqrs8ii3mgqcgccye.webp",
+  "url": "https://businessofconnections.com/bocomp26",
+  "organizer": {
+    "@type": "Organization",
+    "name": "Business of Connections",
+    "url": "https://businessofconnections.com/"
+  }
+}
+</script>
 <style id="b26">
   /* ============================================================
      bocomp26 — Business of Competition 2026 landing page.
@@ -31,13 +71,12 @@
   /* ---- Header / nav: unified with the home page + style guide ---- */
   .boc-header { max-width:1200px; padding:0 20px; min-height:65px; gap:1rem; }
   .boc-header a.boc-logo { font-family:var(--serif); font-size:26px; font-weight:600; font-variation-settings:"wght" 600; letter-spacing:-0.06em; color:var(--black); gap:8px; }
-  .boc-logo em { font-style:italic; font-weight:600; }
+  .boc-logo em { font-style:normal; font-weight:400; font-variation-settings:"wght" 400; }
   .boc-logo svg { height:22px; fill:var(--black); }
   .boc-nav { gap:25px; align-items:center; }
   .boc-nav a { font-family:var(--sans); font-size:15px; font-weight:500; color:var(--black); }
   .boc-nav a:hover { opacity:0.65; }
   .boc-nav .boc-nav-social { display:inline-flex; align-items:center; color:var(--black); }
-  .boc-nav .boc-nav-search { cursor:default; }
   .boc-burger { color:var(--black); }
 
   /* ---- Section scaffolding + type scale ---- */
@@ -173,6 +212,15 @@
   #b26-testi .b26-testi-initials { width:44px; height:44px; border-radius:99px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--pine); color:var(--white); font-weight:600; font-size:.95rem; letter-spacing:.02em; }
 
   @media (max-width:809px){ .b26-section{ padding:3.5rem 1.25rem; } }
+  @media (max-width:809px){
+    #testimonials{ position:relative; }
+    #b26-testi .boc-testi-card {
+      width: calc(100vw - 40px) !important;
+      flex: 0 0 calc(100vw - 40px) !important;
+      box-sizing: border-box !important;
+      min-width: 0 !important;
+    }
+  }
 
   /* Footer uses the shared .boc-footwrap treatment (see boc-static.css). */
 </style>
@@ -182,10 +230,10 @@
   <a class="boc-logo" href="./" aria-label="Business of Connections — home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="45.51 84.67 245.89 109.33" fill="#000" aria-hidden="true"><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(60 180) scale(0.82) translate(-152 -152)"></path><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(140 180) scale(0.82) translate(-152 -152)"></path><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(220 180) scale(0.82) translate(-152 -152)"></path></svg><span>Business <em>of</em> Connections</span></a>
   <nav class="boc-nav" data-boc-nav>
     <a href="./#services-1">About</a>
-    <a href="./bocomp26">Business of Competition</a>
+    <a href="./#works">Our Events</a>
     <a href="./contact-us">Contact</a>
     <a class="boc-nav-social" href="https://www.linkedin.com/company/business-of-competition/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-    <span class="boc-nav-social boc-nav-search" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="18" height="18" fill="currentColor"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"/></svg></span>
+    <a class="boc-nav-cta boc-btn boc-btn--pine" href="./bocomp27">View 2027 edition</a>
   </nav>
   <button class="boc-burger" type="button" data-boc-menu-toggle aria-label="Open menu">&#8801;</button>
 </header>
@@ -194,10 +242,10 @@
 
   <!-- Hero -->
   <section class="b26-section b26-hero" id="hero">
-    <p class="b26-eyebrow">April 9–10, 2026 &nbsp;•&nbsp; Prague, Czech Republic</p>
+    <p class="b26-eyebrow"><time datetime="2026-04-09">April 9–10, 2026</time> &nbsp;•&nbsp; Prague, Czech Republic</p>
     <h1 class="b26-hero-h"><span class="lead">Business</span> of Competition 2026</h1>
     <p class="b26-hero-sub">Competition Law Conference</p>
-    <p class="b26-sub b26-hero-body">Two days of insights, networking, and strategic discussions bringing together Europe&rsquo;s leading competition law experts, regulators, and practitioners in Prague.</p>
+    <p class="b26-sub b26-hero-body">The first Business of Competition brought together competition law practitioners, economists, regulators, funders, and advisors in Prague for two days of panels, discussion, and networking.</p>
     <a class="b26-btn b26-btn--pine b26-cta" href="./bocomp27">Explore 2027 edition</a>
   </section>
 
@@ -206,7 +254,7 @@
     <h2 class="b26-h2">Event gallery</h2>
     <div class="b26-gallery" data-b26-gallery>
       <div class="b26-gallery-frame">
-        <img class="b26-gallery-img" data-gallery-img src="images/ubtbkgzm0utstuodfmwgjuidsi.jpg" alt="Business of Competition 2026 — Prague">
+        <img class="b26-gallery-img" data-gallery-img src="images/ubtbkgzm0utstuodfmwgjuidsi.webp" alt="Business of Competition 2026 — Prague">
         <button class="b26-gallery-arrow prev" type="button" data-gallery-prev aria-label="Previous photo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
         <button class="b26-gallery-arrow next" type="button" data-gallery-next aria-label="Next photo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
         <div class="b26-gallery-counter" data-gallery-counter>1 / 1</div>
@@ -259,7 +307,7 @@
   <nav aria-label="Pages">
     <a href="./">Home</a>
     <a href="./#services-1">About</a>
-    <a href="./bocomp26">Business of Competition</a>
+    <a href="./bocomp26">Our Events</a>
     <a href="./contact-us">Contact</a>
     <a href="./privacy-policy">Privacy</a>
     <a href="./terms-and-conditions">Terms</a>
@@ -285,7 +333,7 @@
   </div>
 </div>
 
-<script src="js/boc-static.js?v=20260608k" defer></script>
+<script src="js/boc-static.js?v=20260708" defer></script>
 <script>
 /* ======================================================================
    bocomp26 — content data + render (vanilla JS, no Framer).
@@ -298,37 +346,37 @@
   /* ---------- Speakers ---------- */
   // [name, position, company, photo]
   var SPEAKERS = [
-    ['Helene Andersson','Partner','Delphi','speakers/optimized/helene-andersson.jpg'],
-    ['Antonio Capobianco','Deputy Head of Competition Division','OECD','speakers/optimized/antonio-capobianco-oecd.jpg'],
-    ['Juraj Beňa','Chairman','Slovak Competition Authority','speakers/optimized/juraj-bena.jpg'],
-    ['Kamil Nejezchleb','Vice-chairman','Czech Competition Authority','speakers/optimized/kamil-nejezchleb.jpg'],
-    ['Yolanda Martinez','Partner','Marimon Abogados','speakers/optimized/yolanda-martinez.jpg'],
-    ['Cristina Volpin','Competition Expert','OECD','speakers/optimized/cristina-volpin.jpg'],
-    ['Jan Kupčík','Head of Competition','Schoenherr','speakers/optimized/jan-kupcik.jpg'],
-    ['Gerhard Klümpe','Presiding Judge','Regional Court of Dortmund','speakers/optimized/gerhard-klumpe.jpg'],
-    ['Jiří Mňuk','Managing Associate','Rowan Legal','speakers/optimized/jiri-mnuk.jpg'],
-    ['Lukas Cavanda','Executive Director for International Affairs','Austrian Federal Competition Authority','speakers/optimized/lukas-cavada.jpg'],
-    ['Robert Neruda','Partner','Havel & Partners','speakers/optimized/robert-neruda.jpg'],
-    ['Mathis Campestrin','Partner','Bruzzo Dubucq','speakers/optimized/mathis-campestrin.jpg'],
-    ['Tomáš Prouza','Vice-President','EuroCommerce','speakers/optimized/tomas-prouza.jpg'],
-    ['Máté Fodor','Managing Partner','Theseus Economics','speakers/optimized/mate-fodor.jpg'],
-    ['Porfírio Moreira','Partner','Sousa Ferro & Associados','speakers/optimized/porfirio-moreira.jpg'],
-    ['Joe Perkins','Senior Managing Director','FTI Consulting','speakers/optimized/joe_perkins.jpg'],
-    ['Stijn Huijts','Partner','Geradin Partners','speakers/optimized/stijn-huijts.jpg'],
-    ['Valentin Depenne','Case Handler Officer, DMA','European Commission','speakers/optimized/valentin-depenne.jpg'],
-    ['Simon Boersen','Partner','Stek','speakers/optimized/simon-boersen.jpg'],
-    ['Gregoire Ryelandt','Partner','Deprevernet','speakers/optimized/gregoire-ryelandt.jpg'],
-    ['Juraj Šiška','Partner','LitFin','speakers/optimized/juraj-siska.jpg'],
-    ['Boris Bronfentrinker','Global Chair, Antitrust & Competition Litigation Practice','Willkie Farr & Gallagher','speakers/optimized/boris-bronfentrinker.jpg'],
-    ['Max von Thun','Director, Europe','Open Markets Institute','speakers/optimized/max-von-thun.jpg'],
-    ['Carine Seron','Legal Counsel – Class Action','Euroconsumers','speakers/optimized/carine-seron.jpg'],
-    ['Claire Godfrey','Executive Director','Balanced Economy Project','speakers/optimized/claire-godfrey.jpg'],
-    ['Paul Hitchings','Partner','Hitchings & González','speakers/optimized/paul-hitchings.jpg'],
-    ['Ben Bornemann','Director','CDC – Cartel Damage Claims','speakers/optimized/ben-bornemann.jpg'],
-    ['Dominik Fischer','Principal','Charles River Associates','speakers/optimized/dominik-fischer.jpg']
+    ['Helene Andersson','Partner','Delphi','speakers/optimized/helene-andersson.webp'],
+    ['Antonio Capobianco','Deputy Head of Competition Division','OECD','speakers/optimized/antonio-capobianco-oecd.webp'],
+    ['Juraj Beňa','Chairman','Slovak Competition Authority','speakers/optimized/juraj-bena.webp'],
+    ['Kamil Nejezchleb','Vice-chairman','Czech Competition Authority','speakers/optimized/kamil-nejezchleb.webp'],
+    ['Yolanda Martinez','Partner','Marimon Abogados','speakers/optimized/yolanda-martinez.webp'],
+    ['Cristina Volpin','Competition Expert','OECD','speakers/optimized/cristina-volpin.webp'],
+    ['Jan Kupčík','Head of Competition','Schoenherr','speakers/optimized/jan-kupcik.webp'],
+    ['Gerhard Klümpe','Presiding Judge','Regional Court of Dortmund','speakers/optimized/gerhard-klumpe.webp'],
+    ['Jiří Mňuk','Managing Associate','Rowan Legal','speakers/optimized/jiri-mnuk.webp'],
+    ['Lukas Cavanda','Executive Director for International Affairs','Austrian Federal Competition Authority','speakers/optimized/lukas-cavada.webp'],
+    ['Robert Neruda','Partner','Havel & Partners','speakers/optimized/robert-neruda.webp'],
+    ['Mathis Campestrin','Partner','Bruzzo Dubucq','speakers/optimized/mathis-campestrin.webp'],
+    ['Tomáš Prouza','Vice-President','EuroCommerce','speakers/optimized/tomas-prouza.webp'],
+    ['Máté Fodor','Managing Partner','Theseus Economics','speakers/optimized/mate-fodor.webp'],
+    ['Porfírio Moreira','Partner','Sousa Ferro & Associados','speakers/optimized/porfirio-moreira.webp'],
+    ['Joe Perkins','Senior Managing Director','FTI Consulting','speakers/optimized/joe_perkins.webp'],
+    ['Stijn Huijts','Partner','Geradin Partners','speakers/optimized/stijn-huijts.webp'],
+    ['Valentin Depenne','Case Handler Officer, DMA','European Commission','speakers/optimized/valentin-depenne.webp'],
+    ['Simon Boersen','Partner','Stek','speakers/optimized/simon-boersen.webp'],
+    ['Gregoire Ryelandt','Partner','Deprevernet','speakers/optimized/gregoire-ryelandt.webp'],
+    ['Juraj Šiška','Partner','LitFin','speakers/optimized/juraj-siska.webp'],
+    ['Boris Bronfentrinker','Global Chair, Antitrust & Competition Litigation Practice','Willkie Farr & Gallagher','speakers/optimized/boris-bronfentrinker.webp'],
+    ['Max von Thun','Director, Europe','Open Markets Institute','speakers/optimized/max-von-thun.webp'],
+    ['Carine Seron','Legal Counsel – Class Action','Euroconsumers','speakers/optimized/carine-seron.webp'],
+    ['Claire Godfrey','Executive Director','Balanced Economy Project','speakers/optimized/claire-godfrey.webp'],
+    ['Paul Hitchings','Partner','Hitchings & González','speakers/optimized/paul-hitchings.webp'],
+    ['Ben Bornemann','Director','CDC – Cartel Damage Claims','speakers/optimized/ben-bornemann.webp'],
+    ['Dominik Fischer','Principal','Charles River Associates','speakers/optimized/dominik-fischer.webp']
   ];
   var PHOTO_BY_NAME = {}; SPEAKERS.forEach(function (s) { PHOTO_BY_NAME[s[0]] = s[3]; });
-  var FALLBACK_PHOTO = 'speakers/optimized/helene-andersson.jpg';
+  var FALLBACK_PHOTO = 'speakers/optimized/helene-andersson.webp';
 
   var BIOS = {
     "Helene Andersson":"Helene Andersson is a partner at Advokatfirman Delphi in Sweden and is widely recognised as one of Sweden's leading authorities on competition law. With more than 25 years of experience, she advises across the full spectrum of competition law matters, including cartel and abuse of dominance cases and merger control. She has extensive experience representing clients in complex competition proceedings before the European Commission, the Swedish Competition Authority, and Swedish courts. An Associate Professor in European law, Helene combines leading practice with academic expertise. She has published extensively on EU competition law enforcement, including Dawn Raids under Challenge and Access and Cartel Cases (Hart Publishing). She regularly teaches EU and competition law at leading Swedish universities and is a frequent speaker at national and international conferences.",
@@ -385,37 +433,37 @@
 
   /* ---------- Logos (strip) ---------- */
   var LOGOS = [
-    ['images/4xqss3ghwr0cwjdcqn23jx6stw.png','Theseus Economics'],
-    ['images/xp3m8t1s6ock2iexey4qxqfsw.png','IVO Capital Partners'],
-    ['images/lwdrfyolz9hqrify1yenv1fyje.png','Charles River Associates'],
-    ['images/asdyea0ehmonix0rfq9qcn1vn4.jpeg','SSPR'],
+    ['images/4xqss3ghwr0cwjdcqn23jx6stw.webp','Theseus Economics'],
+    ['images/xp3m8t1s6ock2iexey4qxqfsw.webp','IVO Capital Partners'],
+    ['images/lwdrfyolz9hqrify1yenv1fyje.webp','Charles River Associates'],
+    ['images/asdyea0ehmonix0rfq9qcn1vn4.webp','SSPR'],
     ['images/znxwijf0hwuv3q9fxsdj5rdvn9w.gif','Concurrences'],
-    ['logos/LitFin-logo.png','LitFin'],
-    ['logos/mergerfilers-logo.png','Mergerfilers'],
-    ['logos/litigra-logo.png','Litigra']
+    ['logos/LitFin-logo.webp','LitFin'],
+    ['logos/mergerfilers-logo.webp','Mergerfilers'],
+    ['logos/litigra-logo.webp','Litigra']
   ];
 
   /* ---------- Sponsor cards ---------- */
   // {tier, badge, name, desc, logo, web, linkedin}
   var SPONSORS = [
-    { tier:'Gold Partner', badge:'b26-b-gold', name:'Theseus Economics', desc:'Boutique economic consultancy specializing in competition economics, providing expert analysis for mergers, antitrust cases, and regulatory proceedings across Europe.', logo:'images/4xqss3ghwr0cwjdcqn23jx6stw.png', web:'https://theseus-economics.com', linkedin:'https://www.linkedin.com/company/theseuseconomics/' },
-    { tier:'Bronze Partner', badge:'b26-b-bronze', name:'IVO Capital Partners', desc:'French regulated asset manager active in litigation finance. Since 2014, it has invested over $130 million across more than 50 cases, with expertise in structuring, funding, and supporting a wide range of claims in Europe and worldwide.', logo:'images/xp3m8t1s6ock2iexey4qxqfsw.png', web:'https://www.ivocapital.com/en/', linkedin:'https://www.linkedin.com/company/ivo-capital-partners/' },
-    { tier:'Bronze Partner', badge:'b26-b-bronze', name:'Charles River Associates', desc:'Global consulting firm specializing in litigation, regulatory, and financial consulting, with deep expertise in competition economics and antitrust matters.', logo:'images/lwdrfyolz9hqrify1yenv1fyje.png', web:'https://www.crai.com', linkedin:'https://www.linkedin.com/company/charles-river-associates/' },
-    { tier:'Partner', badge:'b26-b-partner', name:'Association of Competition Law and Regulation', desc:'NGO connecting academics, representatives of various legal professions, students and others interested in competition law and regulation.', logo:'images/asdyea0ehmonix0rfq9qcn1vn4.jpeg', linkedin:'https://www.linkedin.com/company/spolek-sout%C4%9B%C5%BEn%C3%ADho-pr%C3%A1va-a-regulace/about/' },
-    { tier:'Partner', badge:'b26-b-partner', name:'LitFin – Litigation Financiers', desc:'Leading European litigation funder specializing in antitrust cases, arbitrations, and complex disputes with expertise in the CEE region.', logo:'logos/LitFin-logo.png', web:'https://www.litfin.capital/en', linkedin:'https://www.linkedin.com/company/litfin/' },
-    { tier:'Partner', badge:'b26-b-partner', name:'Litigra', desc:'Graphic studio specializing in legal graphics, transforming intricate legal concepts into clear, digestible visual formats.', logo:'logos/litigra-logo.png', web:'https://litigra.eu', linkedin:'https://www.linkedin.com/company/litigra/' },
+    { tier:'Gold Partner', badge:'b26-b-gold', name:'Theseus Economics', desc:'Boutique economic consultancy specializing in competition economics, providing expert analysis for mergers, antitrust cases, and regulatory proceedings across Europe.', logo:'images/4xqss3ghwr0cwjdcqn23jx6stw.webp', web:'https://theseus-economics.com', linkedin:'https://www.linkedin.com/company/theseuseconomics/' },
+    { tier:'Bronze Partner', badge:'b26-b-bronze', name:'IVO Capital Partners', desc:'French regulated asset manager active in litigation finance. Since 2014, it has invested over $130 million across more than 50 cases, with expertise in structuring, funding, and supporting a wide range of claims in Europe and worldwide.', logo:'images/xp3m8t1s6ock2iexey4qxqfsw.webp', web:'https://www.ivocapital.com/en/', linkedin:'https://www.linkedin.com/company/ivo-capital-partners/' },
+    { tier:'Bronze Partner', badge:'b26-b-bronze', name:'Charles River Associates', desc:'Global consulting firm specializing in litigation, regulatory, and financial consulting, with deep expertise in competition economics and antitrust matters.', logo:'images/lwdrfyolz9hqrify1yenv1fyje.webp', web:'https://www.crai.com', linkedin:'https://www.linkedin.com/company/charles-river-associates/' },
+    { tier:'Partner', badge:'b26-b-partner', name:'Association of Competition Law and Regulation', desc:'NGO connecting academics, representatives of various legal professions, students and others interested in competition law and regulation.', logo:'images/asdyea0ehmonix0rfq9qcn1vn4.webp', linkedin:'https://www.linkedin.com/company/spolek-sout%C4%9B%C5%BEn%C3%ADho-pr%C3%A1va-a-regulace/about/' },
+    { tier:'Partner', badge:'b26-b-partner', name:'LitFin – Litigation Financiers', desc:'Leading European litigation funder specializing in antitrust cases, arbitrations, and complex disputes with expertise in the CEE region.', logo:'logos/LitFin-logo.webp', web:'https://www.litfin.capital/en', linkedin:'https://www.linkedin.com/company/litfin/' },
+    { tier:'Partner', badge:'b26-b-partner', name:'Litigra', desc:'Graphic studio specializing in legal graphics, transforming intricate legal concepts into clear, digestible visual formats.', logo:'logos/litigra-logo.webp', web:'https://litigra.eu', linkedin:'https://www.linkedin.com/company/litigra/' },
     { tier:'Media Partner', badge:'b26-b-media', name:'Concurrences', desc:'Leading antitrust publications and events platform connecting the global competition law community.', logo:'images/znxwijf0hwuv3q9fxsdj5rdvn9w.gif', web:'https://www.concurrences.com/en/', linkedin:'https://www.linkedin.com/company/institute-of-competition-law-icl-institut-de-droit-de-la-concurrence-idc-/' },
-    { tier:'Media Partner', badge:'b26-b-media', name:'Mergerfilers', desc:'Global legal guides platform providing comprehensive merger control filing resources and practical guidance for competition law practitioners worldwide.', logo:'logos/mergerfilers-logo.png', web:'https://www.mergerfilers.com', linkedin:'https://www.linkedin.com/company/mergerfilers/' }
+    { tier:'Media Partner', badge:'b26-b-media', name:'Mergerfilers', desc:'Global legal guides platform providing comprehensive merger control filing resources and practical guidance for competition law practitioners worldwide.', logo:'logos/mergerfilers-logo.webp', web:'https://www.mergerfilers.com', linkedin:'https://www.linkedin.com/company/mergerfilers/' }
   ];
 
   /* ---------- Testimonials ---------- */
   var TESTI = [
-    { q:'It was really a great event with excellent panels! I hope we will have the chance to work again together next year.', name:'Alexandre Lercher', role:'IVO Capital', img:'testimonials/optimized/alexandre-lercher.jpg' },
-    { q:'Thank you for the hospitality and perfect organisation of this memorable event. I so much appreciate meeting old friends and making new ones. I hope this Conference is the first one in a row of the next to come. I am already looking forward to enrolling.', name:'Jaroslaw Sroczyński', role:'Markiewicz Sroczyński Mioduszewski GP', img:'testimonials/optimized/jaroslaw-sroczynski.jpg' },
-    { q:'It was such a nice conference and you have organised everything with so much passion! Congrats', name:'Lars Maritzen', role:'Schalast', img:'testimonials/optimized/lars-maritzen.jpg' },
-    { q:'I was really impressed by everything you put together. Everything, from the topics to the speakers, the venue and the boat trip was so well organised. It was also a real pleasure working with you.', name:'Helene Andersson', role:'Delphi', img:'testimonials/optimized/helene-andersson.jpg' },
-    { q:'I would like to congratulate you on a wonderful event, which was both highly insightful and a great opportunity to connect with fellow professionals.', name:'Ivana Halamova-Dobiskova', role:'A&O Shearman', img:'testimonials/optimized/ivana-halamova-dobiskova.jpg' },
-    { q:'Thank you for a fantastic conference and all your efforts in organising it — it really showed. I thoroughly enjoyed the event and found the discussions very valuable.', name:'Lukas Cavada', role:'Austrian Federal Competition Authority', img:'testimonials/optimized/lukas-cavada.jpg' }
+    { q:'It was really a great event with excellent panels! I hope we will have the chance to work again together next year.', name:'Alexandre Lercher', role:'IVO Capital', img:'testimonials/optimized/alexandre-lercher.webp' },
+    { q:'Thank you for the hospitality and perfect organisation of this memorable event. I so much appreciate meeting old friends and making new ones. I hope this Conference is the first one in a row of the next to come. I am already looking forward to enrolling.', name:'Jaroslaw Sroczyński', role:'Markiewicz Sroczyński Mioduszewski GP', img:'testimonials/optimized/jaroslaw-sroczynski.webp' },
+    { q:'It was such a nice conference and you have organised everything with so much passion! Congrats', name:'Lars Maritzen', role:'Schalast', img:'testimonials/optimized/lars-maritzen.webp' },
+    { q:'I was really impressed by everything you put together. Everything, from the topics to the speakers, the venue and the boat trip was so well organised. It was also a real pleasure working with you.', name:'Helene Andersson', role:'Delphi', img:'testimonials/optimized/helene-andersson.webp' },
+    { q:'I would like to congratulate you on a wonderful event, which was both highly insightful and a great opportunity to connect with fellow professionals.', name:'Ivana Halamova-Dobiskova', role:'A&O Shearman', img:'testimonials/optimized/ivana-halamova-dobiskova.webp' },
+    { q:'Thank you for a fantastic conference and all your efforts in organising it — it really showed. I thoroughly enjoyed the event and found the discussions very valuable.', name:'Lukas Cavada', role:'Austrian Federal Competition Authority', img:'testimonials/optimized/lukas-cavada.webp' }
   ];
 
   var esc = function (s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
@@ -573,8 +621,8 @@
     var counter = root.querySelector('[data-gallery-counter]');
     var thumbsWrap = root.querySelector('[data-gallery-thumbs]');
     var FALLBACK = [
-      { src:'images/ubtbkgzm0utstuodfmwgjuidsi.jpg' }, { src:'images/admdrlvqhoaxd2fkeubrjnmo2y.jpg' },
-      { src:'images/zab4stflzjhbegtje9nqtqgt6cs.jpg' }, { src:'images/lmagbqmhle5bt8oeiqt2jnqvz8.jpg' }
+      { src:'images/ubtbkgzm0utstuodfmwgjuidsi.webp' }, { src:'images/admdrlvqhoaxd2fkeubrjnmo2y.webp' },
+      { src:'images/zab4stflzjhbegtje9nqtqgt6cs.webp' }, { src:'images/lmagbqmhle5bt8oeiqt2jnqvz8.webp' }
     ];
     function build(photos) {
       if (!photos || !photos.length) photos = FALLBACK;
@@ -608,6 +656,75 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
+})();
+</script>
+<script>
+// Mobile testimonials carousel — arrow nav (arrows injected by JS, hidden on desktop via CSS)
+(function () {
+  function chev(dir) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+      'stroke-linecap="round" stroke-linejoin="round"><polyline points="' +
+      (dir < 0 ? '15 18 9 12 15 6' : '9 18 15 12 9 6') + '"/></svg>';
+  }
+  var placements = [];
+  function placeNav(anchor, nav, host) {
+    if (getComputedStyle(nav).display === 'none') return;
+    var a = anchor.getBoundingClientRect();
+    var h = host.getBoundingClientRect();
+    nav.style.top = (a.bottom - h.top - nav.offsetHeight - 12) + 'px';
+  }
+  function visibleCards(track, sel) {
+    return [].filter.call(track.querySelectorAll(sel), function (c) {
+      return c.offsetParent !== null;
+    });
+  }
+  function buildNav(id, track, anchor, host, cardSelector) {
+    if (!track || !anchor || !host) return;
+    var index = 0;
+    var nav = document.createElement('div');
+    nav.className = 'boc-carousel-nav';
+    nav.id = id;
+    nav.innerHTML =
+      '<button type="button" class="boc-carousel-arrow" data-dir="-1" aria-label="Previous">' + chev(-1) + '</button>' +
+      '<button type="button" class="boc-carousel-arrow" data-dir="1" aria-label="Next">' + chev(1) + '</button>';
+    function stride() {
+      var cards = visibleCards(track, cardSelector);
+      return cards.length > 1
+        ? cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left
+        : (cards[0] ? cards[0].getBoundingClientRect().width : 0);
+    }
+    function apply() {
+      if (getComputedStyle(nav).display === 'none') { track.style.transform = ''; return; }
+      track.style.transform = 'translateX(' + (-index * stride()) + 'px)';
+    }
+    nav.addEventListener('click', function (e) {
+      var btn = e.target.closest('.boc-carousel-arrow');
+      if (!btn) return;
+      var dir = parseInt(btn.getAttribute('data-dir'), 10);
+      var last = Math.max(0, visibleCards(track, cardSelector).length - 1);
+      index = Math.max(0, Math.min(last, index + dir));
+      apply();
+    });
+    host.appendChild(nav);
+    placements.push(function () { index = 0; apply(); placeNav(anchor, nav, host); });
+    placeNav(anchor, nav, host);
+  }
+  function initCarousel() {
+    var testiMarquee = document.querySelector('section#testimonials .boc-testi-marquee');
+    buildNav('boc-testi-nav',
+      testiMarquee && testiMarquee.querySelector('.boc-testi-track'),
+      testiMarquee,
+      testiMarquee && testiMarquee.parentElement,
+      '.boc-testi-card');
+    var rafId;
+    window.addEventListener('resize', function () {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(function () { placements.forEach(function (fn) { fn(); }); });
+    });
+    window.addEventListener('load', function () { placements.forEach(function (fn) { fn(); }); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCarousel);
+  else initCarousel();
 })();
 </script>
 </body>

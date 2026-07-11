@@ -1,7 +1,7 @@
 /* Business of Connections — static-site enhancements (no Framer runtime).
-   Provides the mobile navigation menu that the Framer React runtime used to
-   render dynamically. Reads the real nav links from the page so it stays
-   correct per-page. Pure vanilla JS, no dependencies. */
+   Provides the mobile navigation menu and page-specific interactions.
+   Reads real nav links from the page so it stays correct per-page.
+   Pure vanilla JS, no dependencies. */
 (function () {
   'use strict';
 
@@ -10,11 +10,25 @@
     else document.addEventListener('DOMContentLoaded', fn);
   }
 
-  // Collect nav links, deduped by href. Works with the Framer desktop nav
-  // variant (main pages) or a plain [data-boc-nav] (rebuilt static pages).
+  // Keep non-production hosts (e.g. *.vercel.app previews, localhost) out of
+  // search indexes so the throwaway preview URL isn't crawled/duplicated before
+  // launch. Auto-disables on the live domain, so go-live needs no code change.
+  function guardPreviewIndexing() {
+    var host = location.hostname;
+    if (host === 'businessofconnections.com' || host === 'www.businessofconnections.com') return;
+    if (document.querySelector('meta[data-preview-guard]')) return;
+    var m = document.createElement('meta');
+    m.name = 'robots';
+    m.content = 'noindex, nofollow';
+    m.setAttribute('data-preview-guard', '');
+    (document.head || document.documentElement).appendChild(m);
+  }
+  guardPreviewIndexing();
+
+  // Collect nav links, deduped by href. Works with [data-boc-nav] (rebuilt pages)
+  // or a plain nav fallback.
   function collectLinks() {
-    var src = document.querySelector('nav[data-framer-name="Desktop"]') ||
-              document.querySelector('[data-boc-nav]') ||
+    var src = document.querySelector('[data-boc-nav]') ||
               document.querySelector('nav');
     var items = [], seen = {};
     if (src) {
@@ -26,7 +40,7 @@
         items.push({ href: href, text: text });
       });
     }
-    // Ensure a Home entry (on rebuilt pages the home link lives on the logo).
+    // Ensure a Home entry (the home link lives on the logo on rebuilt pages).
     if (!items.some(function (l) { return l.href === './' || l.href === '/' || l.href === 'index.html'; })) {
       items.unshift({ href: './', text: 'Home' });
     }
@@ -36,7 +50,7 @@
   var LINKEDIN = 'https://www.linkedin.com/company/business-of-competition/posts/?feedView=all';
 
   function buildMenu() {
-    var hamburgers = document.querySelectorAll('nav [data-framer-name="Open"], [data-boc-menu-toggle]');
+    var hamburgers = document.querySelectorAll('[data-boc-menu-toggle]');
     if (!hamburgers.length || document.querySelector('.boc-mm')) return;
 
     var links = collectLinks();
@@ -46,7 +60,7 @@
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-label', 'Menu');
 
-    var html = '<button class="boc-mm-close" type="button" aria-label="Close menu">×</button><nav class="boc-mm-nav">';
+    var html = '<button class="boc-mm-close" type="button" aria-label="Close menu">\xd7</button><nav class="boc-mm-nav">';
     links.forEach(function (l) {
       html += '<a href="' + l.href + '">' + l.text + '</a>';
     });
@@ -81,35 +95,14 @@
     });
   }
 
-  // Reveal Framer "appear" content that the old runtime used to fade in.
-  // Without the runtime these elements keep their initial opacity:0 and stay
-  // invisible. Reveal any inline-opacity:0 element that has real rendered area,
-  // except the old (unused) Framer mobile nav panel.
-  function revealAppear() {
-    document.querySelectorAll('[style*="opacity:0"], [style*="opacity: 0"]').forEach(function (el) {
-      if (el.getAttribute('data-framer-name') === 'Links + Search') return;
-      var op = el.style && el.style.opacity;
-      if (op === '' || parseFloat(op) >= 0.05) return;
-      var r = el.getBoundingClientRect();
-      if (r.width > 0 && r.height > 0) {
-        el.style.opacity = '1';
-        el.style.filter = 'none';
-        el.style.webkitFilter = 'none';
-      }
-    });
-  }
-
-  // Rebuild the hero "rolling photos" band as a CSS marquee. The original was a
-  // Framer Ticker (runtime-driven) that collapses to 0px without the runtime;
-  // its source images live in a now-hidden container (.framer-12ow6ey).
-  // Photos are served in name order from the hero-photos/ folder.
+  // Rebuild the hero "rolling photos" band as a CSS marquee.
   var HERO_PHOTOS = [
-    'hero-photos/hero-1.jpg',
-    'hero-photos/hero-2.jpg',
-    'hero-photos/hero-3.jpg',
-    'hero-photos/hero-4.jpg',
-    'hero-photos/hero-5.jpg',
-    'hero-photos/hero-6.jpg'
+    'hero-photos/hero-1.webp',
+    'hero-photos/hero-2.webp',
+    'hero-photos/hero-3.webp',
+    'hero-photos/hero-4.webp',
+    'hero-photos/hero-5.webp',
+    'hero-photos/hero-6.webp'
   ];
 
   function buildHeroMarquee() {
@@ -129,134 +122,93 @@
       track.appendChild(im);
     });
     marquee.appendChild(track);
-    // full-bleed band right below the hero (under the CTAs, before "How can I help")
+    // full-bleed band right below the hero (under the CTAs, before Services)
     if (hero.parentNode) hero.parentNode.insertBefore(marquee, hero.nextSibling);
   }
 
-  // "How can I help" section: full hover interaction (was a Framer variant swap).
-  // Each card has Open (225px, description+button visible) and Closed (91px, clipped)
-  // states baked into the SSR via framer-v-* classes. Switching those classes and
-  // bringing the matching image to front replicates the original behaviour.
+  // "Our services" section: hover interaction — cards expand/collapse and the
+  // matching image comes to front. Targets the rebuilt clean HTML selectors.
   function initHelpCards() {
     var sec = document.getElementById('services-1');
     if (!sec) return;
-    var OPEN_CLS  = 'framer-v-164cwfm';
-    var CLOSE_CLS = 'framer-v-akikko';
-    var cards = [].slice.call(sec.querySelectorAll(
-      '[data-framer-name="Open"], [data-framer-name="Closed"]'
-    ));
+    var cards = [].slice.call(sec.querySelectorAll('.home-help-card'));
     if (!cards.length) return;
-    var imgSlots = ['Image 1','Image 2','Image 3','Image 4'].map(function(n){
-      return sec.querySelector('[data-framer-name="' + n + '"]');
-    });
+    var imgs = [].slice.call(sec.querySelectorAll('.home-help-card-img'));
+    var SPRING = 'height 0.7s cubic-bezier(0.33, 1, 0.68, 1)';
+    var openH = 0, closedH = 0, activeIdx = 0;
 
-    // Rebuild each card's CTA as the shared style-guide primary button (.boc-btn).
-    // The Framer markup ships an <a data-framer-name="Small"> wrapping duplicated
-    // desktop/mobile Text spans with inline background/radius — replace that with a
-    // single clean label and our button class so all cards match the style guide.
-    // Card 0 → "Explore conferences"; cards 2 & 3 → "Contact us".
-    var ctaLabels = ['Explore conferences', 'Contact us', 'Contact us'];
-    var ctaHrefs  = [null, './contact-us', './contact-us'];
-    cards.forEach(function(card, idx) {
-      var a = card.querySelector('a[data-framer-name="Small"]');
-      if (!a) return;
-      a.className = 'boc-btn boc-btn--pine';
-      a.removeAttribute('style');
-      a.innerHTML = '<span>' + (ctaLabels[idx] || 'Learn more') + '</span>';
-      if (ctaHrefs[idx]) a.href = ctaHrefs[idx];
-    });
-
-    // Measure natural heights once from current SSR state (card[0]=Open, rest=Closed).
-    var openH  = Math.round(cards[0].getBoundingClientRect().height);  // ~225
-    var closedH = Math.round(cards[1].getBoundingClientRect().height); // ~91
-
-    // Lock in explicit heights + add the spring-equivalent CSS transition.
-    // (height: min-content can't CSS-interpolate, so we own the value from here.)
-    // Spring params from Framer bundle: { type:"spring", duration:0.8, bounce:0 }
-    // The spring reaches ~95% at ≈0.35s (duration:0.8 is full settle, not half-life).
-    // cubic-bezier(0.33,1,0.68,1) = strong ease-out matching critically-damped spring.
-    var SPRING = 'height 0.7s cubic-bezier(0.33, 1, 0.68, 1)'; // bg-color handled by CSS
-    cards.forEach(function(c, i) {
-      c.style.height     = (i === 0 ? openH : closedH) + 'px';
-      c.style.overflow   = 'clip';
-      c.style.transition = SPRING;
-      c.style.cursor     = 'pointer';
-    });
-
-    function activate(idx) {
-      cards.forEach(function(c, i) {
-        var isOpen = (i === idx);
-        c.style.height = (isOpen ? openH : closedH) + 'px';
-        // background-color is driven by CSS targeting [data-framer-name] (see
-        // boc-static.css) — no inline override needed here.
-        c.classList.remove(OPEN_CLS, CLOSE_CLS);
-        c.classList.add(isOpen ? OPEN_CLS : CLOSE_CLS);
-        c.setAttribute('data-framer-name', isOpen ? 'Open' : 'Closed');
-        // Hide the description+button on closed cards. The clip height is fixed,
-        // but single-line titles sit higher than two-line ones, so without this
-        // their content peeks below the title (e.g. "Support at any stage").
-        var content = c.querySelector('[data-framer-name="Content"]');
-        if (content) {
-          content.style.opacity = isOpen ? '1' : '0';
-          content.style.transition = 'opacity 0.3s ease';
-          content.style.pointerEvents = isOpen ? '' : 'none';
-        }
-      });
-      imgSlots.forEach(function(slot, i) {
-        if (!slot) return;
-        slot.style.zIndex     = i === idx ? '2' : '1';
-        slot.style.opacity    = i === idx ? '1' : '0';
-        slot.style.transition = 'opacity 0.3s ease';
+    // Measure each card's natural (unlocked) height and take the max across cards,
+    // so the shared open/closed height fits every card's content, not just the one
+    // that happened to be open at measurement time.
+    function measure() {
+      openH = 0; closedH = 0;
+      cards.forEach(function (c) {
+        var prev = c.style.height;
+        c.style.height = '';
+        var h = Math.round(c.getBoundingClientRect().height);
+        var isOpen = c.getAttribute('data-card-state') === 'open';
+        if (isOpen) { if (h > openH) openH = h; }
+        else { if (h > closedH) closedH = h; }
+        c.style.height = prev;
       });
     }
 
-    activate(0); // sync image stack and colours to default open card
-    cards.forEach(function(card, idx) {
-      card.addEventListener('mouseenter', function() { activate(idx); });
-    });
-  }
+    function apply() {
+      cards.forEach(function (c, i) {
+        var isOpen = i === activeIdx;
+        c.style.height     = (isOpen ? openH : closedH) + 'px';
+        c.style.overflow   = 'clip';
+        c.style.transition = SPRING;
+        c.style.cursor     = 'pointer';
+        c.setAttribute('data-card-state', isOpen ? 'open' : 'closed');
+        var body = c.querySelector('.home-help-card-body');
+        if (body) {
+          body.style.opacity       = isOpen ? '1' : '0';
+          body.style.transition    = 'opacity 0.3s ease';
+          body.style.pointerEvents = isOpen ? '' : 'none';
+        }
+      });
+    }
 
-  // Hero CTAs: the original Framer buttons ship a layered filled/outlined mask
-  // structure whose hover (colour wipe + scale) doesn't survive the static export.
-  // Rebuild them as the shared style-guide button (.boc-btn) so they get the same
-  // hover treatment as every other CTA on the site. Same 48px size, so layout is
-  // unchanged. "Explore conferences" → pine (wipes to black); "Contact us" → black
-  // (wipes to pine), matching their current base colours.
-  function initHeroButtons() {
-    var hero = document.getElementById('hero');
-    if (!hero) return;
-    // The Framer markup duplicates the label across filled + outlined layers, so
-    // textContent would read it twice — map label + colour by href instead.
-    var variants = {
-      './#works':     { cls: 'boc-btn boc-btn--pine',  label: 'Explore conferences' },
-      './contact-us': { cls: 'boc-btn boc-btn--black', label: 'Contact us' }
-    };
-    hero.querySelectorAll('a.framer-E5NUw').forEach(function (a) {
-      var v = variants[a.getAttribute('href')];
-      if (!v) return;
-      a.className = v.cls;
-      a.removeAttribute('style');
-      a.innerHTML = '<span>' + v.label + '</span>';
-    });
-  }
+    function activate(idx) {
+      activeIdx = idx;
+      apply();
+      imgs.forEach(function (img, i) {
+        img.style.zIndex     = i === idx ? '2' : '1';
+        img.style.opacity    = i === idx ? '1' : '0';
+        img.style.transition = 'opacity 0.3s ease';
+      });
+    }
 
-  // Re-add the hover lift on conference project cards (was a Framer hover variant).
-  function addCardHovers() {
-    document.querySelectorAll('[data-framer-name^="Project Card"]').forEach(function (card) {
-      card.classList.add('boc-hover-lift');
+    measure();
+    if (!openH) return;
+    activate(0); // sync image stack to default open card
+
+    cards.forEach(function (card, idx) {
+      card.addEventListener('mouseenter', function () { activate(idx); });
     });
+
+    // Web fonts can swap in after this first measurement (font-display: swap),
+    // changing line-wrapping and therefore the natural card height. Re-measure
+    // once fonts are ready and reapply without disturbing which card is open.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        measure();
+        apply();
+      });
+    }
   }
 
   // Real BoC 2026 testimonials. Mirrors the set rendered on bocomp26.html so the
   // home page and the event page stay in sync (same people, text and style).
   // Cards without a photo render an initials avatar (see .boc-testi-initials).
   var TESTIMONIALS = [
-    { quote: 'It was really a great event with excellent panels! I hope we will have the chance to work again together next year.', name: 'Alexandre Lercher', title: 'IVO Capital', avatar: 'testimonials/optimized/alexandre-lercher.jpg' },
-    { quote: 'Thank you for the hospitality and perfect organisation of this memorable event. I so much appreciate meeting old friends and making new ones. I hope this Conference is the first one in a row of the next to come. I am already looking forward to enrolling.', name: 'Jaroslaw Sroczyński', title: 'Markiewicz Sroczyński Mioduszewski GP', avatar: 'testimonials/optimized/jaroslaw-sroczynski.jpg' },
-    { quote: 'It was such a nice conference and you have organised everything with so much passion! Congrats', name: 'Lars Maritzen', title: 'Schalast', avatar: 'testimonials/optimized/lars-maritzen.jpg' },
-    { quote: 'I was really impressed by everything you put together. Everything, from the topics to the speakers, the venue and the boat trip was so well organised. It was also a real pleasure working with you.', name: 'Helene Andersson', title: 'Delphi', avatar: 'testimonials/optimized/helene-andersson.jpg' },
-    { quote: 'I would like to congratulate you on a wonderful event, which was both highly insightful and a great opportunity to connect with fellow professionals.', name: 'Ivana Halamova-Dobiskova', title: 'A&O Shearman', avatar: 'testimonials/optimized/ivana-halamova-dobiskova.jpg' },
-    { quote: 'Thank you for a fantastic conference and all your efforts in organising it — it really showed. I thoroughly enjoyed the event and found the discussions very valuable.', name: 'Lukas Cavada', title: 'Austrian Federal Competition Authority', avatar: 'testimonials/optimized/lukas-cavada.jpg' }
+    { quote: 'It was really a great event with excellent panels! I hope we will have the chance to work again together next year.', name: 'Alexandre Lercher', title: 'IVO Capital', avatar: 'testimonials/optimized/alexandre-lercher.webp' },
+    { quote: 'Thank you for the hospitality and perfect organisation of this memorable event. I so much appreciate meeting old friends and making new ones. I hope this Conference is the first one in a row of the next to come. I am already looking forward to enrolling.', name: 'Jaroslaw Sroczyński', title: 'Markiewicz Sroczyński Mioduszewski GP', avatar: 'testimonials/optimized/jaroslaw-sroczynski.webp' },
+    { quote: 'It was such a nice conference and you have organised everything with so much passion! Congrats', name: 'Lars Maritzen', title: 'Schalast', avatar: 'testimonials/optimized/lars-maritzen.webp' },
+    { quote: 'I was really impressed by everything you put together. Everything, from the topics to the speakers, the venue and the boat trip was so well organised. It was also a real pleasure working with you.', name: 'Helene Andersson', title: 'Delphi', avatar: 'testimonials/optimized/helene-andersson.webp' },
+    { quote: 'I would like to congratulate you on a wonderful event, which was both highly insightful and a great opportunity to connect with fellow professionals.', name: 'Ivana Halamova-Dobiskova', title: 'A&O Shearman', avatar: 'testimonials/optimized/ivana-halamova-dobiskova.webp' },
+    { quote: 'Thank you for a fantastic conference and all your efforts in organising it — it really showed. I thoroughly enjoyed the event and found the discussions very valuable.', name: 'Lukas Cavada', title: 'Austrian Federal Competition Authority', avatar: 'testimonials/optimized/lukas-cavada.webp' }
   ];
 
   function testiInitials(name) {
@@ -266,23 +218,14 @@
     return (parts[0].charAt(0) + last).toUpperCase();
   }
 
-  // Make the testimonial cards scroll (the original was a Framer Ticker that
-  // collapses without the runtime). Hides the Framer placeholder ticker and
-  // rebuilds the section as the shared CSS marquee from TESTIMONIALS above.
+  // Build the testimonial marquee. Finds the section by its h2 text so it works
+  // on any page that uses the "partners have to say" heading.
   function buildTestimonialMarquee() {
-    var heads = [].slice.call(document.querySelectorAll('#main h2, h2'));
+    var heads = [].slice.call(document.querySelectorAll('h2'));
     var h = heads.filter(function (x) { return /partners have to say/i.test(x.textContent); })[0];
     if (!h) return;
     var sec = h.closest('section');
     if (!sec || sec.querySelector('.boc-testi-marquee')) return;
-
-    // Hide the original Framer ticker (and any "Connect to Content" placeholder).
-    var ul = sec.querySelector('ul');
-    var ticker = ul ? (ul.closest('[data-framer-name="Ticker Stack"]') || ul.parentElement) : null;
-    if (ticker) ticker.style.display = 'none';
-    [].slice.call(sec.querySelectorAll('section')).forEach(function (s) {
-      if (/Connect to Content/i.test(s.textContent)) s.style.display = 'none';
-    });
 
     function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
     var marquee = document.createElement('div');
@@ -308,11 +251,7 @@
   }
 
   // Inject the shared "Contact us" column into the footer on every page. It sits
-  // in the empty space between the brand block and the link columns. Stacked
-  // vertically: "Contact us" headline, then Maria's portrait + name + email,
-  // then the round mail / LinkedIn buttons. On the home page the Framer footer
-  // ships three responsive twins (Desktop/Tablet/Phone), so inject into each
-  // content row; the rebuilt static pages have a single .boc-footer.
+  // between the brand block and the link columns.
   function buildContactBand() {
     var MAIL = 'mailto:maria@businessofcompetition.com';
     var mailIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
@@ -325,7 +264,7 @@
       col.innerHTML =
         '<span class="boc-contact-label">Contact us</span>' +
         '<div class="boc-contact-person">' +
-          '<img class="boc-contact-photo" src="images/maria-babenkova.jpg" alt="Maria Babenkova" loading="lazy">' +
+          '<img class="boc-contact-photo" src="images/maria-babenkova.webp" alt="Maria Babenkova" loading="lazy">' +
           '<div>' +
             '<div class="boc-contact-name">Maria Babenkova</div>' +
             '<a class="boc-contact-email" href="' + MAIL + '">maria@businessofcompetition.com</a>' +
@@ -338,18 +277,6 @@
       return col;
     }
 
-    // Home page: Framer footer content rows (one per responsive twin).
-    var contents = document.querySelectorAll('footer .framer-xi07ez');
-    if (contents.length) {
-      contents.forEach(function (content) {
-        if (content.querySelector('.boc-contact-col')) return;
-        var nav = content.querySelector('.framer-13o9k3r'); // link-columns group
-        content.insertBefore(makeCol(), nav || null);
-      });
-      return;
-    }
-
-    // Rebuilt static pages: insert between the brand block and the page nav.
     var footer = document.querySelector('.boc-footer');
     if (footer && !footer.querySelector('.boc-contact-col')) {
       var brand = footer.querySelector('.boc-foot-brand');
@@ -357,12 +284,80 @@
     }
   }
 
+  function initMobileCarousels() {
+    if (window.innerWidth > 809) return;
+
+    var leftSVG  = '<svg viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9L11 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var rightSVG = '<svg viewBox="0 0 18 18" fill="none"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    function makeNav(onPrev, onNext) {
+      var nav = document.createElement('div');
+      nav.className = 'boc-carousel-nav';
+      ['prev', 'next'].forEach(function (dir) {
+        var btn = document.createElement('button');
+        btn.className = 'boc-carousel-arrow';
+        btn.setAttribute('aria-label', dir === 'prev' ? 'Previous' : 'Next');
+        btn.innerHTML = dir === 'prev' ? leftSVG : rightSVG;
+        btn.addEventListener('click', dir === 'prev' ? onPrev : onNext);
+        nav.appendChild(btn);
+      });
+      return nav;
+    }
+
+    // Examples: 1 card per page
+    // Nav sits inside the card's linen background, bottom-right corner.
+    // Section has padding 3.5rem (56px) bottom and 1.5rem (24px) right; card inner padding 12px.
+    var exSec = document.getElementById('examples');
+    var exGrid = exSec && exSec.querySelector('.home-examples-grid');
+    if (exGrid) {
+      var exCards = [].slice.call(exGrid.querySelectorAll('.home-examples-card'));
+      var exPages = exCards.length;
+      var exIdx = 0;
+      function exSetPage(idx) {
+        exIdx = (idx + exPages) % exPages;
+        var cW  = exCards[0].getBoundingClientRect().width;
+        var gap = parseFloat(getComputedStyle(exGrid).columnGap) || 16;
+        exGrid.style.transform = 'translateX(-' + (exIdx * (cW + gap)) + 'px)';
+      }
+      exSec.style.position = 'relative';
+      var exNav = makeNav(function () { exSetPage(exIdx - 1); }, function () { exSetPage(exIdx + 1); });
+      exNav.style.right  = '36px';   // 24px section padding + 12px card padding
+      exNav.style.bottom = '68px';   // 56px section padding + 12px card padding
+      exSec.appendChild(exNav);
+    }
+
+    // Testimonials: 1 card per page (track already built by buildTestimonialMarquee)
+    // Nav sits inside the marquee at bottom-right — marquee width == card width on mobile.
+    var testiMarquee = document.querySelector('.boc-testi-marquee');
+    var testiTrack = testiMarquee && testiMarquee.querySelector('.boc-testi-track');
+    if (testiTrack) {
+      testiTrack.style.transform = 'translateX(0)'; // reset animation offset before measuring
+      var testiSlideW = testiMarquee.offsetWidth;
+      var testiGap = 16;
+      var TESTI_COUNT = 6;
+      var testiIdx = 0;
+      // Size each visible card to exactly fill the marquee (border-box so padding is included)
+      [].slice.call(testiTrack.querySelectorAll('.boc-testi-card')).slice(0, TESTI_COUNT).forEach(function (c) {
+        c.style.boxSizing = 'border-box';
+        c.style.width     = testiSlideW + 'px';
+        c.style.flex      = '0 0 ' + testiSlideW + 'px';
+      });
+      function testiSetPage(idx) {
+        testiIdx = (idx + TESTI_COUNT) % TESTI_COUNT;
+        testiTrack.style.transform = 'translateX(-' + (testiIdx * (testiSlideW + testiGap)) + 'px)';
+      }
+      testiMarquee.style.position = 'relative';
+      var testiNav = makeNav(function () { testiSetPage(testiIdx - 1); }, function () { testiSetPage(testiIdx + 1); });
+      testiNav.style.right  = '20px';
+      testiNav.style.bottom = '20px';
+      testiMarquee.appendChild(testiNav);
+    }
+  }
+
   ready(buildMenu);
   ready(buildContactBand);
-  ready(revealAppear);
   ready(buildHeroMarquee);
-  ready(initHeroButtons);
   ready(initHelpCards);
-  ready(addCardHovers);
   ready(buildTestimonialMarquee);
+  ready(initMobileCarousels);
 })();

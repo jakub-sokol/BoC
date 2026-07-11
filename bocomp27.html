@@ -5,11 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Business of Competition 2027 — Competition Law Conference, Prague</title>
 <meta name="description" content="Business of Competition 2027 — the 2nd edition of the Competition Law Conference. April 8–9, 2027, Prague. Two days of insights, networking and strategic discussion for Europe's leading competition-law community.">
+<link rel="canonical" href="https://businessofconnections.com/bocomp27">
+<meta property="og:title" content="Business of Competition 2027 — Competition Law Conference, Prague">
+<meta property="og:description" content="Business of Competition 2027 — the 2nd edition of the Competition Law Conference. April 8–9, 2027, Prague. Two days of insights, networking and strategic discussion for Europe's leading competition-law community.">
+<meta property="og:image" content="https://businessofconnections.com/images/ubtbkgzm0utstuodfmwgjuidsi.webp">
+<meta property="og:url" content="https://businessofconnections.com/bocomp27">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Business of Connections">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Business of Competition 2027 — Competition Law Conference, Prague">
+<meta name="twitter:description" content="Business of Competition 2027 — the 2nd edition of the Competition Law Conference. April 8–9, 2027, Prague.">
+<meta name="twitter:image" content="https://businessofconnections.com/images/ubtbkgzm0utstuodfmwgjuidsi.webp">
 <link rel="icon" href="images/atv4soethwqm06m3jp5rjcih0e-1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="boc-static.css?v=20260608k">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="boc-static.css?v=20260708">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Business of Competition 2027",
+  "description": "The 2nd edition of the Competition Law Conference — two days of insights, networking and strategic discussion for Europe's leading competition-law community.",
+  "startDate": "2027-04-08",
+  "endDate": "2027-04-09",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Prague, Czech Republic",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Prague",
+      "addressCountry": "CZ"
+    }
+  },
+  "image": "https://businessofconnections.com/images/ubtbkgzm0utstuodfmwgjuidsi.webp",
+  "url": "https://businessofconnections.com/bocomp27",
+  "organizer": {
+    "@type": "Organization",
+    "name": "Business of Connections",
+    "url": "https://businessofconnections.com/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://businessofconnections.com/bocomp27-register",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
 <style id="b27">
   /* ============================================================
      bocomp27 — Business of Competition 2027 landing page.
@@ -41,13 +86,12 @@
      White bar, black logo + black DM-Sans 15/500 links. */
   .boc-header { max-width: 1200px; padding: 0 20px; min-height: 65px; gap: 1rem; }
   .boc-header a.boc-logo { font-family: var(--serif); font-size: 26px; font-weight: 600; font-variation-settings: "wght" 600; letter-spacing: -0.06em; color: var(--black); gap: 8px; }
-  .boc-logo em { font-style: italic; font-weight: 600; }
+  .boc-logo em { font-style: normal; font-weight: 400; font-variation-settings: "wght" 400; }
   .boc-logo svg { height: 22px; fill: var(--black); }
   .boc-nav { gap: 25px; align-items: center; }
   .boc-nav a { font-family: var(--sans); font-size: 15px; font-weight: 500; color: var(--black); }
   .boc-nav a:hover { opacity: 0.65; }
   .boc-nav .boc-nav-social { display: inline-flex; align-items: center; color: var(--black); }
-  .boc-nav .boc-nav-search { cursor: default; }
   .boc-burger { color: var(--black); }
 
   /* ---- Page scaffolding ---- */
@@ -110,6 +154,8 @@
   @media (prefers-reduced-motion: reduce) {
     .b27-btn, .b27-btn::before { transition: none; }
   }
+  .b27-reg-page-link { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--black-70); text-decoration: none; margin-top: 10px; }
+  .b27-reg-page-link:hover { color: var(--black); text-decoration: underline; }
 
   /* ---- Hero ---- */
   .b27-hero { padding-top: 3.5rem; padding-bottom: 3.5rem; }
@@ -316,10 +362,10 @@
   <a class="boc-logo" href="./" aria-label="Business of Connections — home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="45.51 84.67 245.89 109.33" fill="#000" aria-hidden="true"><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(60 180) scale(0.82) translate(-152 -152)"></path><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(140 180) scale(0.82) translate(-152 -152)"></path><path d="M152 152 C151 128 151 92 154 66 C158 55 169 52 185 53 C202 54 216 66 222 85 C217 80 205 78 193 77 C184 83 175 96 168 112 C161 128 156 142 152 152 Z" transform="translate(220 180) scale(0.82) translate(-152 -152)"></path></svg><span>Business <em>of</em> Connections</span></a>
   <nav class="boc-nav" data-boc-nav>
     <a href="./#services-1">About</a>
-    <a href="./bocomp26">Business of Competition</a>
+    <a href="./#works">Our Events</a>
     <a href="./contact-us">Contact</a>
     <a class="boc-nav-social" href="https://www.linkedin.com/company/business-of-competition/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-    <span class="boc-nav-social boc-nav-search" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="18" height="18" fill="currentColor"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"/></svg></span>
+    <a class="boc-nav-cta boc-btn boc-btn--pine" href="./bocomp27-register">Register</a>
   </nav>
   <button class="boc-burger" type="button" data-boc-menu-toggle aria-label="Open menu">&#8801;</button>
 </header>
@@ -328,12 +374,12 @@
 
   <!-- Hero -->
   <section class="b27-section b27-hero" id="hero">
-    <p class="b27-eyebrow">April 8–9, 2027 &nbsp;•&nbsp; Prague, Czech Republic</p>
+    <p class="b27-eyebrow"><time datetime="2027-04-08">April 8–9, 2027</time> &nbsp;•&nbsp; Prague, Czech Republic</p>
     <h1 class="b27-hero-h"><span class="lead">Business</span> of Competition 2027</h1>
     <p class="b27-hero-sub">2nd edition of<br>Competition Law Conference</p>
     <p class="b27-sub b27-hero-body">Two days of insights, networking, and strategic discussions bringing together Europe&rsquo;s leading competition law experts, regulators, and practitioners in Prague.</p>
     <div class="b27-hero-cta">
-      <a class="b27-btn b27-btn--pine" href="#boc27-rates" data-reg-open>Register</a>
+      <a class="b27-btn b27-btn--pine" href="./bocomp27-register">Register</a>
       <a class="b27-btn b27-btn--black" href="./bocomp26">View 2026 edition</a>
     </div>
   </section>
@@ -343,7 +389,7 @@
     <h2 class="b27-h2">Our focus for 2027</h2>
     <div class="b27-focus-body">
       <p>The first edition gave us a strong foundation. For 2027, we want to build on it by putting even <em><strong>more care into the programme</strong></em>.</p>
-      <p>We will focus on the topics, speakers, and panels — choosing questions that matter, inviting people who can add real value, and meticulously preparing each session so it leads to a useful discussion.</p>
+      <p>We will spend more time on the programme: choosing questions that matter, inviting speakers who can add real value, and preparing each session so it leads to a useful discussion.</p>
       <p>We also want to hear from you. What topics should be part of the 2027 programme? Which speakers would you like to see in Prague?</p>
     </div>
     <a class="b27-btn b27-btn--pine" href="#" data-suggest-open>Suggest a topic or speaker</a>
@@ -369,7 +415,7 @@
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Networking coffee breaks &amp; lunches</span></li>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>River cruise &amp; dinner after day one</span></li>
         </ul>
-        <a class="b27-btn b27-btn--pine" href="#boc27-rates" data-reg-open data-ticket="General">Register</a>
+        <a class="b27-btn b27-btn--pine" href="./bocomp27-register?ticket=General">Register</a>
       </div>
       <div class="b27-price-card">
         <div class="tier tier--silver">Reduced</div>
@@ -380,7 +426,7 @@
         <ul>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to academics, NGOs, professional associations &amp; public-sector participants</span></li>
         </ul>
-        <a class="b27-btn b27-btn--pine" href="#boc27-rates" data-reg-open data-ticket="Academic &amp; public sector">Register</a>
+        <a class="b27-btn b27-btn--pine" href="./bocomp27-register?ticket=Academic%20%26%20public%20sector">Register</a>
       </div>
       <div class="b27-price-card">
         <div class="tier tier--bronze">Reduced</div>
@@ -391,7 +437,7 @@
         <ul>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to students &amp; PhD candidates — limited availability</span></li>
         </ul>
-        <a class="b27-btn b27-btn--pine" href="#boc27-rates" data-reg-open data-ticket="Students &amp; PhD candidates">Register</a>
+        <a class="b27-btn b27-btn--pine" href="./bocomp27-register?ticket=Students%20%26%20PhD%20candidates">Register</a>
       </div>
       <div class="b27-price-card">
         <div class="tier tier--silver">Complimentary</div>
@@ -402,10 +448,10 @@
         <ul>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.2" fill="#05290d"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Available to competition authorities &amp; other regulatory bodies — limited availability</span></li>
         </ul>
-        <a class="b27-btn b27-btn--pine" href="#boc27-rates" data-reg-open data-ticket="Authorities &amp; regulators">Register</a>
+        <a class="b27-btn b27-btn--pine" href="./bocomp27-register?ticket=Authorities%20%26%20regulators">Register</a>
       </div>
     </div>
-    <p class="b27-sub" style="margin-top:24px; font-size:13px;">Prices exclude VAT (21%). To register, complete the form on the conference website or contact Maria at <a href="mailto:maria@businessofcompetition.eu">maria@businessofcompetition.eu</a>. An invoice will be issued upon registration.</p>
+    <p class="b27-sub" style="margin-top:24px; font-size:13px;">Prices exclude VAT (21%). Register using the form above, or <a href="./bocomp27-register">on a separate page</a>. You can also contact Maria at <a href="mailto:maria@businessofcompetition.eu">maria@businessofcompetition.eu</a>. An invoice will be issued upon registration.</p>
   </section>
 
   <!-- Coming soon (combined) -->
@@ -425,12 +471,13 @@
   <section class="b27-section" id="boc27-venue">
     <p class="b27-eyebrow">Conference location</p>
     <h2 class="b27-h2">Občanská Plovárna</h2>
-    <p class="b27-sub">Set on the banks of the Vltava River with stunning views of Prague Castle, Občanská Plovárna is one of Prague&rsquo;s most iconic riverside venues. The restored historic building blends elegant 19th-century architecture with modern amenities — a fitting setting for two days of competition-law discussion. It is roughly 30 minutes by car or 40 minutes by public transport from the airport.</p>
+    <p class="b27-eyebrow">To be confirmed</p>
+    <p class="b27-sub">Občanská Plovárna is a riverside venue in central Prague, overlooking the Vltava and Prague Castle. It offers a strong setting for two days of focused competition-law discussion, with space for sessions, networking, lunch, and the evening programme. The venue was one of the most appreciated parts of the 2026 edition, and we are happy to return there in 2027.</p>
     <p class="b27-venue-meta">U Plovárny 1, 118 00 Praha 1</p>
     <div class="b27-venue-grid">
       <figure><img class="b27-venue-img" src="venue/11.webp" alt="Občanská Plovárna riverside venue in Prague" loading="lazy"></figure>
       <figure><img class="b27-venue-img" src="venue/22.webp" alt="Interior of Občanská Plovárna conference venue" loading="lazy"></figure>
-      <figure><img class="b27-venue-img" src="venue/unnamed.jpg" alt="View of Prague Castle from Občanská Plovárna" loading="lazy"></figure>
+      <figure><img class="b27-venue-img" src="venue/unnamed.webp" alt="View of Prague Castle from Občanská Plovárna" loading="lazy"></figure>
     </div>
   </section>
 
@@ -438,7 +485,7 @@
   <section class="b27-section" id="boc27-pricing">
     <p class="b27-eyebrow">Partnership</p>
     <h2 class="b27-h2">Become a partner</h2>
-    <p class="b27-sub">Align your brand with Europe&rsquo;s leading competition-law gathering. Choose the package that fits your goals.</p>
+    <p class="b27-sub">Become a partner and reach a focused audience of lawyers, economists, regulators, funders, and competition-law professionals. Packages are available depending on the visibility and involvement you want.</p>
     <div class="b27-pricing-grid">
       <div class="b27-price-card">
         <div class="tier tier--bronze">Bronze</div>
@@ -491,7 +538,7 @@
   <nav aria-label="Pages">
     <a href="./">Home</a>
     <a href="./#services-1">About</a>
-    <a href="./bocomp26">Business of Competition</a>
+    <a href="./bocomp26">Our Events</a>
     <a href="./contact-us">Contact</a>
     <a href="./privacy-policy">Privacy</a>
     <a href="./terms-and-conditions">Terms</a>
@@ -985,6 +1032,6 @@
 })();
 </script>
 
-<script src="js/boc-static.js?v=20260608k" defer></script>
+<script src="js/boc-static.js?v=20260708" defer></script>
 </body>
 </html>

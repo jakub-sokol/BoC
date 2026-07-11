@@ -77,6 +77,10 @@
   margin: 0 auto;
   padding: 0 20px;
   min-height: 65px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
 }
 .boc-logo {
   display: flex;
@@ -91,13 +95,13 @@
   color: #000;
   white-space: nowrap;
 }
-.boc-logo em { font-style: italic; font-weight: 600; }
+.boc-logo em { font-style: normal; font-weight: 400; font-variation-settings: "wght" 400; }
 .boc-logo svg { height: 22px; width: auto; flex-shrink: 0; fill: #000; }
 .boc-nav { display: flex; gap: 25px; align-items: center; }
 .boc-nav a { text-decoration: none; font-size: 15px; font-weight: 500; color: #000; }
 .boc-nav a:hover { opacity: 0.65; }
 .boc-nav .boc-nav-social { display: inline-flex; align-items: center; color: #000; }
-.boc-nav .boc-nav-search { cursor: default; }
+.boc-nav-cta.boc-btn { height: 40px; padding: 0 20px; font-size: 14px; }
 .boc-burger {
   display: none;
   background: none;
@@ -208,6 +212,8 @@
 @media (prefers-reduced-motion: reduce) {
   .boc-btn, .boc-btn::before { transition: none; }
 }
+/* Anchor specificity fix: .boc-page a (0,1,1) overrides .boc-btn (0,1,0). */
+.boc-page a.boc-btn { color: #fff; }
 
 /* Help-card titles → style guide h4 preset (Erode 24px / 550). Overrides the
    original Framer heading preset so the "How can I help" cards match the system. */
@@ -283,7 +289,6 @@
   margin-right: 56px;
 }
 /* White text on the pine home/conference footers. */
-.framer-5QXa6 .boc-contact-col,
 .boc-footwrap .boc-contact-col { color: #fff; }
 .boc-contact-label {
   font-family: "DM Sans", sans-serif;
@@ -329,44 +334,15 @@
 }
 .boc-contact-btn:hover { transform: scale(1.08); }
 /* On the pine footers, invert the buttons to a white circle with a pine icon. */
-.framer-5QXa6 .boc-contact-btn,
 .boc-footwrap .boc-contact-btn { background: #fff; color: #05290d; }
 
 @media (max-width: 809px) {
   .boc-contact-col { margin-right: 0; }
 }
 
-/* Keep each footer "Pages" link on a single line (Framer ships the column at
-   width:min-content, which wraps the longer event names). */
-.framer-141ncpi { width: auto !important; }
-.framer-141ncpi p { white-space: nowrap; }
-
-/* Narrow the footer brand description (Framer hardcodes it to 496px, which
-   overflows into the injected Contact us column). */
-.framer-5QXa6 .framer-1cwkjng { width: 340px !important; max-width: 100% !important; }
-
-/* Top-align the footer columns so the "Contact us", "Pages" and "Info"
-   headings sit on the same line (the row ships centered by default). */
-.framer-5QXa6 .framer-xi07ez { align-items: flex-start !important; }
-
 /* ============================================================
-   Reimplemented Framer-runtime effects (hover + photo marquees)
+   Reimplemented hover + photo marquees
    ============================================================ */
-
-/* "How can I help" cards */
-
-/* Background colour driven by [data-framer-name] attribute (toggled by JS).
-   This beats the Framer inline style that setProperty couldn't override. */
-#services-1 [data-framer-name="Open"]   { background-color: #F3F2F0 !important; transition: background-color 0.5s ease; }
-#services-1 [data-framer-name="Closed"] { background-color: rgb(255,255,255) !important; transition: background-color 0.5s ease; }
-
-/* Button text: force white — browser default link-blue bleeds through without
-   the Framer runtime, which used to set color via JS. */
-#services-1 a[data-framer-name="Small"],
-#services-1 a[data-framer-name="Small"] * { color: #fff !important; }
-/* Button min-width: "Contact us" is shorter than "Explore conferences" so the
-   pill shrinks. Lock to the original width. */
-#services-1 a[data-framer-name="Small"] { min-width: 182px; justify-content: center; }
 
 /* Generic card lift for conference/works cards */
 .boc-hover-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
@@ -479,4 +455,50 @@
   font-family: "DM Sans", "DM Sans Placeholder", sans-serif;
   font-size: 16px; font-weight: 500; letter-spacing: -0.64px; line-height: 24px;
   color: rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================
+   Mobile carousels: full-width cards + bottom-right arrow nav
+   (events "Examples of our events" + testimonials marquee)
+   Desktop is untouched — nav is hidden and the layouts keep their
+   original grid / auto-scroll behaviour above 810px.
+   ============================================================ */
+
+/* Pine circular arrow buttons (injected by JS) — mobile only. */
+.boc-carousel-nav { display: none; }
+.boc-carousel-arrow {
+  width: 40px; height: 40px; padding: 0;
+  border: none; border-radius: 99px; cursor: pointer;
+  background: #05290d; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 16px rgba(3, 50, 34, 0.28);
+  transition: transform 0.2s ease;
+}
+.boc-carousel-arrow:hover  { transform: scale(1.08); }
+.boc-carousel-arrow:active { transform: scale(0.96); }
+.boc-carousel-arrow svg { width: 18px; height: 18px; display: block; }
+
+@media (max-width: 809px) {
+  .boc-carousel-nav {
+    display: flex; gap: 8px;
+    position: absolute; z-index: 6;
+  }
+
+  /* --- Testimonials: page one card at a time on mobile (kill the auto-marquee) --- */
+  .boc-testi-marquee {
+    overflow: hidden;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .boc-testi-track {
+    animation: none !important;
+    gap: 16px;
+    transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: transform;
+  }
+  .boc-testi-card {
+    padding-bottom: 4rem;
+  }
+  /* Hide the duplicate set used for the desktop infinite loop. */
+  .boc-testi-track .boc-testi-card:nth-child(n+7) { display: none; }
+
 }
