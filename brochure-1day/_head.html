@@ -675,6 +675,51 @@
     background: linear-gradient(180deg, rgba(5,41,13,1) 0%, rgba(5,41,13,0) 100%);
     z-index: 1;
   }
+
+  /* ===== SPEAKERS ===== */
+  .speaker-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10mm;
+    margin-top: 10mm;
+  }
+  .speaker-card {
+    width: 52mm;
+    text-align: center;
+  }
+  .speaker-photo {
+    width: 42mm;
+    height: 42mm;
+    margin: 0 auto 5mm;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid var(--hairline);
+  }
+  .speaker-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .speaker-name {
+    font-family: 'Erode', Georgia, serif;
+    font-size: 14pt;
+    font-weight: 550;
+    color: var(--black);
+    line-height: 1.2;
+    margin-bottom: 1.5mm;
+  }
+  .speaker-role {
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--black);
+  }
+  .speaker-firm {
+    font-size: 9.5pt;
+    color: var(--black70);
+  }
+
 /* ===== WEB LAYOUT OVERRIDES ===== */
 body { background: #D0CCC6; font-size: 13px !important; }
 .brochure-nav { position:fixed; top:0; left:0; right:0; z-index:100; background:var(--pine); display:flex; align-items:center; justify-content:space-between; padding:0 28px; height:48px; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; }
@@ -772,6 +817,6 @@ h1 { font-size:64px !important; } h2 { font-size:34px !important; } h3 { font-si
 </style>
 </head>
 <body>
-<nav class="brochure-nav"><span class="nav-brand">BOCA27 &mdash; Business of Class Actions Europe 2027</span><div class="nav-links"><a href="#page-1">Cover</a> <a href="#page-2">About</a> <a href="#page-3">Programme</a> <a href="#page-5">Registration</a> <a href="#page-7">Partnership</a> <a href="#page-9">Contact</a></div><span class="nav-pages">6 pages</span></nav>
+<nav class="brochure-nav"><span class="nav-brand">BOCA27 &mdash; Business of Class Actions Europe 2027</span><div class="nav-links"><a href="#page-1">Cover</a> <a href="#page-2">About</a> <a href="#page-30">Speakers</a> <a href="#page-5">Programme</a> <a href="#page-11">Registration</a> <a href="#page-17">Partnership</a> <a href="#page-23">Contact</a></div><span class="nav-pages">7 pages</span></nav>
 <div class="brochure-wrapper">
 
