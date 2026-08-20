@@ -90,8 +90,8 @@
   #reg-invoice { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
   .reg-check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: var(--black-70); cursor: pointer; }
   .reg-check input { width: 18px; height: 18px; flex-shrink: 0; margin: 1px 0 0; padding: 0; accent-color: var(--pine); cursor: pointer; }
-  #reg-invoice-fields { display: none; flex-direction: column; gap: 14px; padding: 16px; background: rgba(0,0,0,0.04); border-radius: 12px; }
-  #reg-invoice-fields.is-open { display: flex; }
+  .reg-billing-title { font-size: 14px; font-weight: 600; color: var(--black); margin: 0; }
+  #reg-invoice-fields { display: flex; flex-direction: column; gap: 14px; padding: 16px; background: rgba(0,0,0,0.04); border-radius: 12px; }
 
   /* Terms */
   .reg-terms { font-size: 13px; line-height: 1.55; color: var(--black-70); margin: 2px 0 0; }
@@ -220,10 +220,7 @@
         </label>
 
         <fieldset id="reg-invoice">
-          <label class="reg-check">
-            <input type="checkbox" id="reg-invoice-toggle" name="needInvoice">
-            <span>I need an invoice with billing details</span>
-          </label>
+          <p class="reg-billing-title">Billing details:</p>
           <div id="reg-invoice-fields">
             <label class="reg-field">
               <span>Billing entity / name</span>
@@ -296,8 +293,6 @@
 <script src="js/boc-static.js?v=20260708" defer></script>
 <script>
 (function () {
-  var invToggle = document.getElementById('reg-invoice-toggle');
-  var invFields = document.getElementById('reg-invoice-fields');
   var form      = document.getElementById('reg-form');
   var success   = document.getElementById('reg-success');
 
@@ -308,10 +303,6 @@
     var opt = sel.querySelector('option[value="' + ticket.replace(/"/g, '\\"') + '"]');
     if (opt) sel.value = ticket;
   }
-
-  invToggle.addEventListener('change', function () {
-    invFields.classList.toggle('is-open', invToggle.checked);
-  });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, follow">
 <title>Register — Business of Class Actions 2027</title>
-<meta name="description" content="Register for Business of Class Actions 2027 — February 18–19, 2027, Porto. Two days of class action insights, networking, and strategic discussion.">
+<meta name="description" content="Register for Business of Class Actions 2027 — February 19, 2027, Porto. A day of class action insights, networking, and strategic discussion.">
 <link rel="icon" href="images/atv4soethwqm06m3jp5rjcih0e-1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,8 +90,8 @@
   #reg-invoice { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
   .reg-check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: var(--black-70); cursor: pointer; }
   .reg-check input { width: 18px; height: 18px; flex-shrink: 0; margin: 1px 0 0; padding: 0; accent-color: var(--pine); cursor: pointer; }
-  #reg-invoice-fields { display: none; flex-direction: column; gap: 14px; padding: 16px; background: rgba(0,0,0,0.04); border-radius: 12px; }
-  #reg-invoice-fields.is-open { display: flex; }
+  .reg-billing-title { font-size: 14px; font-weight: 600; color: var(--black); margin: 0; }
+  #reg-invoice-fields { display: flex; flex-direction: column; gap: 14px; padding: 16px; background: rgba(0,0,0,0.04); border-radius: 12px; }
 
   /* Terms */
   .reg-terms { font-size: 13px; line-height: 1.55; color: var(--black-70); margin: 2px 0 0; }
@@ -159,16 +159,15 @@
 
     <!-- Info card -->
     <aside class="reg-info">
-      <p class="reg-info-eyebrow">1st edition</p>
       <p class="reg-info-name">Business of Class Actions 2027</p>
-      <p class="reg-info-date">February 18–19, 2027 &nbsp;·&nbsp; Porto</p>
+      <p class="reg-info-date">February 19, 2027 &nbsp;·&nbsp; Porto</p>
       <div class="reg-info-divider"></div>
       <p class="reg-info-label">What's included</p>
       <ul class="reg-info-includes">
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Access to all sessions over two days</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Access to all sessions</li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Conference materials</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Networking coffee breaks &amp; lunches</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>River cruise &amp; dinner after day one</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Networking coffee breaks &amp; lunch</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="rgba(255,255,255,0.2)"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>River cruise &amp; dinner after the conference</li>
       </ul>
       <a class="reg-info-link" href="./boca27">
         Conference page
@@ -220,10 +219,7 @@
         </label>
 
         <fieldset id="reg-invoice">
-          <label class="reg-check">
-            <input type="checkbox" id="reg-invoice-toggle" name="needInvoice">
-            <span>I need an invoice with billing details</span>
-          </label>
+          <p class="reg-billing-title">Billing details:</p>
           <div id="reg-invoice-fields">
             <label class="reg-field">
               <span>Billing entity / name</span>
@@ -296,8 +292,6 @@
 <script src="js/boc-static.js?v=20260708" defer></script>
 <script>
 (function () {
-  var invToggle = document.getElementById('reg-invoice-toggle');
-  var invFields = document.getElementById('reg-invoice-fields');
   var form      = document.getElementById('reg-form');
   var success   = document.getElementById('reg-success');
 
@@ -308,10 +302,6 @@
     var opt = sel.querySelector('option[value="' + ticket.replace(/"/g, '\\"') + '"]');
     if (opt) sel.value = ticket;
   }
-
-  invToggle.addEventListener('change', function () {
-    invFields.classList.toggle('is-open', invToggle.checked);
-  });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
