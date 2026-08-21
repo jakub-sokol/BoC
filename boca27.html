@@ -354,6 +354,57 @@
 
   @media (max-width: 480px) { .b27-field-row { grid-template-columns: 1fr; } }
   @media (prefers-reduced-motion: reduce) { #b27-modal-card { animation: none; } }
+
+  /* ---- Programme ---- (ported from bocomp26 #schedule) */
+  .b27-prog { width:100%; max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:0; }
+  .b27-day { margin-top:2.5rem; }
+  .b27-day:first-child { margin-top:1.5rem; }
+  .b27-day-head { display:flex; align-items:baseline; gap:0.75rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(0,0,0,0.12); margin-bottom:0.5rem; }
+  .b27-day-label { font-family:var(--serif); font-weight:550; font-variation-settings:"wght" 550; font-size:24px; letter-spacing:-0.01em; color:var(--black); }
+  .b27-day-date { font-family:var(--sans); font-size:14px; font-weight:500; color:var(--black-70); }
+  .b27-ses { display:grid; grid-template-columns:96px 1fr; gap:1.25rem; padding:1.5rem 0; border-bottom:1px solid rgba(0,0,0,0.08); }
+  .b27-ses:last-child { border-bottom:0; }
+  .b27-ses-time { font-family:var(--sans); font-size:14px; font-weight:600; color:var(--pine); line-height:1.4; padding-top:2px; }
+  .b27-ses-title { font-family:var(--serif); font-weight:550; font-variation-settings:"wght" 550; font-size:20px; line-height:1.25; letter-spacing:-0.01em; color:var(--black); margin:0; }
+  .b27-ses-desc { font-family:var(--sans); font-size:16px; font-weight:500; line-height:1.6; color:var(--black-70); margin:0.5rem 0 0; }
+  .b27-ses--break .b27-ses-title { font-size:16px; font-family:var(--sans); font-weight:600; color:var(--black-70); letter-spacing:-0.02em; }
+  @media (max-width:560px){ .b27-ses{ grid-template-columns:1fr; gap:0.4rem; } }
+
+  /* ---- Speakers grid ---- (ported from bocomp26 #speakers)
+     3 columns while the line-up is small; return to repeat(4,…) when
+     there are enough speakers to fill a fourth column. */
+  .b27-spkgrid { display:grid; grid-template-columns:repeat(3,minmax(0,200px)); gap:28px 64px; max-width:820px; width:100%; margin:2.75rem auto 0; justify-content:center; }
+  .b27-spkgrid.collapsed .b27-spkcard:nth-child(n+9) { display:none; }
+  .b27-spkcard { display:flex; flex-direction:column; align-items:center; text-align:center; cursor:pointer; background:none; border:0; padding:0; font:inherit; }
+  /* Fixed circular frame; the photo is clipped inside it so each face can be
+     centred and zoomed to a roughly consistent size regardless of source crop. */
+  .b27-spkava { width:100%; max-width:160px; aspect-ratio:1; border-radius:50%; overflow:hidden; }
+  .b27-spkava img { width:100%; height:100%; object-fit:cover; object-position:var(--op,center top); filter:saturate(0.96); transform:scale(var(--sc,1)); transform-origin:var(--to,center top); transition:transform 0.25s ease; display:block; }
+  .b27-spkcard:hover .b27-spkava img, .b27-spkcard:focus-visible .b27-spkava img { transform:scale(calc(var(--sc,1) * 1.06)); }
+  .b27-spkcard:focus-visible { outline:none; }
+  .b27-spkcard .nm { font-family:var(--sans); font-size:16px; font-weight:600; color:var(--black); margin:12px 0 2px; line-height:1.25; }
+  .b27-spkcard .ro { font-family:var(--sans); font-size:13px; font-weight:500; color:var(--black-70); line-height:1.3; }
+  .b27-spkcard .co { font-family:var(--sans); font-size:13px; font-weight:600; color:var(--pine); line-height:1.3; }
+  .b27-viewall { margin-top:32px; }
+  @media (prefers-reduced-motion:reduce) { .b27-spkcard:hover .b27-spkava img, .b27-spkcard:focus-visible .b27-spkava img { transform:scale(var(--sc,1)); } }
+  @media (max-width:809px){ .b27-spkgrid{ grid-template-columns:repeat(2,minmax(0,200px)); gap:28px 32px; } }
+  @media (max-width:560px){ .b27-spkgrid{ grid-template-columns:repeat(2,minmax(0,160px)); } }
+
+  /* ---- Speaker bio modal ---- (ported from bocomp26 #b26-modal) */
+  #b27-spk-modal { display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); padding:20px; }
+  #b27-spk-modal.open { display:flex; }
+  #b27-spk-modal-card { background:var(--white); border-radius:16px; max-width:520px; width:100%; padding:36px 36px 32px; box-shadow:0 24px 64px rgba(0,0,0,0.18); position:relative; font-family:var(--sans); animation:bocSlideUp 0.25s cubic-bezier(.22,.68,0,1.2) both; max-height:88vh; overflow-y:auto; }
+  #b27-spk-modal-header { display:flex; gap:24px; align-items:flex-start; margin-bottom:20px; }
+  #b27-spk-modal-photo { width:96px; height:96px; border-radius:50%; object-fit:cover; object-position:center top; flex-shrink:0; }
+  #b27-spk-modal-meta { flex:1; padding-top:4px; }
+  #b27-spk-modal-name { font-family:var(--serif); font-weight:550; font-variation-settings:"wght" 550; font-size:24px; letter-spacing:-0.02em; color:var(--black); margin:0 0 4px; line-height:1.2; }
+  #b27-spk-modal-role { font-size:14px; font-weight:500; color:var(--black-70); margin:0 0 2px; }
+  #b27-spk-modal-company { font-size:15px; font-weight:600; letter-spacing:-0.02em; color:var(--pine); margin:0; }
+  #b27-spk-modal-divider { height:1px; background:rgba(0,0,0,0.1); margin:0 0 20px; }
+  #b27-spk-modal-bio { font-size:14px; line-height:1.7; color:var(--black-70); margin:0; }
+  #b27-spk-modal-close { position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:var(--linen); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--black); transition:background 0.15s; }
+  #b27-spk-modal-close:hover { background:rgba(0,0,0,0.1); }
+  @media (prefers-reduced-motion:reduce) { #b27-spk-modal-card { animation:none; } }
 </style>
 </head>
 <body class="boc-page b27-page">
@@ -452,16 +503,20 @@
     <p class="b27-sub" style="margin-top:24px; font-size:13px;">Prices exclude VAT (21%). Register using the form above, or <a href="./boca27-register">on a separate page</a>. You can also contact Maria at <a href="mailto:maria@businessofcompetition.eu">maria@businessofcompetition.eu</a>. An invoice will be issued upon registration.<br>The refund policy is available <a href="./boca27-refund-policy">here</a>.</p>
   </section>
 
-  <!-- Coming soon (combined) -->
-  <section class="b27-section" id="boc27-coming">
-    <div class="b27-tba">
-      <span class="b27-pill">To be announced</span>
-      <h2 class="b27-h4">Program, speakers &amp; partners — coming soon</h2>
-      <p class="b27-sub">We are finalising the full programme, an exceptional line-up of speakers, and our partner roster for the 2027 edition. Register now to be the first to know when they are announced.</p>
-      <div class="b27-btn-row">
-        <button type="button" class="b27-btn b27-btn--pine" data-posted-open>Keep me posted</button>
-      </div>
-    </div>
+  <!-- Programme -->
+  <section class="b27-section" id="boc27-programme">
+    <p class="b27-eyebrow">Programme</p>
+    <h2 class="b27-h2">Programme</h2>
+    <div class="b27-prog" data-program></div>
+  </section>
+
+  <!-- Confirmed Speakers -->
+  <section class="b27-section" id="boc27-speakers">
+    <p class="b27-eyebrow">Speakers</p>
+    <h2 class="b27-h2">Confirmed speakers</h2>
+    <p class="b27-sub">More speakers to be announced soon.</p>
+    <div class="b27-spkgrid collapsed" data-speakers></div>
+    <button class="b27-btn-outline b27-viewall" type="button" data-speakers-toggle>View all speakers</button>
   </section>
 
   <!-- Venue -->
@@ -798,6 +853,23 @@
   </div>
 </div>
 
+<!-- Speaker bio modal -->
+<div id="b27-spk-modal" role="dialog" aria-modal="true" aria-label="Speaker details">
+  <div id="b27-spk-modal-card">
+    <button id="b27-spk-modal-close" type="button" aria-label="Close"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button>
+    <div id="b27-spk-modal-header">
+      <img id="b27-spk-modal-photo" src="" alt="">
+      <div id="b27-spk-modal-meta">
+        <p id="b27-spk-modal-name"></p>
+        <p id="b27-spk-modal-role"></p>
+        <p id="b27-spk-modal-company"></p>
+      </div>
+    </div>
+    <div id="b27-spk-modal-divider"></div>
+    <p id="b27-spk-modal-bio"></p>
+  </div>
+</div>
+
 <script>
 /* Become a partner modal — open/close, tier pre-select, submit. */
 (function () {
@@ -1025,6 +1097,130 @@
     success.classList.add('is-open');
     card.scrollTop = 0;
   });
+})();
+</script>
+<script>
+/* ======================================================================
+   boca27 — Programme + Confirmed Speakers (vanilla JS).
+   Design/behaviour mirrors the bocomp26 (/boc26) Program & Speakers
+   components. Content from the BOCA27 brochure.
+   ====================================================================== */
+(function () {
+  "use strict";
+  var el = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+  var esc = function (s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+
+  /* ---------- Programme ---------- */
+  // session: {time, title, desc?, brk?:true}
+  var PROGRAM = [
+    { day:'Pre-conference evening', date:'Thursday, 18 February 2027', sessions:[
+      { time:'18:30 – 21:00', title:'Welcome Reception', desc:'Join fellow delegates for an informal evening of Portuguese wine, local flavours and first conversations before the conference begins. Venue to be confirmed.' }
+    ]},
+    { day:'Conference day', date:'Friday, 19 February 2027', sessions:[
+      { time:'08:30', title:'Morning Coffee & Registration', brk:true },
+      { time:'09:00', title:'Opening Remarks', brk:true },
+      { time:'09:15', title:'The State of Collective Redress in Europe: A Data-Driven Map', desc:'This session sets the factual baseline for the conference. A comparison of selected jurisdictions: claims filed, cases dismissed, average time to certification and more.' },
+      { time:'10:05', title:'The Negative Space: Why Collective Redress Fails to Launch', desc:'This discussion explores where collective redress was poorly implemented, dead on arrival, or never adopted, and why: procedural, economic, institutional barriers or simply a lack of incentives.' },
+      { time:'10:55', title:'Networking Break', brk:true },
+      { time:'11:25', title:'Qualified Entities as Claimants: Is the Association the Only Door In?', desc:'Collective redress in Europe often depends on associations, but what happens when they move too slowly, lack resources or choose not to act? Practical realities, incentives and limitations of the qualified entity model.' },
+      { time:'12:15', title:'The Economic Expert’s Role', desc:'Economic evidence increasingly influences collective actions from the earliest stages. Data requirements, methodology and how expert analysis can affect the viability of a claim.' },
+      { time:'13:05', title:'Lunch', brk:true },
+      { time:'14:05', title:'Technology and Class Actions', desc:'Collective litigation increasingly means managing data at scale. Document collection, data processing, practical challenges for legal teams and how courts expect complex evidence to be presented.' },
+      { time:'14:55', title:'Distribution: Paying Out the Money', desc:'Judgment or settlement is not the end of the story. Distribution mechanisms, costs, unclaimed funds and the practical realities of getting compensation into claimants’ hands.' },
+      { time:'15:45', title:'Networking Break', brk:true },
+      { time:'16:15', title:'The Litigation Funders’ Perspective', desc:'Not every claim is investable. How funders assess opportunities, where they see growth and how economics, risk and regulation influence funding decisions in practice.' },
+      { time:'17:05', title:'Closing Remarks & End of the Conference', brk:true },
+      { time:'19:00', title:'The Porto Evening', desc:'Portuguese dinner, live Fado and Port wine in a relaxed atmosphere overlooking Porto. Included in the conference ticket.' }
+    ]}
+  ];
+
+  /* ---------- Speakers ---------- */
+  // [name, role, company, photo, imgStyle?]
+  // imgStyle centres + size-matches each face inside the fixed circle:
+  //   --op = object-position, --sc = zoom, --to = transform-origin.
+  var FALLBACK_PHOTO = 'boca27/speakers-boca27/porfirio-moreira.png';
+  var SPEAKERS = [
+    ['Porfírio Moreira','Partner','Sousa Ferro & Associados','boca27/speakers-boca27/porfirio-moreira.png','--op:center 22%;'],
+    ['Lena Hornkohl','President','Ius Omnibus','boca27/speakers-boca27/lena-hornkohl.jpeg','--sc:1.18; --to:50% 34%;'],
+    ['Carine Seron','Legal Counsel','Euroconsumers','boca27/speakers-boca27/carine-seron.jpeg','--sc:1.2; --to:50% 40%;']
+  ];
+  var BIOS = {
+    "Carine Seron":"Carine studied law at the University of Liège (Belgium), Maastricht University (Netherlands), and Harvard (LL.M.). With several years of experience addressing the impact of the economic and business sectors on human rights, the environment, and climate change globally, she worked as a lawyer at the Brussels Bar (Belgium) for four years. She joined Euroconsumers in September 2024, where she focuses on class actions and litigation funding to enhance consumer rights."
+  };
+
+  /* ---------- Render: programme ---------- */
+  function renderProgram() {
+    var root = document.querySelector('[data-program]'); if (!root) return;
+    PROGRAM.forEach(function (d) {
+      var day = el('div', 'b27-day');
+      var head = el('div', 'b27-day-head');
+      head.appendChild(el('span', 'b27-day-label', esc(d.day)));
+      head.appendChild(el('span', 'b27-day-date', esc(d.date)));
+      day.appendChild(head);
+      d.sessions.forEach(function (s) {
+        var row = el('div', 'b27-ses' + (s.brk ? ' b27-ses--break' : ''));
+        row.appendChild(el('div', 'b27-ses-time', esc(s.time)));
+        var body = el('div');
+        body.appendChild(el('h3', 'b27-ses-title', esc(s.title)));
+        if (s.desc) body.appendChild(el('p', 'b27-ses-desc', esc(s.desc)));
+        row.appendChild(body);
+        day.appendChild(row);
+      });
+      root.appendChild(day);
+    });
+  }
+
+  /* ---------- Render: speakers grid + bio modal ---------- */
+  function openModal(sp) {
+    document.getElementById('b27-spk-modal-name').textContent = sp[0];
+    document.getElementById('b27-spk-modal-role').textContent = sp[1];
+    document.getElementById('b27-spk-modal-company').textContent = sp[2];
+    var bio = BIOS[sp[0]] || '';
+    var bioEl = document.getElementById('b27-spk-modal-bio');
+    var divEl = document.getElementById('b27-spk-modal-divider');
+    bioEl.textContent = bio; bioEl.style.display = bio ? '' : 'none'; divEl.style.display = bio ? '' : 'none';
+    var photo = document.getElementById('b27-spk-modal-photo');
+    photo.src = sp[3] || FALLBACK_PHOTO; photo.alt = sp[0];
+    document.getElementById('b27-spk-modal').classList.add('open');
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('b27-spk-modal').classList.remove('open');
+    document.documentElement.style.overflow = '';
+  }
+  function renderSpeakers() {
+    var grid = document.querySelector('[data-speakers]'); if (!grid) return;
+    SPEAKERS.forEach(function (sp) {
+      var card = el('button', 'b27-spkcard'); card.type = 'button';
+      var ava = el('div', 'b27-spkava');
+      var im = el('img'); im.src = sp[3] || FALLBACK_PHOTO; im.alt = sp[0]; im.loading = 'lazy';
+      if (sp[4]) im.setAttribute('style', sp[4]);
+      ava.appendChild(im); card.appendChild(ava);
+      card.appendChild(el('div', 'nm', esc(sp[0])));
+      card.appendChild(el('div', 'ro', esc(sp[1])));
+      card.appendChild(el('div', 'co', esc(sp[2])));
+      card.addEventListener('click', function () { openModal(sp); });
+      grid.appendChild(card);
+    });
+    var toggle = document.querySelector('[data-speakers-toggle]');
+    if (toggle) {
+      if (SPEAKERS.length <= 8) { toggle.style.display = 'none'; }
+      else {
+        toggle.addEventListener('click', function () {
+          var collapsed = grid.classList.toggle('collapsed');
+          toggle.textContent = collapsed ? 'View all speakers' : 'Show fewer';
+          if (collapsed) document.getElementById('boc27-speakers').scrollIntoView({ behavior:'smooth', block:'start' });
+        });
+      }
+    }
+    document.getElementById('b27-spk-modal-close').addEventListener('click', closeModal);
+    document.getElementById('b27-spk-modal').addEventListener('click', function (e) { if (e.target.id === 'b27-spk-modal') closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+  }
+
+  function init() { renderProgram(); renderSpeakers(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
 </script>
 <script src="js/boc-static.js?v=20260708" defer></script>
