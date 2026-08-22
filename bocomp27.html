@@ -178,6 +178,19 @@
   }
   .b27-hero-body { margin-top: 1.4rem; max-width: 600px; }
   .b27-hero-cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 1.6rem; }
+  .b27-hero { padding-bottom: 2rem; }
+
+  /* ---- Hero illustration band (full-bleed Prague skyline) ---- */
+  .b27-hero-scene {
+    position: relative; left: 50%; transform: translateX(-50%);
+    width: 100vw; max-width: 100vw; overflow: hidden;
+    height: clamp(240px, 32vw, 440px);
+  }
+  .b27-hero-scene img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .b27-hero-scene::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 72px;
+    background: linear-gradient(var(--white), rgba(255,255,255,0)); pointer-events: none;
+  }
 
   /* ---- Focus ---- */
   .b27-focus-body { max-width: 680px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
@@ -389,6 +402,11 @@
       <a class="b27-btn b27-btn--black" href="./bocomp26">View 2026 edition</a>
     </div>
   </section>
+
+  <!-- Hero illustration: Prague skyline (full-bleed band) -->
+  <div class="b27-hero-scene" aria-hidden="true">
+    <img src="bocomp27/prague-hero.svg" alt="" loading="lazy">
+  </div>
 
   <!-- Our focus for 2027 -->
   <section class="b27-section b27-focus" id="boc27-focus">
