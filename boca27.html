@@ -390,6 +390,15 @@
   @media (max-width:809px){ .b27-spkgrid{ grid-template-columns:repeat(2,minmax(0,200px)); gap:28px 32px; } }
   @media (max-width:560px){ .b27-spkgrid{ grid-template-columns:repeat(2,minmax(0,160px)); } }
 
+  /* ---- Key themes (compact icon cards) ---- */
+  .b27-themes-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:1000px; width:100%; margin:2.25rem auto 0; }
+  .b27-theme { background:var(--linen); border-radius:12px; padding:18px 18px; display:flex; flex-direction:row; align-items:center; gap:15px; text-align:left; }
+  .b27-theme-ic { width:38px; height:38px; border-radius:50%; background:var(--pine); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .b27-theme-ic svg { width:19px; height:19px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .b27-theme p { font-family:var(--sans); font-size:15.5px; font-weight:500; line-height:1.4; color:var(--black); margin:0; }
+  @media (max-width:809px){ .b27-themes-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:520px){ .b27-themes-grid{ grid-template-columns:1fr; } }
+
   /* ---- Speaker bio modal ---- (ported from bocomp26 #b26-modal) */
   #b27-spk-modal { display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); padding:20px; }
   #b27-spk-modal.open { display:flex; }
@@ -442,6 +451,38 @@
       <p>For the first edition, our goal is simple: build a focused programme, bring the right people into the room, and create space for practical discussion between lawyers, funders, economists, companies, associations, and public-sector voices.</p>
     </div>
     <a class="b27-btn b27-btn--pine" href="#" data-suggest-open>Suggest a topic or speaker</a>
+  </section>
+
+  <!-- Key themes -->
+  <section class="b27-section" id="boc27-themes">
+    <p class="b27-eyebrow">What we&rsquo;ll cover</p>
+    <h2 class="b27-h2">Key themes</h2>
+    <div class="b27-themes-grid">
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><polyline points="3 16 9 10 13 14 21 6"/><polyline points="15 6 21 6 21 12"/></svg></span>
+        <p>What makes collective actions succeed and where in Europe</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><path d="M12 4 21 19 3 19Z"/><line x1="12" y1="9.5" x2="12" y2="13.5"/><line x1="12" y1="16.4" x2="12" y2="16.5"/></svg></span>
+        <p>Where collective actions fail and why</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.2 8 21l4-2.2 4 2.2-1-7.8"/></svg></span>
+        <p>What it takes to get a collective action through certification</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><line x1="3.5" y1="20.5" x2="20.5" y2="20.5"/><rect x="5" y="12" width="3.2" height="8"/><rect x="10.4" y="7" width="3.2" height="13"/><rect x="15.8" y="10" width="3.2" height="10"/></svg></span>
+        <p>The role of economic analysis and data in building viable claims</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5Z"/><path d="M3 13l9 5 9-5"/></svg></span>
+        <p>Managing documents, data and claimants at scale</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="4.5" x2="12" y2="20"/><line x1="7" y1="20" x2="17" y2="20"/><line x1="4" y1="7.5" x2="20" y2="7.5"/><path d="M4 7.5 1.9 12.4a2.5 2.5 0 0 0 4.2 0Z"/><path d="M20 7.5 17.9 12.4a2.5 2.5 0 0 0 4.2 0Z"/></svg></span>
+        <p>How courts approach collective actions in practice</p>
+      </div>
+    </div>
   </section>
 
   <!-- Registration band -->
