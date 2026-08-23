@@ -137,19 +137,27 @@
     var SPRING = 'height 0.7s cubic-bezier(0.33, 1, 0.68, 1)';
     var openH = 0, closedH = 0, activeIdx = 0;
 
-    // Measure each card's natural (unlocked) height and take the max across cards,
-    // so the shared open/closed height fits every card's content, not just the one
-    // that happened to be open at measurement time.
+    // Measure every card's natural height in BOTH the open and closed states and
+    // take the max of each across all cards. The shared open height must fit the
+    // tallest card's content (some cards have more body copy than others),
+    // otherwise overflow:clip cuts off the button on the longer cards.
     function measure() {
       openH = 0; closedH = 0;
       cards.forEach(function (c) {
-        var prev = c.style.height;
+        var prevH = c.style.height;
+        var prevState = c.getAttribute('data-card-state');
         c.style.height = '';
-        var h = Math.round(c.getBoundingClientRect().height);
-        var isOpen = c.getAttribute('data-card-state') === 'open';
-        if (isOpen) { if (h > openH) openH = h; }
-        else { if (h > closedH) closedH = h; }
-        c.style.height = prev;
+        // Closed height for this card.
+        c.setAttribute('data-card-state', 'closed');
+        var hClosed = Math.round(c.getBoundingClientRect().height);
+        if (hClosed > closedH) closedH = hClosed;
+        // Open height for this card.
+        c.setAttribute('data-card-state', 'open');
+        var hOpen = Math.round(c.getBoundingClientRect().height);
+        if (hOpen > openH) openH = hOpen;
+        // Restore.
+        c.setAttribute('data-card-state', prevState);
+        c.style.height = prevH;
       });
     }
 
