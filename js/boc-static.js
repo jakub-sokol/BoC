@@ -185,7 +185,16 @@
     activate(0); // sync image stack to default open card
 
     cards.forEach(function (card, idx) {
+      // Desktop: open the card as soon as the pointer moves over it. Bind both
+      // mouseenter and mouse-type pointerenter so hover registers reliably even
+      // on fast pointer movement / across browser engines.
       card.addEventListener('mouseenter', function () { activate(idx); });
+      card.addEventListener('pointerenter', function (e) {
+        if (e.pointerType === 'mouse') activate(idx);
+      });
+      // Touch devices never fire hover events, so a tap must also open the card.
+      // Without this, only the default-open card is usable on phones.
+      card.addEventListener('click', function () { activate(idx); });
     });
 
     // Web fonts can swap in after this first measurement (font-display: swap),

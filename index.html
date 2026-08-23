@@ -434,7 +434,12 @@
     .home-svc-cards { flex: none; width: 100%; }
     .home-works-grid { grid-template-columns: 1fr; }
     .home-about { grid-template-columns: 1fr; gap: 2rem; }
-    .home-about-photo { display: none; }
+    .home-about-photo {
+      max-width: 320px;
+      aspect-ratio: 3/4;
+      margin: 0 auto;
+      justify-self: center;
+    }
     .home-about-stats { gap: 2rem; flex-direction: column; }
     .home-examples-section { overflow: hidden; }
     .home-examples-grid {
@@ -634,6 +639,6 @@
 </footer>
 </div>
 
-<script src="js/boc-static.js?v=20260708" defer></script>
+<script src="js/boc-static.js?v=20260823" defer></script>
 </body>
 </html>
