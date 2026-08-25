@@ -102,6 +102,53 @@
 .boc-nav a:hover { opacity: 0.65; }
 .boc-nav .boc-nav-social { display: inline-flex; align-items: center; color: #000; }
 .boc-nav-cta.boc-btn { height: 40px; padding: 0 20px; font-size: 14px; }
+
+/* "Our Events" hover/focus dropdown (desktop only — .boc-nav is hidden < 810px). */
+.boc-nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+.boc-nav-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  margin-top: 10px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s;
+  z-index: 200;
+}
+/* Invisible bridge so the pointer can travel from label to menu without closing it. */
+.boc-nav-submenu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10px;
+  height: 10px;
+}
+.boc-nav-dropdown:hover .boc-nav-submenu,
+.boc-nav-dropdown:focus-within .boc-nav-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.boc-nav-submenu a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  padding: 8px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.boc-nav-submenu a:hover { background: #F3F2F0; opacity: 1; }
 .boc-burger {
   display: none;
   background: none;

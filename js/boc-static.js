@@ -33,6 +33,9 @@
     var items = [], seen = {};
     if (src) {
       src.querySelectorAll('a[href]').forEach(function (a) {
+        // Skip event links inside the desktop "Our Events" flyout so the mobile
+        // menu keeps a single "Our Events" link.
+        if (a.closest('.boc-nav-submenu')) return;
         var href = a.getAttribute('href');
         var text = (a.textContent || '').trim();
         if (!href || !text || seen[href]) return;
@@ -92,6 +95,60 @@
     overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+    });
+  }
+
+  // Turn the desktop "Our Events" nav link into a hover/focus dropdown listing
+  // the individual events. The label itself stays a working link to #works.
+  var EVENT_LINKS = [
+    { href: './boca27', text: 'Business of Class Actions 2027' },
+    { href: './bocomp27', text: 'Business of Competition 2027' },
+    { href: './bocomp26', text: 'Business of Competition 2026' }
+  ];
+
+  function enhanceEventsDropdown() {
+    var nav = document.querySelector('[data-boc-nav]');
+    if (!nav || nav.querySelector('.boc-nav-dropdown')) return;
+
+    // Find the "Our Events" trigger by href, falling back to link text.
+    var trigger = nav.querySelector('a[href="./#works"]');
+    if (!trigger) {
+      nav.querySelectorAll('a[href]').forEach(function (a) {
+        if (!trigger && (a.textContent || '').trim().toLowerCase() === 'our events') trigger = a;
+      });
+    }
+    if (!trigger) return;
+
+    var wrap = document.createElement('span');
+    wrap.className = 'boc-nav-dropdown';
+    trigger.parentNode.insertBefore(wrap, trigger);
+    wrap.appendChild(trigger);
+
+    trigger.setAttribute('aria-haspopup', 'menu');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    var menu = document.createElement('div');
+    menu.className = 'boc-nav-submenu';
+    menu.setAttribute('role', 'menu');
+    EVENT_LINKS.forEach(function (l) {
+      var a = document.createElement('a');
+      a.setAttribute('role', 'menuitem');
+      a.href = l.href;
+      a.textContent = l.text;
+      menu.appendChild(a);
+    });
+    wrap.appendChild(menu);
+
+    // Keyboard/focus support (mouse hover is handled in CSS).
+    function setExpanded(open) { trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+    wrap.addEventListener('focusin', function () { setExpanded(true); });
+    wrap.addEventListener('focusout', function (e) {
+      if (!wrap.contains(e.relatedTarget)) setExpanded(false);
+    });
+    wrap.addEventListener('mouseenter', function () { setExpanded(true); });
+    wrap.addEventListener('mouseleave', function () { setExpanded(false); });
+    wrap.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setExpanded(false); trigger.focus(); }
     });
   }
 
@@ -372,6 +429,7 @@
   }
 
   ready(buildMenu);
+  ready(enhanceEventsDropdown);
   ready(buildContactBand);
   ready(buildHeroMarquee);
   ready(initHelpCards);
