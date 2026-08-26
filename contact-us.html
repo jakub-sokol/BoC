@@ -42,13 +42,29 @@
 <p class="boc-eyebrow">Contact</p>
 <h1>We&rsquo;d love to hear from you</h1>
 <p>Planning a specialist conference, looking for support with an existing event, or interested in one of our own conferences? Send a short message and we&rsquo;ll get back to you.</p>
-<!-- TODO: set the form action to your form backend (e.g. Formspree/Basin endpoint) or switch to a mailto: link. -->
-<form class="boc-form" action="#REPLACE_WITH_FORM_ENDPOINT" method="POST">
+<form class="boc-form" id="boc-contact-form" action="mailto:maria@businessofconnections.com" method="POST" enctype="text/plain">
   <label>Name<input type="text" name="name" autocomplete="name" required></label>
   <label>Email<input type="email" name="email" autocomplete="email" required></label>
   <label>Message<textarea name="message" required></textarea></label>
   <button class="boc-btn boc-btn--pine" type="submit">Send message</button>
 </form>
+<script>
+  (function () {
+    var form = document.getElementById('boc-contact-form');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = (form.name.value || '').trim();
+      var email = (form.email.value || '').trim();
+      var message = (form.message.value || '').trim();
+      var subject = 'Website enquiry' + (name ? ' from ' + name : '');
+      var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+      window.location.href = 'mailto:maria@businessofconnections.com'
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body);
+    });
+  })();
+</script>
 <p class="boc-form-note">We&rsquo;ll only use the information you provide to respond to your enquiry. For more information about how we handle personal data, please see our <a href="./privacy-policy">Privacy Policy</a>.</p>
 </main>
 <div class="boc-footwrap">
