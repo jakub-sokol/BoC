@@ -310,9 +310,9 @@
   }
   .home-about p em,
   .home-about p strong {
-    font-style: italic;
-    font-weight: 600;
-    color: var(--white);
+    font-style: normal;
+    font-weight: 500;
+    color: var(--white-70);
   }
   .home-about-stats {
     display: flex;
@@ -340,11 +340,24 @@
     display: block;
     margin-top: 4px;
   }
+  .home-about-figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
   .home-about-photo {
     width: 100%;
     aspect-ratio: 3/4;
     object-fit: cover;
     border-radius: 12px;
+  }
+  .home-about-caption {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white-70);
+    margin-top: 0.75rem;
+    text-align: center;
   }
 
   /* ---- Examples of our events ---- */
@@ -435,11 +448,13 @@
     .home-svc-cards { flex: none; width: 100%; }
     .home-works-grid { grid-template-columns: 1fr; }
     .home-about { grid-template-columns: 1fr; gap: 2rem; }
-    .home-about-photo {
+    .home-about-figure {
       max-width: 320px;
-      aspect-ratio: 3/4;
       margin: 0 auto;
       justify-self: center;
+    }
+    .home-about-photo {
+      aspect-ratio: 3/4;
     }
     .home-about-stats { gap: 2rem; flex-direction: column; }
     .home-examples-section { overflow: hidden; }
@@ -474,7 +489,7 @@
   <!-- Hero -->
   <section id="hero" class="home-hero">
     <h1 class="home-hero-h"><em>Conferences</em> for a professional audience</h1>
-    <p class="home-hero-para">From original conference brands to client events, we help create conferences built around relevant topics, credible speakers, the right audience, and smooth execution.</p>
+    <p class="home-hero-para">Conferences built around the right questions and the right people.<br>We create specialist B2B conferences of our own and help organisations build theirs.</p>
     <div class="home-hero-ctas">
       <a class="boc-btn boc-btn--pine" href="./#works">Explore conferences</a>
       <a class="boc-btn boc-btn--black" href="./contact-us">Build a conference with us</a>
@@ -557,24 +572,14 @@
     <section id="quote" class="home-about">
       <div>
         <h2 class="home-about-h2">About</h2>
-        <p>I have been organizing conferences for the past five years. What I enjoy most is the combination of <em>content and people</em>: shaping a strong topic, bringing together people who care about it, and creating an environment where conversations happen naturally.</p>
+        <p>I have been organizing conferences for the past five years. In that time, I have helped build more than <em>15 events</em> across <em>five countries</em>, welcoming more than <em>500 attendees</em> in total.</p>
+        <p>What I enjoy most is the combination of <em>content and people</em>: shaping a strong topic, bringing together people who care about it, and creating an environment where conversations happen naturally.</p>
         <p>A good conference is not just a venue and a timetable. It needs a topic worth discussing, the right speakers, the right <em>audience</em>, and details that are handled properly. When those things come together, the event feels focused, useful, and worth attending.</p>
-        <div class="home-about-stats">
-          <div class="home-about-stat">
-            <span class="home-about-stat-num">15+</span>
-            <span class="home-about-stat-label">Events</span>
-          </div>
-          <div class="home-about-stat">
-            <span class="home-about-stat-num">5</span>
-            <span class="home-about-stat-label">Countries</span>
-          </div>
-          <div class="home-about-stat">
-            <span class="home-about-stat-num">500+</span>
-            <span class="home-about-stat-label">Attendees</span>
-          </div>
-        </div>
       </div>
-      <img class="home-about-photo" src="images/about-photo.webp" alt="" aria-hidden="true">
+      <figure class="home-about-figure">
+        <img class="home-about-photo" src="images/about-photo.webp" alt="" aria-hidden="true">
+        <figcaption class="home-about-caption">Maria Babenkova, Founder</figcaption>
+      </figure>
     </section>
   </div>
 
@@ -626,7 +631,7 @@
 <footer class="boc-footer">
   <div class="boc-foot-brand">
     <strong>Business of Connections</strong>
-    <p>Business of Connections is a conference brand and services platform built to develop original events, support client conferences, and bring professional audiences together around topics worth discussing.</p>
+    <p>We create specialist conferences and help organisations build their own.</p>
   </div>
   <nav aria-label="Pages">
     <a href="./">Home</a>
