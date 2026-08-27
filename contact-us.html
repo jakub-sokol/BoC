@@ -24,8 +24,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"></noscript>
-<link rel="stylesheet" href="boc-static.css?v=20260825">
-<script src="js/boc-static.js?v=20260825" defer></script>
+<link rel="stylesheet" href="boc-static.css?v=20260827">
+<script src="js/boc-static.js?v=20260827" defer></script>
 </head>
 <body class="boc-page">
 <header class="boc-header">
@@ -42,26 +42,56 @@
 <p class="boc-eyebrow">Contact</p>
 <h1>We&rsquo;d love to hear from you</h1>
 <p>Planning a specialist conference, looking for support with an existing event, or interested in one of our own conferences? Send a short message and we&rsquo;ll get back to you.</p>
-<form class="boc-form" id="boc-contact-form" action="mailto:maria@businessofconnections.com" method="POST" enctype="text/plain">
+<form class="boc-form" id="boc-contact-form" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="cda5d57a-0a3d-48c4-8b71-19a34d24b7a1">
+  <input type="hidden" name="subject" value="New enquiry from the Business of Connections website">
+  <input type="hidden" name="from_name" value="Business of Connections website">
+  <input type="checkbox" name="botcheck" class="boc-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
   <label>Name<input type="text" name="name" autocomplete="name" required></label>
   <label>Email<input type="email" name="email" autocomplete="email" required></label>
   <label>Message<textarea name="message" required></textarea></label>
   <button class="boc-btn boc-btn--pine" type="submit">Send message</button>
+  <p class="boc-form-status" id="boc-form-status" role="status" aria-live="polite" hidden></p>
 </form>
 <script>
   (function () {
     var form = document.getElementById('boc-contact-form');
+    var status = document.getElementById('boc-form-status');
     if (!form) return;
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var name = (form.name.value || '').trim();
-      var email = (form.email.value || '').trim();
-      var message = (form.message.value || '').trim();
-      var subject = 'Website enquiry' + (name ? ' from ' + name : '');
-      var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
-      window.location.href = 'mailto:maria@businessofconnections.com'
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(body);
+      var button = form.querySelector('button[type="submit"]');
+      var original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      status.hidden = true;
+      status.className = 'boc-form-status';
+      fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (result) {
+          if (result.ok && result.data.success) {
+            form.reset();
+            status.textContent = 'Thanks — your message has been sent. We’ll be in touch soon.';
+            status.classList.add('is-success');
+          } else {
+            status.textContent = (result.data && result.data.message) || 'Sorry, something went wrong. Please email us at maria@businessofconnections.com.';
+            status.classList.add('is-error');
+          }
+          status.hidden = false;
+        })
+        .catch(function () {
+          status.textContent = 'Sorry, something went wrong. Please email us at maria@businessofconnections.com.';
+          status.classList.add('is-error');
+          status.hidden = false;
+        })
+        .finally(function () {
+          button.disabled = false;
+          button.textContent = original;
+        });
     });
   })();
 </script>
