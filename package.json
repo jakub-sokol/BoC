@@ -1,0 +1,10 @@
+{
+  "name": "boc-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Business of Connections — static site plus serverless form handler.",
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "nodemailer": "^6.9.16"
+  }
+}

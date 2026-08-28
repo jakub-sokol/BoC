@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="boc-static.css?v=20260825">
+<link rel="stylesheet" href="boc-static.css?v=20260828">
 <style id="reg">
   @font-face { font-family: "Erode Variable"; src: url("images/mokcgu3ekyhoxp3y5x7xq2bpg4hcmf66.woff2"); font-display: swap; font-style: normal; font-weight: 400 700; }
   @font-face { font-family: "Erode Variable"; src: url("images/ocj3wfmt5pzol4g7ergyk77eykdlsntr.woff2"); font-display: swap; font-style: italic; font-weight: 400 700; }
@@ -182,6 +182,9 @@
     <div class="reg-form-card">
 
       <form class="reg-form" id="reg-form" novalidate>
+        <input type="hidden" name="conference" value="boca27">
+        <input type="hidden" name="formType" value="registration">
+        <input type="checkbox" name="botcheck" class="boc-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <label class="reg-field">
           <span>Full name</span>
@@ -292,7 +295,7 @@
 </footer>
 </div>
 
-<script src="js/boc-static.js?v=20260825" defer></script>
+<script src="js/boc-static.js?v=20260828" defer></script>
 <script>
 (function () {
   var form      = document.getElementById('reg-form');
@@ -309,10 +312,11 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.reportValidity()) return;
-    // TODO: POST the collected data to a registration endpoint / email service.
-    form.style.display = 'none';
-    success.classList.add('is-open');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.bocHandleSubmit(form, function () {
+      form.style.display = 'none';
+      success.classList.add('is-open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   });
 })();
 </script>

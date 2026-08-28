@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"></noscript>
-<link rel="stylesheet" href="boc-static.css?v=20260825">
+<link rel="stylesheet" href="boc-static.css?v=20260828">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -584,6 +584,9 @@
     <p id="b27-modal-intro">Fill in your details below and we’ll confirm your place and send an invoice by email.</p>
 
     <form id="b27-reg-form" novalidate>
+      <input type="hidden" name="conference" value="bocomp27">
+      <input type="hidden" name="formType" value="registration">
+      <input type="checkbox" name="botcheck" class="boc-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="b27-field">
         <span>Full name</span>
         <input type="text" name="fullName" autocomplete="name" required>
@@ -684,6 +687,9 @@
     <p id="b27-posted-intro">Be the first to hear when we announce the programme, speakers, and partners for 2027.</p>
 
     <form id="b27-posted-form" novalidate>
+      <input type="hidden" name="conference" value="bocomp27">
+      <input type="hidden" name="formType" value="posted">
+      <input type="checkbox" name="botcheck" class="boc-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="b27-field">
         <span>Name</span>
         <input type="text" name="name" autocomplete="name" required>
@@ -729,6 +735,9 @@
     <p id="b27-partner-eyebrow">Partnership</p>
     <h2 id="b27-partner-title">Become a partner</h2>
     <form id="b27-partner-form" novalidate>
+      <input type="hidden" name="conference" value="bocomp27">
+      <input type="hidden" name="formType" value="partner">
+      <input type="checkbox" name="botcheck" class="boc-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="b27-field">
         <span>Name</span>
         <input type="text" name="contactName" autocomplete="name" required>
@@ -791,6 +800,9 @@
     <p id="b27-suggest-eyebrow">Help shape 2027</p>
     <h2 id="b27-suggest-title">Suggest a topic or speaker</h2>
     <form id="b27-suggest-form" novalidate>
+      <input type="hidden" name="conference" value="bocomp27">
+      <input type="hidden" name="formType" value="suggestion">
+      <input type="checkbox" name="botcheck" class="boc-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="b27-field">
         <span>Name</span>
         <input type="text" name="name" autocomplete="name" required>
@@ -869,10 +881,11 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.reportValidity()) return;
-    // TODO: POST the collected data to the partnership email endpoint (address TBD).
-    form.style.display = 'none';
-    success.classList.add('is-open');
-    card.scrollTop = 0;
+    window.bocHandleSubmit(form, function () {
+      form.style.display = 'none';
+      success.classList.add('is-open');
+      card.scrollTop = 0;
+    });
   });
 })();
 </script>
@@ -918,17 +931,18 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.reportValidity()) return;
-    // TODO: POST the collected data to the mailing-list / email endpoint (address TBD).
-    form.style.display = 'none';
-    if (linkedin) linkedin.style.display = 'none';
-    var eyebrow = document.getElementById('b27-posted-eyebrow');
-    var title   = document.getElementById('b27-posted-title');
-    var intro   = document.getElementById('b27-posted-intro');
-    if (eyebrow) eyebrow.style.display = 'none';
-    if (title) title.style.display = 'none';
-    if (intro) intro.style.display = 'none';
-    success.classList.add('is-open');
-    card.scrollTop = 0;
+    window.bocHandleSubmit(form, function () {
+      form.style.display = 'none';
+      if (linkedin) linkedin.style.display = 'none';
+      var eyebrow = document.getElementById('b27-posted-eyebrow');
+      var title   = document.getElementById('b27-posted-title');
+      var intro   = document.getElementById('b27-posted-intro');
+      if (eyebrow) eyebrow.style.display = 'none';
+      if (title) title.style.display = 'none';
+      if (intro) intro.style.display = 'none';
+      success.classList.add('is-open');
+      card.scrollTop = 0;
+    });
   });
 })();
 </script>
@@ -981,14 +995,15 @@
       speaker.setCustomValidity('');
     }
     if (!form.reportValidity()) return;
-    // TODO: POST the collected data to the suggestion email endpoint (address TBD).
-    form.style.display = 'none';
-    var eyebrow = document.getElementById('b27-suggest-eyebrow');
-    var title   = document.getElementById('b27-suggest-title');
-    if (eyebrow) eyebrow.style.display = 'none';
-    if (title) title.style.display = 'none';
-    success.classList.add('is-open');
-    card.scrollTop = 0;
+    window.bocHandleSubmit(form, function () {
+      form.style.display = 'none';
+      var eyebrow = document.getElementById('b27-suggest-eyebrow');
+      var title   = document.getElementById('b27-suggest-title');
+      if (eyebrow) eyebrow.style.display = 'none';
+      if (title) title.style.display = 'none';
+      success.classList.add('is-open');
+      card.scrollTop = 0;
+    });
   });
 })();
 </script>
@@ -1044,16 +1059,17 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.reportValidity()) return;
-    // TODO: POST the collected data to a registration endpoint / email service.
-    form.style.display = 'none';
-    var intro = document.getElementById('b27-modal-intro');
-    if (intro) intro.style.display = 'none';
-    success.classList.add('is-open');
-    card.scrollTop = 0;
+    window.bocHandleSubmit(form, function () {
+      form.style.display = 'none';
+      var intro = document.getElementById('b27-modal-intro');
+      if (intro) intro.style.display = 'none';
+      success.classList.add('is-open');
+      card.scrollTop = 0;
+    });
   });
 })();
 </script>
 
-<script src="js/boc-static.js?v=20260825" defer></script>
+<script src="js/boc-static.js?v=20260828" defer></script>
 </body>
 </html>

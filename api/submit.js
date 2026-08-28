@@ -1,0 +1,193 @@
+// Serverless handler for the conference forms on /boca27 and /bocomp27.
+//
+// Every submission is appended as a row to the correct Google Sheet + tab and
+// triggers an email notification. Routing is driven by two hidden fields the
+// forms send:
+//   conference : "boca27" | "bocomp27"          -> which spreadsheet
+//   formType   : "registration" | "partner"     -> which tab + column order
+//                | "suggestion" | "posted"
+//
+// Credentials live only in Vercel environment variables (never in the repo).
+
+const { google } = require('googleapis');
+const nodemailer = require('nodemailer');
+
+// conference -> spreadsheet id
+const SHEETS = {
+  boca27: process.env.SHEET_ID_BOCA27,
+  bocomp27: process.env.SHEET_ID_BOCOMP27,
+};
+
+// Human labels used in the notification subject line.
+const CONFERENCE_LABELS = {
+  boca27: 'Business of Class Actions 2027',
+  bocomp27: 'Business of Competition 2027',
+};
+
+// formType -> { tab, label, columns }. `columns` is the fixed order written to
+// the sheet; the first entry of each row is always the timestamp (added below).
+const FORMS = {
+  registration: {
+    tab: 'Registrations',
+    label: 'registration',
+    columns: [
+      ['Full name', 'fullName'],
+      ['Email', 'email'],
+      ['Phone', 'phone'],
+      ['Organization', 'organization'],
+      ['Job title', 'jobTitle'],
+      ['Ticket type', 'ticketType'],
+      ['Needs invoice', 'needInvoice'],
+      ['Billing name', 'billingName'],
+      ['Company ID', 'companyId'],
+      ['VAT ID', 'vatId'],
+      ['Billing address', 'billingAddress'],
+      ['Consent', 'consent'],
+    ],
+  },
+  partner: {
+    tab: 'Partners',
+    label: 'partnership enquiry',
+    columns: [
+      ['Contact name', 'contactName'],
+      ['Email', 'email'],
+      ['Company', 'company'],
+      ['Tier', 'tier'],
+      ['Message', 'message'],
+      ['Consent', 'consent'],
+    ],
+  },
+  suggestion: {
+    tab: 'Suggestions',
+    label: 'topic / speaker suggestion',
+    columns: [
+      ['Name', 'name'],
+      ['Email', 'email'],
+      ['Topic', 'topic'],
+      ['Speaker', 'speaker'],
+    ],
+  },
+  posted: {
+    tab: 'Mailing list',
+    label: 'mailing-list sign-up',
+    columns: [
+      ['Name', 'name'],
+      ['Email', 'email'],
+      ['LinkedIn', 'linkedin'],
+    ],
+  },
+};
+
+// Checkbox fields arrive as "on" when ticked and are absent otherwise.
+function displayValue(field, raw) {
+  if (field === 'needInvoice' || field === 'consent') {
+    return raw ? 'Yes' : 'No';
+  }
+  return raw == null ? '' : String(raw);
+}
+
+function getSheetsClient() {
+  const auth = new google.auth.JWT({
+    email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    // The private key is stored with literal "\n"; turn them into real newlines.
+    key: (process.env.GOOGLE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+  return google.sheets({ version: 'v4', auth });
+}
+
+// Append one row, writing a header row first if the tab is still empty.
+async function appendRow(sheets, spreadsheetId, form, values) {
+  const tab = form.tab;
+  const existing = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${tab}!A1:A1`,
+  });
+  const hasHeader = existing.data.values && existing.data.values.length > 0;
+
+  if (!hasHeader) {
+    const header = ['Timestamp'].concat(form.columns.map(function (c) { return c[0]; }));
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: `${tab}!A1`,
+      valueInputOption: 'USER_ENTERED',
+      insertDataOption: 'INSERT_ROWS',
+      requestBody: { values: [header] },
+    });
+  }
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId,
+    range: `${tab}!A1`,
+    valueInputOption: 'USER_ENTERED',
+    insertDataOption: 'INSERT_ROWS',
+    requestBody: { values: [values] },
+  });
+}
+
+async function sendEmail(conference, form, body) {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+  });
+
+  const lines = form.columns.map(function (c) {
+    return c[0] + ': ' + displayValue(c[1], body[c[1]]);
+  });
+
+  const confLabel = CONFERENCE_LABELS[conference] || conference;
+  const submitter = (body.email || '').trim();
+
+  await transporter.sendMail({
+    from: process.env.SMTP_USER,
+    to: process.env.NOTIFY_TO || process.env.SMTP_USER,
+    replyTo: submitter || undefined,
+    subject: `New ${form.label} — ${confLabel}`,
+    text: `A new ${form.label} was submitted for ${confLabel}.\n\n` + lines.join('\n'),
+  });
+}
+
+module.exports = async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  }
+
+  const body = req.body || {};
+
+  // Honeypot: silently accept (but ignore) submissions from bots.
+  if (body.botcheck) {
+    return res.status(200).json({ ok: true });
+  }
+
+  const conference = body.conference;
+  const formType = body.formType;
+  const spreadsheetId = SHEETS[conference];
+  const form = FORMS[formType];
+
+  if (!form || !spreadsheetId) {
+    return res.status(400).json({ ok: false, error: 'Unknown conference or form type' });
+  }
+
+  const timestamp = new Date().toISOString();
+  const rowValues = [timestamp].concat(
+    form.columns.map(function (c) { return displayValue(c[1], body[c[1]]); })
+  );
+
+  // Run the sheet append and the email independently so one failing still lets
+  // the other through — but report a failure if either did not succeed.
+  const results = await Promise.allSettled([
+    appendRow(getSheetsClient(), spreadsheetId, form, rowValues),
+    sendEmail(conference, form, body),
+  ]);
+
+  const failed = results.filter(function (r) { return r.status === 'rejected'; });
+  if (failed.length) {
+    failed.forEach(function (r) { console.error('submit error:', r.reason); });
+    return res.status(502).json({ ok: false, error: 'Delivery failed' });
+  }
+
+  return res.status(200).json({ ok: true });
+};

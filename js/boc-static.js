@@ -428,6 +428,58 @@
     }
   }
 
+  // ----- Shared form submission (conference forms + contact) -----------------
+  // Posts a form to the /api/submit serverless handler as urlencoded data (so
+  // Vercel parses req.body automatically). Hidden fields on the form — conference,
+  // formType, botcheck (honeypot) — ride along in the FormData. Returns a Promise
+  // that resolves on success and rejects on any failure.
+  function submitForm(form) {
+    var data = new URLSearchParams();
+    new FormData(form).forEach(function (value, key) { data.append(key, value); });
+    return fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: data
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (json) {
+        if (res.ok && json && json.ok) return json;
+        throw new Error((json && json.error) || 'Request failed');
+      });
+    });
+  }
+
+  // Show/clear an inline error message inside a form.
+  function setFormError(form, msg) {
+    var el = form.querySelector('.boc-form-err');
+    if (!msg) { if (el) el.remove(); return; }
+    if (!el) {
+      el = document.createElement('p');
+      el.className = 'boc-form-err';
+      el.setAttribute('role', 'alert');
+      form.appendChild(el);
+    }
+    el.textContent = msg;
+  }
+
+  // Wire the network round-trip for a form: disable the button, POST, then run
+  // onSuccess() (the caller's existing "show success panel" code) or surface an
+  // error and re-enable the button. Assumes validation already passed.
+  function handleSubmit(form, onSuccess) {
+    var btn = form.querySelector('button[type="submit"]');
+    var original = btn ? btn.textContent : '';
+    setFormError(form, '');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    submitForm(form).then(function () {
+      onSuccess();
+    }).catch(function () {
+      setFormError(form, 'Something went wrong — please try again, or email maria@businessofconnections.com.');
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+    });
+  }
+
+  window.bocSubmitForm = submitForm;
+  window.bocHandleSubmit = handleSubmit;
+
   ready(buildMenu);
   ready(enhanceEventsDropdown);
   ready(buildContactBand);

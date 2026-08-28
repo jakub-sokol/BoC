@@ -240,11 +240,13 @@
 }
 .boc-form button:not(.boc-btn):hover { opacity: 0.9; }
 /* Honeypot — hidden from users, catches bots that fill every field. */
-.boc-form .boc-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.boc-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 /* Submission feedback shown after a direct send. */
 .boc-form-status { font-size: 0.9rem; line-height: 1.5; margin: 0; padding: 0.75rem 1rem; border-radius: 10px; }
 .boc-form-status.is-success { color: #05290d; background: rgba(5, 41, 13, 0.08); }
 .boc-form-status.is-error { color: #7a1f1f; background: rgba(122, 31, 31, 0.08); }
+/* Inline error shown when a form fails to submit to /api/submit. */
+.boc-form-err { font-size: 0.85rem; line-height: 1.5; margin: 4px 0 0; color: #7a1f1f; }
 
 /* Shared primary button — mirrors the style guide .sg-btn (Pine / Black forms).
    On hover the opposite colour wipes in from the left and the button scales up. */
