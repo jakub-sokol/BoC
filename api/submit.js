@@ -185,8 +185,17 @@ module.exports = async function handler(req, res) {
 
   const failed = results.filter(function (r) { return r.status === 'rejected'; });
   if (failed.length) {
+    var steps = ['sheet', 'email'];
+    var detail = results.map(function (r, i) {
+      if (r.status === 'rejected') {
+        var msg = (r.reason && (r.reason.message || r.reason.toString())) || 'unknown';
+        return { step: steps[i], ok: false, error: String(msg).slice(0, 300) };
+      }
+      return { step: steps[i], ok: true };
+    });
     failed.forEach(function (r) { console.error('submit error:', r.reason); });
-    return res.status(502).json({ ok: false, error: 'Delivery failed' });
+    // NOTE: `detail` is a temporary diagnostic — remove before final hardening.
+    return res.status(502).json({ ok: false, error: 'Delivery failed', detail: detail });
   }
 
   return res.status(200).json({ ok: true });
