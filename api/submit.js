@@ -86,11 +86,22 @@ function displayValue(field, raw) {
   return raw == null ? '' : String(raw);
 }
 
+// Normalise the private key so it tolerates common paste mistakes in the Vercel
+// env UI: surrounding single/double quotes, stray whitespace, and either literal
+// "\n" sequences or real newlines.
+function normalizePrivateKey(raw) {
+  let key = (raw || '').trim();
+  if ((key.startsWith('"') && key.endsWith('"')) ||
+      (key.startsWith("'") && key.endsWith("'"))) {
+    key = key.slice(1, -1);
+  }
+  return key.replace(/\\n/g, '\n');
+}
+
 function getSheetsClient() {
   const auth = new google.auth.JWT({
-    email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    // The private key is stored with literal "\n"; turn them into real newlines.
-    key: (process.env.GOOGLE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
+    email: (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || '').trim(),
+    key: normalizePrivateKey(process.env.GOOGLE_PRIVATE_KEY),
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
   return google.sheets({ version: 'v4', auth });
@@ -125,12 +136,24 @@ async function appendRow(sheets, spreadsheetId, form, values) {
   });
 }
 
+// Strip surrounding quotes and all whitespace — Gmail app passwords are 16
+// letters with no spaces, and the account UI displays them in spaced groups.
+function normalizePassword(raw) {
+  let pw = (raw || '').trim();
+  if ((pw.startsWith('"') && pw.endsWith('"')) ||
+      (pw.startsWith("'") && pw.endsWith("'"))) {
+    pw = pw.slice(1, -1);
+  }
+  return pw.replace(/\s+/g, '');
+}
+
 async function sendEmail(conference, form, body) {
+  const smtpUser = (process.env.SMTP_USER || '').trim();
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    auth: { user: smtpUser, pass: normalizePassword(process.env.SMTP_PASS) },
   });
 
   const lines = form.columns.map(function (c) {
@@ -141,8 +164,8 @@ async function sendEmail(conference, form, body) {
   const submitter = (body.email || '').trim();
 
   await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: process.env.NOTIFY_TO || process.env.SMTP_USER,
+    from: smtpUser,
+    to: (process.env.NOTIFY_TO || smtpUser).trim(),
     replyTo: submitter || undefined,
     subject: `New ${form.label} — ${confLabel}`,
     text: `A new ${form.label} was submitted for ${confLabel}.\n\n` + lines.join('\n'),
@@ -186,16 +209,12 @@ module.exports = async function handler(req, res) {
   const failed = results.filter(function (r) { return r.status === 'rejected'; });
   if (failed.length) {
     var steps = ['sheet', 'email'];
-    var detail = results.map(function (r, i) {
-      if (r.status === 'rejected') {
-        var msg = (r.reason && (r.reason.message || r.reason.toString())) || 'unknown';
-        return { step: steps[i], ok: false, error: String(msg).slice(0, 300) };
-      }
-      return { step: steps[i], ok: true };
+    // Log the underlying reason server-side (visible in Vercel function logs)
+    // without exposing details to the client.
+    results.forEach(function (r, i) {
+      if (r.status === 'rejected') console.error('submit error [' + steps[i] + ']:', r.reason);
     });
-    failed.forEach(function (r) { console.error('submit error:', r.reason); });
-    // NOTE: `detail` is a temporary diagnostic — remove before final hardening.
-    return res.status(502).json({ ok: false, error: 'Delivery failed', detail: detail });
+    return res.status(502).json({ ok: false, error: 'Delivery failed' });
   }
 
   return res.status(200).json({ ok: true });
