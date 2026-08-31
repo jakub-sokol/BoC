@@ -446,7 +446,7 @@
   display: flex;
   gap: 8px;
   width: max-content;
-  animation: boc-scroll-x 60s linear infinite;
+  animation: boc-scroll-x 48s linear infinite;
 }
 .boc-photo-track img {
   height: clamp(217px, 30.3vw, 405px);
@@ -478,7 +478,7 @@
   display: flex;
   gap: 20px;
   width: max-content;
-  animation: boc-scroll-x 55s linear infinite;
+  animation: boc-scroll-x 44s linear infinite;
 }
 .boc-testi-marquee:hover .boc-testi-track { animation-play-state: paused; }
 .boc-testi-card {
