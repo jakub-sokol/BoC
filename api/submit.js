@@ -43,6 +43,7 @@ const FORMS = {
       ['VAT ID', 'vatId'],
       ['Billing address', 'billingAddress'],
       ['Consent', 'consent'],
+      ['Participant list consent', 'participantList'],
     ],
   },
   partner: {
@@ -80,7 +81,7 @@ const FORMS = {
 
 // Checkbox fields arrive as "on" when ticked and are absent otherwise.
 function displayValue(field, raw) {
-  if (field === 'needInvoice' || field === 'consent') {
+  if (field === 'needInvoice' || field === 'consent' || field === 'participantList') {
     return raw ? 'Yes' : 'No';
   }
   return raw == null ? '' : String(raw);
