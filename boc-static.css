@@ -466,11 +466,13 @@
 /* Testimonial marquee (rebuilt from the collapsed Framer ticker) */
 .boc-testi-marquee {
   overflow: hidden;
-  width: 100%;
-  margin: 28px 0 0;
+  /* Full-bleed break-out so the edge fade lines up with the screen edges,
+     matching the hero photo band (rather than the 1100px content column). */
+  width: 100vw;
+  margin: 28px 0 0 calc(50% - 50vw);
   padding: 8px 0;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 clamp(60px, 10vw, 160px), #000 calc(100% - clamp(60px, 10vw, 160px)), transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 clamp(60px, 10vw, 160px), #000 calc(100% - clamp(60px, 10vw, 160px)), transparent 100%);
 }
 .boc-testi-track {
   display: flex;
@@ -552,6 +554,8 @@
   /* --- Testimonials: page one card at a time on mobile (kill the auto-marquee) --- */
   .boc-testi-marquee {
     overflow: hidden;
+    width: 100%;
+    margin: 28px 0 0;
     -webkit-mask-image: none; mask-image: none;
   }
   .boc-testi-track {
