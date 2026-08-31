@@ -360,58 +360,6 @@
     text-align: center;
   }
 
-  /* ---- Examples of our events ---- */
-  .home-examples-section {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3.5rem 1.5rem;
-  }
-  .home-examples-h2 {
-    font-family: var(--serif);
-    font-weight: 550;
-    font-variation-settings: "wght" 550;
-    font-size: clamp(2rem, 4vw, 48px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--black);
-    margin: 0 0 2.5rem;
-    text-align: center;
-  }
-  .home-examples-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-    width: 100%;
-  }
-  .home-examples-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    border-radius: 12px;
-    background: rgb(248, 246, 244);
-    padding: 12px;
-  }
-  .home-examples-card-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; border-radius: 8px; }
-  .home-examples-card-body { padding: 0.85rem 0.15rem 0.15rem; }
-  .home-examples-card-title {
-    font-family: var(--sans);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
-    color: var(--black);
-    margin: 0 0 0.25rem;
-  }
-  .home-examples-card-loc {
-    font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--black-70);
-    margin: 0;
-  }
-
   /* ---- Testimonials ---- */
   .home-testi-section {
     box-sizing: border-box;
@@ -457,15 +405,6 @@
       aspect-ratio: 3/4;
     }
     .home-about-stats { gap: 2rem; flex-direction: column; }
-    .home-examples-section { overflow: hidden; }
-    .home-examples-grid {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 1rem;
-      transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
-    }
-    .home-examples-card { flex: 0 0 100%; }
-    .home-examples-card-body { padding-bottom: 3.5rem; }
     .home-testi-section { padding-left: 16px; padding-right: 16px; }
   }
 </style>
@@ -582,41 +521,6 @@
       </figure>
     </section>
   </div>
-
-  <!-- Examples of our events -->
-  <section id="examples" class="home-examples-section">
-    <h2 class="home-examples-h2">Examples of our events</h2>
-    <div class="home-examples-grid">
-      <div class="home-examples-card">
-        <img class="home-examples-card-img" src="images/gmnbgctmkknbavonfpxz5w1pat0.webp" alt="Healthcare Innovation Conference" loading="lazy">
-        <div class="home-examples-card-body">
-          <h3 class="home-examples-card-title">Healthcare Innovation Conference</h3>
-          <p class="home-examples-card-loc">Barcelona, Spain</p>
-        </div>
-      </div>
-      <div class="home-examples-card">
-        <img class="home-examples-card-img" src="images/hjap4425jhk2cryv1pks6z2y70-900.webp" srcset="images/hjap4425jhk2cryv1pks6z2y70-600.webp 600w, images/hjap4425jhk2cryv1pks6z2y70-900.webp 900w, images/hjap4425jhk2cryv1pks6z2y70-1500.webp 1500w" sizes="(max-width: 809px) calc(100vw - 72px), 261px" alt="Digital Transformation Conference" loading="lazy">
-        <div class="home-examples-card-body">
-          <h3 class="home-examples-card-title">Digital Transformation Conference</h3>
-          <p class="home-examples-card-loc">Berlin, Germany</p>
-        </div>
-      </div>
-      <div class="home-examples-card">
-        <img class="home-examples-card-img" src="images/1txotqhecvbqr6nfceg4yaen9xi-900.webp" srcset="images/1txotqhecvbqr6nfceg4yaen9xi-600.webp 600w, images/1txotqhecvbqr6nfceg4yaen9xi-900.webp 900w, images/1txotqhecvbqr6nfceg4yaen9xi-1500.webp 1500w" sizes="(max-width: 809px) calc(100vw - 72px), 261px" alt="MedTech @ Pharma Conference" loading="lazy">
-        <div class="home-examples-card-body">
-          <h3 class="home-examples-card-title">MedTech @ Pharma Conference</h3>
-          <p class="home-examples-card-loc">Prague, Czech Republic</p>
-        </div>
-      </div>
-      <div class="home-examples-card">
-        <img class="home-examples-card-img" src="images/mmzws85wdusqrs8ii3mgqcgccye.webp" alt="Business of Competition" loading="lazy">
-        <div class="home-examples-card-body">
-          <h3 class="home-examples-card-title">Business of Competition</h3>
-          <p class="home-examples-card-loc">Prague, Czech Republic</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Testimonials -->
   <section id="testimonials" class="home-testi-section">
