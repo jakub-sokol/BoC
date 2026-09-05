@@ -461,6 +461,25 @@
     el.textContent = msg;
   }
 
+  // Record a conversion in Vercel Web Analytics. window.va is the queue function
+  // installed by /_vercel/insights/script.js; guarded so nothing breaks if the
+  // script is blocked (ad blocker) or analytics is disabled. Event names and
+  // property values must be plain strings.
+  function trackConversion(form) {
+    try {
+      if (typeof window.va !== 'function') return;
+      var get = function (name) {
+        var el = form.querySelector('[name="' + name + '"]');
+        return el && el.value ? String(el.value) : '';
+      };
+      window.va('event', {
+        name: 'form_submit',
+        formType: get('formType') || 'contact',
+        conference: get('conference') || 'none'
+      });
+    } catch (e) { /* analytics must never break the form */ }
+  }
+
   // Wire the network round-trip for a form: disable the button, POST, then run
   // onSuccess() (the caller's existing "show success panel" code) or surface an
   // error and re-enable the button. Assumes validation already passed.
@@ -470,6 +489,7 @@
     setFormError(form, '');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
     submitForm(form).then(function () {
+      trackConversion(form);
       onSuccess();
     }).catch(function () {
       setFormError(form, 'Something went wrong — please try again, or email maria@businessofconnections.com.');
