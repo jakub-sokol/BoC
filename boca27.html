@@ -254,17 +254,21 @@
   .b27-eb-tag {
     align-self: flex-start; display: inline-block; font-family: var(--sans); font-size: 0.65rem;
     font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    background: rgba(5,41,13,0.1); color: var(--pine);
+    background: rgba(242,175,75,0.22); color: #7a5200;
     border-radius: 100px; padding: 0.25rem 0.6rem; margin-bottom: 4px;
   }
   .b27-price-card .pt-name {
     font-family: var(--serif); font-weight: 550; font-variation-settings: "wght" 550;
-    font-size: 30px; line-height: 1.08; letter-spacing: -0.02em; color: var(--black); margin: 0 0 8px;
+    font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; color: var(--black); margin: 0 0 8px;
   }
   .b27-price-card .pt-desc {
     font-family: var(--sans); font-size: 15px; font-weight: 500; line-height: 1.45;
     letter-spacing: -0.02em; color: var(--black-70); margin: 0;
   }
+  /* Align the price block (old price · early-bird tag · new price) to a common
+     baseline across the four cards, with the button anchored beneath it. */
+  .b27-pricing-grid--4 .b27-price-card .amt-old { margin-top: auto; }
+  .b27-pricing-grid--4 .b27-price-card .b27-btn { margin-top: 18px; }
   @media (max-width: 1100px) and (min-width: 810px) {
     .b27-pricing-grid--4 { grid-template-columns: repeat(2, 1fr); }
   }
