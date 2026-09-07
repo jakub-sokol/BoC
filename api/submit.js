@@ -11,6 +11,35 @@
 
 const { google } = require('googleapis');
 const nodemailer = require('nodemailer');
+const { Ratelimit } = require('@upstash/ratelimit');
+const { Redis } = require('@upstash/redis');
+
+// IP rate limiter (fail-open): at most RATE_MAX submissions per RATE_WINDOW per
+// IP. Built lazily and only when Upstash is configured, so the form keeps
+// working locally and in any environment where the env vars aren't set.
+const RATE_MAX = 5;
+const RATE_WINDOW = '1 m';
+let _ratelimit; // memoised across warm invocations
+function getRatelimit() {
+  if (_ratelimit !== undefined) return _ratelimit;
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  _ratelimit = (url && token)
+    ? new Ratelimit({
+        redis: new Redis({ url, token }),
+        limiter: Ratelimit.slidingWindow(RATE_MAX, RATE_WINDOW),
+        prefix: 'boc-submit',
+      })
+    : null; // not configured -> rate limiting disabled (fail-open)
+  return _ratelimit;
+}
+
+// Best-effort client IP from the proxy headers Vercel sets.
+function clientIp(req) {
+  const xff = req.headers['x-forwarded-for'];
+  if (xff) return String(xff).split(',')[0].trim();
+  return req.headers['x-real-ip'] || req.socket?.remoteAddress || 'unknown';
+}
 
 // conference -> spreadsheet id
 const SHEETS = {
@@ -77,14 +106,47 @@ const FORMS = {
       ['LinkedIn', 'linkedin'],
     ],
   },
+  // General website enquiry. Email-only: not tied to a conference spreadsheet,
+  // so it just notifies the inbox (replaces the old Web3Forms integration).
+  contact: {
+    label: 'contact enquiry',
+    emailOnly: true,
+    columns: [
+      ['Name', 'name'],
+      ['Email', 'email'],
+      ['Message', 'message'],
+    ],
+  },
 };
+
+// Per-field maximum length written to the sheet/email. Anything longer is
+// truncated so a single submission can't push megabytes into a cell or inbox.
+const MAX_LEN = { message: 5000, billingAddress: 1000 };
+const DEFAULT_MAX_LEN = 300;
+
+// Collapse control characters (including CR/LF) to spaces and cap the length.
+// Applied to every stored/emailed value so no field can inject newlines into an
+// email header or smuggle terminal/formula control bytes into the sheet.
+function sanitize(field, raw) {
+  if (raw == null) return '';
+  var s = String(raw).replace(/[\x00-\x1F\x7F]+/g, ' ').trim();
+  var cap = MAX_LEN[field] || DEFAULT_MAX_LEN;
+  return s.length > cap ? s.slice(0, cap) : s;
+}
 
 // Checkbox fields arrive as "on" when ticked and are absent otherwise.
 function displayValue(field, raw) {
   if (field === 'needInvoice' || field === 'consent' || field === 'participantList') {
     return raw ? 'Yes' : 'No';
   }
-  return raw == null ? '' : String(raw);
+  return sanitize(field, raw);
+}
+
+// Conservative single-line email check. Also guarantees no CR/LF, so the value
+// is safe to use as a mail header (replyTo).
+function isValidEmail(raw) {
+  var e = (raw == null ? '' : String(raw)).trim();
+  return e.length <= 254 && /^[^\s@"'<>]+@[^\s@"'<>]+\.[^\s@"'<>]+$/.test(e);
 }
 
 // Normalise the private key so it tolerates common paste mistakes in the Vercel
@@ -122,7 +184,10 @@ async function appendRow(sheets, spreadsheetId, form, values) {
     await sheets.spreadsheets.values.append({
       spreadsheetId,
       range: `${tab}!A1`,
-      valueInputOption: 'USER_ENTERED',
+      // RAW (not USER_ENTERED): store submitted values as literal text so a
+      // field beginning with = + - @ can never be evaluated as a formula when
+      // the sheet is opened (spreadsheet/CSV formula injection).
+      valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: { values: [header] },
     });
@@ -131,7 +196,7 @@ async function appendRow(sheets, spreadsheetId, form, values) {
   await sheets.spreadsheets.values.append({
     spreadsheetId,
     range: `${tab}!A1`,
-    valueInputOption: 'USER_ENTERED',
+    valueInputOption: 'RAW',
     insertDataOption: 'INSERT_ROWS',
     requestBody: { values: [values] },
   });
@@ -161,8 +226,10 @@ async function sendEmail(conference, form, body) {
     return c[0] + ': ' + displayValue(c[1], body[c[1]]);
   });
 
-  const confLabel = CONFERENCE_LABELS[conference] || conference;
-  const submitter = (body.email || '').trim();
+  const confLabel = CONFERENCE_LABELS[conference] || 'Business of Connections';
+  // Only set replyTo from a value that passed validation — this guarantees no
+  // CR/LF and so cannot be used to inject additional mail headers.
+  const submitter = isValidEmail(body.email) ? String(body.email).trim() : '';
 
   await transporter.sendMail({
     from: smtpUser,
@@ -179,6 +246,23 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
+  // Per-IP rate limit (skipped when Upstash isn't configured). Fail-open: if the
+  // limiter errors we log and let the request through rather than block a real
+  // submission on infrastructure trouble.
+  const limiter = getRatelimit();
+  if (limiter) {
+    try {
+      const { success, reset } = await limiter.limit(clientIp(req));
+      if (!success) {
+        const retry = Math.max(1, Math.ceil((reset - Date.now()) / 1000));
+        res.setHeader('Retry-After', String(retry));
+        return res.status(429).json({ ok: false, error: 'Too many requests — please wait a moment and try again.' });
+      }
+    } catch (e) {
+      console.error('rate limit error (allowing through):', e);
+    }
+  }
+
   const body = req.body || {};
 
   // Honeypot: silently accept (but ignore) submissions from bots.
@@ -188,11 +272,20 @@ module.exports = async function handler(req, res) {
 
   const conference = body.conference;
   const formType = body.formType;
-  const spreadsheetId = SHEETS[conference];
   const form = FORMS[formType];
+  // Email-only forms (e.g. the general contact enquiry) aren't tied to a
+  // conference spreadsheet, so they don't need a valid `conference`.
+  const emailOnly = !!(form && form.emailOnly);
+  const spreadsheetId = SHEETS[conference];
 
-  if (!form || !spreadsheetId) {
+  if (!form || (!emailOnly && !spreadsheetId)) {
     return res.status(400).json({ ok: false, error: 'Unknown conference or form type' });
+  }
+
+  // Every form collects an email; reject early if it is missing or malformed so
+  // we don't store junk rows or accept header-injection payloads.
+  if (!isValidEmail(body.email)) {
+    return res.status(400).json({ ok: false, error: 'A valid email address is required' });
   }
 
   const timestamp = new Date().toISOString();
@@ -200,20 +293,21 @@ module.exports = async function handler(req, res) {
     form.columns.map(function (c) { return displayValue(c[1], body[c[1]]); })
   );
 
-  // Run the sheet append and the email independently so one failing still lets
-  // the other through — but report a failure if either did not succeed.
-  const results = await Promise.allSettled([
-    appendRow(getSheetsClient(), spreadsheetId, form, rowValues),
-    sendEmail(conference, form, body),
-  ]);
+  // Run the sheet append (when applicable) and the email independently so one
+  // failing still lets the other through — but report a failure if any did not
+  // succeed. Email-only forms skip the sheet entirely.
+  const steps = [];
+  if (!emailOnly) steps.push({ name: 'sheet', run: appendRow(getSheetsClient(), spreadsheetId, form, rowValues) });
+  steps.push({ name: 'email', run: sendEmail(conference, form, body) });
+
+  const results = await Promise.allSettled(steps.map(function (s) { return s.run; }));
 
   const failed = results.filter(function (r) { return r.status === 'rejected'; });
   if (failed.length) {
-    var steps = ['sheet', 'email'];
     // Log the underlying reason server-side (visible in Vercel function logs)
     // without exposing details to the client.
     results.forEach(function (r, i) {
-      if (r.status === 'rejected') console.error('submit error [' + steps[i] + ']:', r.reason);
+      if (r.status === 'rejected') console.error('submit error [' + steps[i].name + ']:', r.reason);
     });
     return res.status(502).json({ ok: false, error: 'Delivery failed' });
   }
