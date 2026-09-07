@@ -79,12 +79,34 @@ const FORMS = {
   },
 };
 
+// Per-field maximum length written to the sheet/email. Anything longer is
+// truncated so a single submission can't push megabytes into a cell or inbox.
+const MAX_LEN = { message: 5000, billingAddress: 1000 };
+const DEFAULT_MAX_LEN = 300;
+
+// Collapse control characters (including CR/LF) to spaces and cap the length.
+// Applied to every stored/emailed value so no field can inject newlines into an
+// email header or smuggle terminal/formula control bytes into the sheet.
+function sanitize(field, raw) {
+  if (raw == null) return '';
+  var s = String(raw).replace(/[\x00-\x1F\x7F]+/g, ' ').trim();
+  var cap = MAX_LEN[field] || DEFAULT_MAX_LEN;
+  return s.length > cap ? s.slice(0, cap) : s;
+}
+
 // Checkbox fields arrive as "on" when ticked and are absent otherwise.
 function displayValue(field, raw) {
   if (field === 'needInvoice' || field === 'consent' || field === 'participantList') {
     return raw ? 'Yes' : 'No';
   }
-  return raw == null ? '' : String(raw);
+  return sanitize(field, raw);
+}
+
+// Conservative single-line email check. Also guarantees no CR/LF, so the value
+// is safe to use as a mail header (replyTo).
+function isValidEmail(raw) {
+  var e = (raw == null ? '' : String(raw)).trim();
+  return e.length <= 254 && /^[^\s@"'<>]+@[^\s@"'<>]+\.[^\s@"'<>]+$/.test(e);
 }
 
 // Normalise the private key so it tolerates common paste mistakes in the Vercel
@@ -122,7 +144,10 @@ async function appendRow(sheets, spreadsheetId, form, values) {
     await sheets.spreadsheets.values.append({
       spreadsheetId,
       range: `${tab}!A1`,
-      valueInputOption: 'USER_ENTERED',
+      // RAW (not USER_ENTERED): store submitted values as literal text so a
+      // field beginning with = + - @ can never be evaluated as a formula when
+      // the sheet is opened (spreadsheet/CSV formula injection).
+      valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: { values: [header] },
     });
@@ -131,7 +156,7 @@ async function appendRow(sheets, spreadsheetId, form, values) {
   await sheets.spreadsheets.values.append({
     spreadsheetId,
     range: `${tab}!A1`,
-    valueInputOption: 'USER_ENTERED',
+    valueInputOption: 'RAW',
     insertDataOption: 'INSERT_ROWS',
     requestBody: { values: [values] },
   });
@@ -162,7 +187,9 @@ async function sendEmail(conference, form, body) {
   });
 
   const confLabel = CONFERENCE_LABELS[conference] || conference;
-  const submitter = (body.email || '').trim();
+  // Only set replyTo from a value that passed validation — this guarantees no
+  // CR/LF and so cannot be used to inject additional mail headers.
+  const submitter = isValidEmail(body.email) ? String(body.email).trim() : '';
 
   await transporter.sendMail({
     from: smtpUser,
@@ -193,6 +220,12 @@ module.exports = async function handler(req, res) {
 
   if (!form || !spreadsheetId) {
     return res.status(400).json({ ok: false, error: 'Unknown conference or form type' });
+  }
+
+  // Every form collects an email; reject early if it is missing or malformed so
+  // we don't store junk rows or accept header-injection payloads.
+  if (!isValidEmail(body.email)) {
+    return res.status(400).json({ ok: false, error: 'A valid email address is required' });
   }
 
   const timestamp = new Date().toISOString();
