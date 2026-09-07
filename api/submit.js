@@ -11,6 +11,35 @@
 
 const { google } = require('googleapis');
 const nodemailer = require('nodemailer');
+const { Ratelimit } = require('@upstash/ratelimit');
+const { Redis } = require('@upstash/redis');
+
+// IP rate limiter (fail-open): at most RATE_MAX submissions per RATE_WINDOW per
+// IP. Built lazily and only when Upstash is configured, so the form keeps
+// working locally and in any environment where the env vars aren't set.
+const RATE_MAX = 5;
+const RATE_WINDOW = '1 m';
+let _ratelimit; // memoised across warm invocations
+function getRatelimit() {
+  if (_ratelimit !== undefined) return _ratelimit;
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  _ratelimit = (url && token)
+    ? new Ratelimit({
+        redis: new Redis({ url, token }),
+        limiter: Ratelimit.slidingWindow(RATE_MAX, RATE_WINDOW),
+        prefix: 'boc-submit',
+      })
+    : null; // not configured -> rate limiting disabled (fail-open)
+  return _ratelimit;
+}
+
+// Best-effort client IP from the proxy headers Vercel sets.
+function clientIp(req) {
+  const xff = req.headers['x-forwarded-for'];
+  if (xff) return String(xff).split(',')[0].trim();
+  return req.headers['x-real-ip'] || req.socket?.remoteAddress || 'unknown';
+}
 
 // conference -> spreadsheet id
 const SHEETS = {
@@ -204,6 +233,23 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  }
+
+  // Per-IP rate limit (skipped when Upstash isn't configured). Fail-open: if the
+  // limiter errors we log and let the request through rather than block a real
+  // submission on infrastructure trouble.
+  const limiter = getRatelimit();
+  if (limiter) {
+    try {
+      const { success, reset } = await limiter.limit(clientIp(req));
+      if (!success) {
+        const retry = Math.max(1, Math.ceil((reset - Date.now()) / 1000));
+        res.setHeader('Retry-After', String(retry));
+        return res.status(429).json({ ok: false, error: 'Too many requests — please wait a moment and try again.' });
+      }
+    } catch (e) {
+      console.error('rate limit error (allowing through):', e);
+    }
   }
 
   const body = req.body || {};

@@ -4,6 +4,8 @@
   "private": true,
   "description": "Business of Connections — static site plus serverless form handler.",
   "dependencies": {
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.4",
     "googleapis": "^178.0.0",
     "nodemailer": "^10.0.1"
   }
