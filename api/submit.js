@@ -106,6 +106,17 @@ const FORMS = {
       ['LinkedIn', 'linkedin'],
     ],
   },
+  // General website enquiry. Email-only: not tied to a conference spreadsheet,
+  // so it just notifies the inbox (replaces the old Web3Forms integration).
+  contact: {
+    label: 'contact enquiry',
+    emailOnly: true,
+    columns: [
+      ['Name', 'name'],
+      ['Email', 'email'],
+      ['Message', 'message'],
+    ],
+  },
 };
 
 // Per-field maximum length written to the sheet/email. Anything longer is
@@ -215,7 +226,7 @@ async function sendEmail(conference, form, body) {
     return c[0] + ': ' + displayValue(c[1], body[c[1]]);
   });
 
-  const confLabel = CONFERENCE_LABELS[conference] || conference;
+  const confLabel = CONFERENCE_LABELS[conference] || 'Business of Connections';
   // Only set replyTo from a value that passed validation — this guarantees no
   // CR/LF and so cannot be used to inject additional mail headers.
   const submitter = isValidEmail(body.email) ? String(body.email).trim() : '';
@@ -261,10 +272,13 @@ module.exports = async function handler(req, res) {
 
   const conference = body.conference;
   const formType = body.formType;
-  const spreadsheetId = SHEETS[conference];
   const form = FORMS[formType];
+  // Email-only forms (e.g. the general contact enquiry) aren't tied to a
+  // conference spreadsheet, so they don't need a valid `conference`.
+  const emailOnly = !!(form && form.emailOnly);
+  const spreadsheetId = SHEETS[conference];
 
-  if (!form || !spreadsheetId) {
+  if (!form || (!emailOnly && !spreadsheetId)) {
     return res.status(400).json({ ok: false, error: 'Unknown conference or form type' });
   }
 
@@ -279,20 +293,21 @@ module.exports = async function handler(req, res) {
     form.columns.map(function (c) { return displayValue(c[1], body[c[1]]); })
   );
 
-  // Run the sheet append and the email independently so one failing still lets
-  // the other through — but report a failure if either did not succeed.
-  const results = await Promise.allSettled([
-    appendRow(getSheetsClient(), spreadsheetId, form, rowValues),
-    sendEmail(conference, form, body),
-  ]);
+  // Run the sheet append (when applicable) and the email independently so one
+  // failing still lets the other through — but report a failure if any did not
+  // succeed. Email-only forms skip the sheet entirely.
+  const steps = [];
+  if (!emailOnly) steps.push({ name: 'sheet', run: appendRow(getSheetsClient(), spreadsheetId, form, rowValues) });
+  steps.push({ name: 'email', run: sendEmail(conference, form, body) });
+
+  const results = await Promise.allSettled(steps.map(function (s) { return s.run; }));
 
   const failed = results.filter(function (r) { return r.status === 'rejected'; });
   if (failed.length) {
-    var steps = ['sheet', 'email'];
     // Log the underlying reason server-side (visible in Vercel function logs)
     // without exposing details to the client.
     results.forEach(function (r, i) {
-      if (r.status === 'rejected') console.error('submit error [' + steps[i] + ']:', r.reason);
+      if (r.status === 'rejected') console.error('submit error [' + steps[i].name + ']:', r.reason);
     });
     return res.status(502).json({ ok: false, error: 'Delivery failed' });
   }

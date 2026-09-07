@@ -42,10 +42,8 @@
 <p class="boc-eyebrow">Contact</p>
 <h1>We&rsquo;d love to hear from you</h1>
 <p>Planning a specialist conference, looking for support with an existing event, or interested in one of our own conferences? Send a short message and we&rsquo;ll get back to you.</p>
-<form class="boc-form" id="boc-contact-form" action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="cda5d57a-0a3d-48c4-8b71-19a34d24b7a1">
-  <input type="hidden" name="subject" value="New enquiry from the Business of Connections website">
-  <input type="hidden" name="from_name" value="Business of Connections website">
+<form class="boc-form" id="boc-contact-form" action="/api/submit" method="POST">
+  <input type="hidden" name="formType" value="contact">
   <input type="checkbox" name="botcheck" class="boc-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
   <label>Name<input type="text" name="name" autocomplete="name" required></label>
   <label>Email<input type="email" name="email" autocomplete="email" required></label>
@@ -66,19 +64,21 @@
       button.textContent = 'Sending…';
       status.hidden = true;
       status.className = 'boc-form-status';
-      fetch(form.action, {
+      var data = new URLSearchParams();
+      new FormData(form).forEach(function (value, key) { data.append(key, value); });
+      fetch('/api/submit', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
+        body: data
       })
-        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (res) { return res.json().catch(function () { return {}; }).then(function (json) { return { ok: res.ok, data: json }; }); })
         .then(function (result) {
-          if (result.ok && result.data.success) {
+          if (result.ok && result.data.ok) {
             form.reset();
             status.textContent = 'Thanks — your message has been sent. We’ll be in touch soon.';
             status.classList.add('is-success');
           } else {
-            status.textContent = (result.data && result.data.message) || 'Sorry, something went wrong. Please email us at maria@businessofconnections.com.';
+            status.textContent = (result.data && result.data.error) || 'Sorry, something went wrong. Please email us at maria@businessofconnections.com.';
             status.classList.add('is-error');
           }
           status.hidden = false;
