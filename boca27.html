@@ -496,6 +496,12 @@
   .b27-ses-title { font-family:var(--serif); font-weight:550; font-variation-settings:"wght" 550; font-size:20px; line-height:1.25; letter-spacing:-0.01em; color:var(--black); margin:0; }
   .b27-ses-desc { font-family:var(--sans); font-size:16px; font-weight:500; line-height:1.6; color:var(--black-70); margin:0.5rem 0 0; }
   .b27-ses--break .b27-ses-title { font-size:16px; font-family:var(--sans); font-weight:600; color:var(--black-70); letter-spacing:-0.02em; }
+  .b27-ses-people { display:flex; flex-wrap:wrap; gap:14px; margin:0.9rem 0 0; }
+  .b27-ses-person { display:flex; align-items:center; gap:8px; background:none; border:0; padding:0; font:inherit; cursor:pointer; text-align:left; }
+  .b27-ses-person-photo { width:32px; height:32px; border-radius:50%; overflow:hidden; flex-shrink:0; background:var(--linen); }
+  .b27-ses-person-photo img { width:100%; height:100%; object-fit:cover; object-position:var(--op,center top); transform:scale(var(--sc,1)); transform-origin:var(--to,center top); display:block; }
+  .b27-ses-person-name { font-family:var(--sans); font-size:13px; font-weight:600; color:var(--black); line-height:1.25; }
+  .b27-ses-person-co { font-family:var(--sans); font-size:12px; font-weight:500; color:var(--pine); line-height:1.25; }
   @media (max-width:560px){ .b27-ses{ grid-template-columns:1fr; gap:0.4rem; } }
 
   /* ---- Speakers grid ---- (ported from bocomp26 #speakers)
@@ -1322,16 +1328,16 @@
     { day:'Conference day', date:'Friday, 19 February 2027', sessions:[
       { time:'08:30', title:'Morning Coffee & Registration', brk:true },
       { time:'09:00', title:'Opening Remarks', brk:true },
-      { time:'09:15', title:'The State of Collective Redress in Europe: A Data-Driven Map', desc:'What can we learn from collective actions that have actually reached European courts? A practical comparison of selected jurisdictions, looking at how cases have developed and why outcomes differ across Europe.' },
-      { time:'10:05', title:'The Negative Space: Why Collective Redress Fails to Launch', desc:'This discussion explores where collective redress was poorly implemented, dead on arrival, or never adopted, and why: procedural, economic, institutional barriers or simply a lack of incentives.' },
+      { time:'09:15', title:'Where are collective actions actually taking off in Europe, and what is holding other jurisdictions back?', desc:'A practical look at the jurisdictions seeing real activity, the barriers holding others back and what is likely to change next.' },
+      { time:'10:05', title:'Collective Actions Across Borders: Lessons from Booking.com, Data Protection and Essure', desc:'Using real competition, data and product liability cases, the panel will look at jurisdiction, claimant recruitment, evidence, funding and the practical challenges of coordinating major claims across borders.', speakers:['Volker Soyez'] },
       { time:'10:55', title:'Networking Break', brk:true },
-      { time:'11:25', title:'Qualified Entities as Claimants: Is the Association the Only Door In?', desc:'Collective redress in Europe often depends on associations, but what happens when they move too slowly, lack resources or choose not to act? Practical realities, incentives and limitations of the qualified entity model.' },
-      { time:'12:15', title:'The Economic Expert’s Role', desc:'Economic evidence increasingly influences collective actions from the earliest stages. Data requirements, methodology and how expert analysis can affect the viability of a claim.' },
+      { time:'11:25', title:'How do qualified entities actually build cases, especially when claims span several countries?', desc:'The panel will discuss case selection, funding, evidence, claimant groups and governance, as well as cooperation between qualified entities, lawyers and funders across jurisdictions. It will also look at the practical limits of the model.', speakers:['Carine Seron','Lena Hornkohl','Patricia Suárez','Paul Hitchings'] },
+      { time:'12:15', title:'Can the economics make or break a collective claim?', desc:'Economists and lawyers will discuss causation, damages, counterfactuals, access to data and how economic evidence shapes a case from the early stages through to trial or settlement.' },
       { time:'13:05', title:'Lunch', brk:true },
-      { time:'14:05', title:'Technology and Class Actions', desc:'Collective litigation increasingly means managing data at scale. Document collection, data processing, practical challenges for legal teams and how courts expect complex evidence to be presented.' },
-      { time:'14:55', title:'The Defence Perspective', desc:'The panel will discuss strategies for challenging claims, dealing with evidence and damages, and coordinating proceedings across jurisdictions.' },
+      { time:'14:05', title:'What makes a collective settlement possible, and how does compensation actually reach claimants?', desc:'Using examples from Portugal, England and the Netherlands, the panel will look at how settlements are negotiated, approved and funded, and how compensation is distributed in practice.', speakers:['Porfírio Moreira'] },
+      { time:'14:55', title:'Where could the next major collective claims come from? Risks for companies and defence strategies', desc:'The panel will explore emerging risks around product liability, AI, data and consumer law, and how companies can prepare, preserve evidence and coordinate their defence across jurisdictions.', speakers:['Stephan Kugler'] },
       { time:'15:45', title:'Networking Break', brk:true },
-      { time:'16:15', title:'The Litigation Funders’ Perspective', desc:'Not every claim is investable. How funders assess opportunities, where they see growth and how economics, risk and regulation influence funding decisions in practice.' },
+      { time:'16:15', title:'Why do some collective actions attract funding while others do not?', desc:'Commercial and impact-driven funders will discuss how they assess jurisdiction, liability, damages, claimant groups, enforceability and case economics, as well as the risks that can stop an otherwise promising claim from being funded.', speakers:['Ianika Tzankova','Maros Kravec'] },
       { time:'17:05', title:'Closing Remarks & End of the Conference', brk:true },
       { time:'19:00', title:'The Porto Evening', desc:'Portuguese dinner, live Fado and Port wine in a relaxed atmosphere overlooking Porto. Included in the conference ticket.' }
     ]}
@@ -1377,6 +1383,8 @@
   /* ---------- Render: programme ---------- */
   function renderProgram() {
     var root = document.querySelector('[data-program]'); if (!root) return;
+    var byName = {};
+    SPEAKERS.forEach(function (sp) { byName[sp[0]] = sp; });
     PROGRAM.forEach(function (d) {
       var day = el('div', 'b27-day');
       var head = el('div', 'b27-day-head');
@@ -1389,6 +1397,24 @@
         var body = el('div');
         body.appendChild(el('h3', 'b27-ses-title', esc(s.title)));
         if (s.desc) body.appendChild(el('p', 'b27-ses-desc', esc(s.desc)));
+        if (s.speakers && s.speakers.length) {
+          var people = el('div', 'b27-ses-people');
+          s.speakers.forEach(function (name) {
+            var sp = byName[name]; if (!sp) return;
+            var person = el('button', 'b27-ses-person'); person.type = 'button';
+            var photo = el('div', 'b27-ses-person-photo');
+            var im = el('img'); im.src = sp[3] || FALLBACK_PHOTO; im.alt = sp[0]; im.loading = 'lazy';
+            if (sp[4]) im.setAttribute('style', sp[4]);
+            photo.appendChild(im); person.appendChild(photo);
+            var meta = el('div');
+            meta.appendChild(el('div', 'b27-ses-person-name', esc(sp[0])));
+            meta.appendChild(el('div', 'b27-ses-person-co', esc(sp[2])));
+            person.appendChild(meta);
+            person.addEventListener('click', function () { openModal(sp); });
+            people.appendChild(person);
+          });
+          body.appendChild(people);
+        }
         row.appendChild(body);
         day.appendChild(row);
       });
