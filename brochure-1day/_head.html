@@ -376,6 +376,11 @@
     line-height: 1.15; color: var(--black); text-transform: uppercase; letter-spacing: 0.02em;
   }
   .mini-firm { font-size: 5.2pt; color: var(--pine); line-height: 1.15; margin-top: 0.5mm; }
+  .mini-mod { font-size: 4.8pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--black70); font-weight: 700; margin-bottom: 0.8mm; }
+  .fmt-label { display: block; font-size: 7pt; letter-spacing: 0.13em; text-transform: uppercase; color: var(--pine); font-weight: 700; margin-bottom: 1mm; }
+  .sess-tba { font-size: 6.5pt; color: var(--black70); font-style: italic; line-height: 1.3; align-self: center; max-width: 30mm; }
+  .prog-note { font-size: 7pt; color: var(--black70); font-style: italic; text-align: center; margin-top: 5mm; }
+  .sched-page .sched .time { font-size: 8.4pt; width: 20mm; white-space: nowrap; }
 
   /* who attends */
   .audience-grid { display: flex; flex-wrap: wrap; gap: 5mm; margin-top: 6mm; }
@@ -483,8 +488,23 @@
     border-top: 1px solid var(--hairline); padding-top: 4mm;
   }
 
-  /* ---------- PARTNERSHIP (content update, original card style) ---------- */
-  .tier .badge { background: var(--pine); color: #fff; }
+  /* ---------- PORTO EXPERIENCE ---------- */
+  .porto-subtitle { font-size: 11pt; color: var(--black70); font-style: italic; margin: 0 0 5mm; }
+  .porto-banner { width: 100%; height: 42mm; object-fit: cover; border-radius: 12px; display: block; margin-bottom: 6mm; }
+  .porto-timeline { display: flex; gap: 5mm; margin-bottom: 6mm; }
+  .porto-item { flex: 1; background: var(--linen); border-radius: 10px; padding: 4mm 5mm; }
+  .porto-date { font-size: 7.5pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pine); font-weight: 700; margin-bottom: 1.5mm; }
+  .porto-ititle { font-family: 'Erode', serif; font-size: 11pt; font-weight: 550; color: var(--black); margin-bottom: 2mm; line-height: 1.2; }
+  .porto-itext { font-size: 8pt; color: var(--black70); line-height: 1.5; }
+  .porto-wow-wrap { background: #F6F1E7; padding: 3mm; border-radius: 12px; margin-bottom: 5mm; }
+  .porto-wow { width: 100%; height: 50mm; object-fit: cover; border-radius: 8px; display: block; }
+  .porto-wow-cap { font-size: 7.5pt; color: var(--black70); font-style: italic; text-align: center; margin-top: 2.5mm; }
+  .porto-prague { display: flex; gap: 5mm; }
+  .porto-prague figure { flex: 1; background: #F6F1E7; padding: 3mm; border-radius: 12px; margin: 0; }
+  .porto-prague img { width: 100%; border-radius: 8px; display: block; }
+  .porto-prague-cap { font-size: 7.5pt; color: var(--black70); font-style: italic; text-align: center; margin-top: 3mm; }
+
+  /* ---------- PARTNERSHIP (content update, original card style) ---------- */  .tier .badge { background: var(--pine); color: #fff; }
   .tier.featured { background: #EDF1EC; border: 1.5px solid rgba(5,41,13,0.30); }
   .pkg-limited {
     margin-top: 3mm; font-size: 7pt; letter-spacing: 0.1em; text-transform: uppercase;
@@ -745,17 +765,21 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 5mm;
-    margin-top: 10mm;
+    gap: 6mm 5mm;
+    margin-top: 9mm;
   }
   .speaker-card {
     width: 37mm;
     text-align: center;
   }
+  .speaker-photo-wrap {
+    position: relative;
+    width: 33mm;
+    margin: 0 auto 4mm;
+  }
   .speaker-photo {
     width: 33mm;
     height: 33mm;
-    margin: 0 auto 4mm;
     border-radius: 50%;
     overflow: hidden;
     background: #ffffff;
@@ -767,23 +791,53 @@
     object-fit: cover;
     display: block;
   }
+  .li-badge {
+    position: absolute;
+    right: 1.5mm;
+    bottom: 0.5mm;
+    width: 7mm;
+    height: 7mm;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0.4mm 1mm rgba(0,0,0,0.22);
+    text-decoration: none;
+  }
+  .li-badge svg { width: 4.4mm; height: 4.4mm; display: block; }
   .speaker-name {
+    display: block;
     font-family: 'Erode', Georgia, serif;
-    font-size: 14pt;
+    font-size: 12.5pt;
     font-weight: 550;
     color: var(--black);
-    line-height: 1.2;
+    line-height: 1.18;
     margin-bottom: 1.5mm;
+    text-decoration: none;
+  }
+  .spk-mod {
+    font-size: 6.5pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--black70); font-weight: 700; margin-bottom: 1.2mm;
   }
   .speaker-role {
-    font-size: 9.5pt;
+    font-size: 8.5pt;
     font-weight: 600;
     color: var(--black);
+    line-height: 1.3;
   }
   .speaker-firm {
-    font-size: 9.5pt;
+    font-size: 8.5pt;
     color: var(--black70);
+    line-height: 1.3;
   }
+  .spk-juris {
+    font-size: 7.5pt;
+    color: var(--black70);
+    margin-top: 1.5mm;
+    letter-spacing: 0.02em;
+  }
+  .spk-juris::before { content: "\25CF"; color: var(--yellow); font-size: 6pt; margin-right: 1.3mm; vertical-align: middle; }
 
 /* ===== WEB LAYOUT OVERRIDES ===== */
 body { background: #D0CCC6; font-size: 13px !important; }
@@ -809,6 +863,7 @@ h1 { font-size:64px !important; } h2 { font-size:34px !important; } h3 { font-si
 .cover .date-loc { font-size:18px !important; margin-bottom:12px; }
 .cover .cover-tagline { font-size:18px !important; margin-top:14px; margin-bottom:6px; }
 .cover .cover-meta-line { font-size:12px !important; }
+.cover-cta { display:inline-block; margin-top:22px; background:var(--yellow); color:var(--pine); font-family:'DM Sans',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.04em; text-transform:uppercase; padding:11px 22px; border-radius:100px; text-decoration:none; }
 .cover .meta-bottom { bottom:28px !important; left:64px !important; right:64px !important; font-size:10px !important; padding-top:12px; }
 .page-head { margin-bottom:18px; padding-right:140px; }
 .stat-row { margin-top:24px; }
@@ -828,6 +883,11 @@ h1 { font-size:64px !important; } h2 { font-size:34px !important; } h3 { font-si
 .venue-inline-desc,.venue-inline-detail { font-size:13px !important; }
 .day-tag { font-size:10px !important; padding:5px 14px; margin-bottom:14px; }
 .sched .time { font-size:13px !important; width:68px; }
+.sched-page .sched .time { font-size:11px !important; width:76px; white-space:nowrap; }
+.fmt-label { font-size:9px !important; }
+.mini-mod { font-size:8px !important; }
+.sess-tba { font-size:10px !important; }
+.prog-note { font-size:10px !important; }
 .sched .session h4 { font-size:14px !important; }
 .sched .session p { font-size:12px !important; }
 .stype { font-size:9px !important; padding:2px 7px; }
@@ -901,6 +961,6 @@ h1 { font-size:64px !important; } h2 { font-size:34px !important; } h3 { font-si
 </style>
 </head>
 <body>
-<nav class="brochure-nav"><span class="nav-brand">BOCA27 &mdash; Business of Class Actions Europe 2027</span><div class="nav-links"><a href="#page-1">Cover</a> <a href="#page-2">About</a> <a href="#page-5">Programme</a> <a href="#page-30">Speakers</a> <a href="#page-11">Registration</a> <a href="#page-17">Partnership</a> <a href="#page-23">Contact</a></div><span class="nav-pages">9 pages</span></nav>
+<nav class="brochure-nav"><span class="nav-brand">BOCA27 &mdash; Business of Class Actions Europe 2027</span><div class="nav-links"><a href="#page-1">Cover</a> <a href="#page-2">About</a> <a href="#page-5">Programme</a> <a href="#page-30">Speakers</a> <a href="#page-11">Registration</a> <a href="#page-17">Experience</a> <a href="#page-23">Contact</a></div><span class="nav-pages">9 pages</span></nav>
 <div class="brochure-wrapper">
 
