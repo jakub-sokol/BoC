@@ -193,6 +193,11 @@
   .b27-focus-body { max-width: 680px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
   .b27-focus-body p { font-family: var(--sans); font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--black-70); text-align: center; margin: 0; }
   .b27-focus .b27-btn { margin-top: 32px; }
+  .b27-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center; }
+  .b27-stat { text-align: center; }
+  .b27-stat-num { font-family: var(--serif); font-weight: 600; font-variation-settings: "wght" 600; font-size: clamp(2rem, 4vw, 48px); line-height: 1; letter-spacing: -0.02em; color: var(--pine); display: block; }
+  .b27-stat-label { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--black-70); display: block; margin-top: 6px; max-width: 140px; }
+  .b27-focus-eb { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--black-70); margin: 12px 0 0; text-align: center; }
 
   /* ---- Registration band ---- */
   .b27-register {
@@ -502,6 +507,10 @@
   .b27-ses-person-photo img { width:100%; height:100%; object-fit:cover; object-position:var(--op,center top); transform:scale(var(--sc,1)); transform-origin:var(--to,center top); display:block; }
   .b27-ses-person-name { font-family:var(--sans); font-size:13px; font-weight:600; color:var(--black); line-height:1.25; }
   .b27-ses-person-co { font-family:var(--sans); font-size:12px; font-weight:500; color:var(--pine); line-height:1.25; }
+  .b27-ses-person-mod { font-family:var(--sans); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--pine); line-height:1.3; margin-top:1px; }
+  .b27-ses-type { font-family:var(--sans); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--pine); margin:0 0 5px; }
+  .b27-ses-note { font-family:var(--sans); font-size:13px; font-weight:500; font-style:italic; color:var(--black-70); margin:0.65rem 0 0; }
+  .b27-prog-footnote { font-family:var(--sans); font-size:13px; font-weight:500; color:var(--black-70); text-align:center; margin:1.75rem 0 0; }
   @media (max-width:560px){ .b27-ses{ grid-template-columns:1fr; gap:0.4rem; } }
 
   /* ---- Speakers grid ---- (ported from bocomp26 #speakers)
@@ -530,7 +539,8 @@
   .b27-theme-ic { width:38px; height:38px; border-radius:50%; background:var(--pine); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .b27-theme-ic svg { width:19px; height:19px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
   .b27-theme p { font-family:var(--sans); font-size:15.5px; font-weight:500; line-height:1.4; color:var(--black); margin:0; }
-  @media (max-width:809px){ .b27-themes-grid{ grid-template-columns:repeat(2,1fr); } }
+  .b27-themes-grid .b27-theme:nth-child(7) { grid-column: 2; }
+  @media (max-width:809px){ .b27-themes-grid{ grid-template-columns:repeat(2,1fr); } .b27-themes-grid .b27-theme:nth-child(7) { grid-column: auto; } }
   @media (max-width:520px){ .b27-themes-grid{ grid-template-columns:1fr; } }
 
   /* ---- Speaker bio modal ---- (ported from bocomp26 #b26-modal) */
@@ -585,14 +595,21 @@
     <img src="boca27/porto-hero.svg" alt="" loading="lazy">
   </div>
 
-  <!-- Our focus for 2027 -->
+  <!-- About -->
   <section class="b27-section b27-focus" id="boc27-focus">
-    <h2 class="b27-h2">Our goal</h2>
+    <h2 class="b27-h2">A focused gathering for Europe&rsquo;s collective redress community</h2>
     <div class="b27-focus-body">
-      <p>Business of Class Actions is a new conference for people working with collective redress, mass claims, consumer litigation, funding, enforcement, and related policy questions in Europe.</p>
-      <p>For the first edition, our goal is simple: build a focused programme, bring the right people into the room, and create space for practical discussion between lawyers, funders, economists, companies, associations, and public-sector voices.</p>
+      <p>Collective redress is developing quickly across Europe, but not evenly. Some jurisdictions are seeing major claims, active qualified entities and new funding models, while others are still struggling to turn legal frameworks into real cases.</p>
+      <p>Business of Class Actions brings together the people building, funding, defending and deciding these claims. Through real cases and practical discussion, the conference explores what makes collective litigation work and what businesses, claimants and funders should prepare for next.</p>
     </div>
-    <a class="b27-btn b27-btn--pine" href="#" data-suggest-open>Suggest a topic or speaker</a>
+    <div class="b27-stats">
+      <div class="b27-stat"><span class="b27-stat-num">1</span><span class="b27-stat-label">Focused day</span></div>
+      <div class="b27-stat"><span class="b27-stat-num">7</span><span class="b27-stat-label">Sessions + opening keynote</span></div>
+      <div class="b27-stat"><span class="b27-stat-num">17</span><span class="b27-stat-label">Confirmed speakers</span></div>
+      <div class="b27-stat"><span class="b27-stat-num">80+</span><span class="b27-stat-label">Expected attendees</span></div>
+    </div>
+    <a class="b27-btn b27-btn--pine" href="./boca27-register">Register for the conference</a>
+    <p class="b27-focus-eb">Early Bird pricing available until 30 November 2026.</p>
   </section>
 
   <!-- Key themes -->
@@ -602,27 +619,31 @@
     <div class="b27-themes-grid">
       <div class="b27-theme">
         <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><polyline points="3 16 9 10 13 14 21 6"/><polyline points="15 6 21 6 21 12"/></svg></span>
-        <p>What makes collective actions succeed and where in Europe</p>
-      </div>
-      <div class="b27-theme">
-        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><path d="M12 4 21 19 3 19Z"/><line x1="12" y1="9.5" x2="12" y2="13.5"/><line x1="12" y1="16.4" x2="12" y2="16.5"/></svg></span>
-        <p>Where collective actions fail and why</p>
-      </div>
-      <div class="b27-theme">
-        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.2 8 21l4-2.2 4 2.2-1-7.8"/></svg></span>
-        <p>What it takes to get a collective action through certification</p>
-      </div>
-      <div class="b27-theme">
-        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><line x1="3.5" y1="20.5" x2="20.5" y2="20.5"/><rect x="5" y="12" width="3.2" height="8"/><rect x="10.4" y="7" width="3.2" height="13"/><rect x="15.8" y="10" width="3.2" height="10"/></svg></span>
-        <p>The role of economic analysis and data in building viable claims</p>
-      </div>
-      <div class="b27-theme">
-        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5Z"/><path d="M3 13l9 5 9-5"/></svg></span>
-        <p>Managing documents, data and claimants at scale</p>
+        <p>Collective redress across Europe: activity and barriers</p>
       </div>
       <div class="b27-theme">
         <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="4.5" x2="12" y2="20"/><line x1="7" y1="20" x2="17" y2="20"/><line x1="4" y1="7.5" x2="20" y2="7.5"/><path d="M4 7.5 1.9 12.4a2.5 2.5 0 0 0 4.2 0Z"/><path d="M20 7.5 17.9 12.4a2.5 2.5 0 0 0 4.2 0Z"/></svg></span>
-        <p>How courts approach collective actions in practice</p>
+        <p>Cross-border cases: Booking.com, data protection and Essure</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5Z"/><path d="M3 13l9 5 9-5"/></svg></span>
+        <p>How qualified entities build claims</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><line x1="3.5" y1="20.5" x2="20.5" y2="20.5"/><rect x="5" y="12" width="3.2" height="8"/><rect x="10.4" y="7" width="3.2" height="13"/><rect x="15.8" y="10" width="3.2" height="10"/></svg></span>
+        <p>Economic evidence, causation and damages</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><path d="M12 4 21 19 3 19Z"/><line x1="12" y1="9.5" x2="12" y2="13.5"/><line x1="12" y1="16.4" x2="12" y2="16.5"/></svg></span>
+        <p>Collective settlements and compensation</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.2 8 21l4-2.2 4 2.2-1-7.8"/></svg></span>
+        <p>Emerging litigation risks and defence strategies</p>
+      </div>
+      <div class="b27-theme">
+        <span class="b27-theme-ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M5 7l7-5 7 5M5 7v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7"/></svg></span>
+        <p>What makes a collective action investable</p>
       </div>
     </div>
   </section>
@@ -633,7 +654,7 @@
   <section class="b27-section" id="boc27-rates">
     <p class="b27-eyebrow">Registration</p>
     <h2 class="b27-h2">Conference rates</h2>
-    <p class="b27-sub">Be part of the discussion on the future of collective redress in Europe. Early Bird pricing available until 31 October 2026.</p>
+    <p class="b27-sub">Be part of the discussion on the future of collective redress in Europe. Early Bird pricing available until 30 November 2026.</p>
     <div class="b27-pricing-grid b27-pricing-grid--4">
       <div class="b27-price-card">
         <h3 class="pt-name">Standard</h3>
@@ -702,6 +723,7 @@
     <p class="b27-eyebrow">Programme</p>
     <h2 class="b27-h2">Programme</h2>
     <div class="b27-prog" data-program></div>
+    <p class="b27-prog-footnote">Programme and speaker line-up are subject to change.</p>
   </section>
 
   <!-- Confirmed Speakers -->
@@ -1326,20 +1348,21 @@
       { time:'18:30 – 21:00', title:'Welcome Reception', desc:'Join fellow delegates for an informal evening of Portuguese wine, local flavours and first conversations before the conference begins. Venue to be confirmed.' }
     ]},
     { day:'Conference day', date:'Friday, 19 February 2027', sessions:[
-      { time:'08:30', title:'Morning Coffee & Registration', brk:true },
-      { time:'09:00', title:'Opening Remarks', brk:true },
-      { time:'09:15', title:'Where are collective actions actually taking off in Europe, and what is holding other jurisdictions back?', desc:'A practical look at the jurisdictions seeing real activity, the barriers holding others back and what is likely to change next.' },
-      { time:'10:05', title:'Collective Actions Across Borders: Lessons from Booking.com, Data Protection and Essure', desc:'Using real competition, data and product liability cases, the panel will look at jurisdiction, claimant recruitment, evidence, funding and the practical challenges of coordinating major claims across borders.', speakers:['Volker Soyez','Peter Hense','Julia Suderow'] },
-      { time:'10:55', title:'Networking Break', brk:true },
-      { time:'11:25', title:'How do qualified entities actually build cases, especially when claims span several countries?', desc:'The panel will discuss case selection, funding, evidence, claimant groups and governance, as well as cooperation between qualified entities, lawyers and funders across jurisdictions. It will also look at the practical limits of the model.', speakers:['Carine Seron','Lena Hornkohl','Patricia Suárez','Paul Hitchings'] },
-      { time:'12:15', title:'Can the economics make or break a collective claim?', desc:'Economists and lawyers will discuss causation, damages, counterfactuals, access to data and how economic evidence shapes a case from the early stages through to trial or settlement.' },
-      { time:'13:05', title:'Lunch', brk:true },
-      { time:'14:05', title:'What makes a collective settlement possible, and how does compensation actually reach claimants?', desc:'Using examples from Portugal, England and the Netherlands, the panel will look at how settlements are negotiated, approved and funded, and how compensation is distributed in practice.', speakers:['Porfírio Moreira'] },
-      { time:'14:55', title:'Where could the next major collective claims come from? Risks for companies and defence strategies', desc:'The panel will explore emerging risks around product liability, AI, data and consumer law, and how companies can prepare, preserve evidence and coordinate their defence across jurisdictions.', speakers:['Stephan Kugler','Sofia Vaz Sampaio','Ozan Akyurek','Gian Paolo Coppola'] },
-      { time:'15:45', title:'Networking Break', brk:true },
-      { time:'16:15', title:'Why do some collective actions attract funding while others do not?', desc:'Commercial and impact-driven funders will discuss how they assess jurisdiction, liability, damages, claimant groups, enforceability and case economics, as well as the risks that can stop an otherwise promising claim from being funded.', speakers:['Ianika Tzankova','Maros Kravec'] },
-      { time:'17:05', title:'Closing Remarks & End of the Conference', brk:true },
-      { time:'19:00', title:'The Porto Evening', desc:'Portuguese dinner, live Fado and Port wine in a relaxed atmosphere overlooking Porto. Included in the conference ticket.' }
+      { time:'08:30–09:00', title:'Morning coffee and registration', brk:true },
+      { time:'09:00–09:05', title:'Opening remarks', brk:true },
+      { time:'09:05–09:25', type:'Opening Keynote', title:'The state of collective redress in Europe', desc:'A short comparative overview of where collective redress is developing across Europe and how national systems continue to differ.', speakers:['Maria José Azar-Baud'] },
+      { time:'09:25–10:10', type:'Opening Panel', title:'From legal frameworks to real cases', desc:'Why collective actions are becoming established in some jurisdictions while remaining difficult to bring in others, including the role of procedure, funding, standing and court practice.', speakers:['Xandra Kramer','Robbert-Jan Kamstra'], moderators:['Xandra Kramer'], note:'Additional speakers to be announced' },
+      { time:'10:10–11:00', type:'Case Discussion', title:'Cross-border collective actions in practice', desc:'A practical look at Booking.com, data protection and Essure claims, focusing on jurisdiction, claimant recruitment, evidence, funding and coordination across countries.', speakers:['Volker Soyez','Peter Hense','Julia Suderow'] },
+      { time:'11:00–11:30', title:'Networking break', brk:true },
+      { time:'11:30–12:20', type:'Practical Roundtable', title:'How qualified entities build claims across borders', desc:'How qualified entities select and develop cases involving consumers in different countries, build claimant groups, gather evidence, secure resources and coordinate with lawyers, funders and partner organisations across jurisdictions.', speakers:['Paul Hitchings','Carine Seron','Lena Hornkohl','Patricia Suárez'], moderators:['Paul Hitchings'] },
+      { time:'12:20–13:10', type:'Expert Discussion', title:'The role of economics in collective claims', desc:'How economic evidence shapes a claim from the earliest assessment through trial or settlement, including causation, counterfactuals, access to data and the calculation of damages — and how claimant and defence teams approach these questions differently.', note:'Speakers to be announced' },
+      { time:'13:10–14:05', title:'Lunch', brk:true },
+      { time:'14:05–14:55', type:'Case Discussion', title:'Reaching settlement and delivering compensation', desc:'How collective settlements are negotiated, funded and approved, and how compensation ultimately reaches claimants in practice.', speakers:['Porfírio Moreira'], note:'Additional speakers to be announced' },
+      { time:'14:55–15:45', type:'Practical Roundtable', title:'Potential litigation risks and how to defend them', desc:'The session will focus on product liability, AI, data protection and consumer law, and the practical steps companies can take before claims arise — from documentation and evidence preservation to internal processes and cross-border defence strategy.', speakers:['Stephan Kugler','Sofia Vaz Sampaio','Ozan Akyurek','Gian Paolo Coppola'] },
+      { time:'15:45–16:15', title:'Networking break', brk:true },
+      { time:'16:15–17:05', type:'Closing Discussion', title:'What makes a collective action worth funding?', desc:'How commercial and impact-driven funders assess collective actions, which risks matter most and why some potentially strong cases still do not receive funding.', speakers:['Ianika Tzankova','Maros Kravec'], moderators:['Ianika Tzankova'], note:'Additional speakers to be announced' },
+      { time:'17:05–17:15', title:'Closing remarks', desc:'A short recap of the main themes from the day and a look ahead at what may come next for collective redress in Europe.' },
+      { time:'19:00', type:'Evening', title:'The Porto Evening', desc:'Portuguese dinner, live Fado and Port wine in a relaxed atmosphere overlooking Porto. Included in the conference ticket.' }
     ]}
   ];
 
@@ -1349,20 +1372,23 @@
   //   --op = object-position, --sc = zoom, --to = transform-origin.
   var FALLBACK_PHOTO = 'boca27/speakers-boca27/porfirio-moreira.png';
   var SPEAKERS = [
-    ['Porfírio Moreira','Partner','Sousa Ferro & Associados','boca27/speakers-boca27/porfirio-moreira.png','--op:center 22%;'],
-    ['Lena Hornkohl','President','Ius Omnibus','boca27/speakers-boca27/lena-hornkohl.jpeg','--sc:1.18; --to:50% 34%;'],
-    ['Carine Seron','Legal Counsel','Euroconsumers','boca27/speakers-boca27/carine-seron.jpeg','--sc:1.2; --to:50% 40%;'],
-    ['Paul Hitchings','Partner','Hitchings & Gonzalez','boca27/speakers-boca27/Paul%20Hitchings.jpeg','--op:center 30%;'],
-    ['Ianika Tzankova','Head of Global Dispute Resolution & Collective Redress','Rubicon Impact & Litigation','boca27/speakers-boca27/Ianika-Tzankova.jpg','--sc:1.2; --to:50% 30%;'],
-    ['Maros Kravec','Partner','LitFin','boca27/speakers-boca27/Maros_Kravec_LL_M_b12d8b4858.jpg','--sc:1.5; --to:50% 18%;'],
-    ['Stephan Kugler','Counsel','Wolf Theiss','boca27/speakers-boca27/Stephan%20Kugler.jpg','--sc:1.9; --to:100% 16%;'],
-    ['Patricia Suárez','President','ASUFIN','boca27/speakers-boca27/Patricia%20Suarez%20Ramirez.jpg','--op:center 20%;'],
+    ['Maria José Azar-Baud','Associate Professor & International Collective Redress Expert','Paris-Saclay University','boca27/speakers-boca27/Maria%20Jose%20Azar-Baud.jpeg','--op:center 18%;'],
+    ['Xandra Kramer','Professor of Law','Erasmus University Rotterdam','boca27/speakers-boca27/Xandra_Kramer.png','--op:center 18%;'],
+    ['Robbert-Jan Kamstra','Managing Partner','Milberg Amsterdam','boca27/speakers-boca27/Robbert-Jan%20Kamstra.jpg','--op:center 18%;'],
     ['Volker Soyez','Partner','SGP Schneider Geiwitz','boca27/speakers-boca27/Volker%20Soyez.webp','--sc:1.2; --to:50% 26%;'],
-    ['Sofia Vaz Sampaio','Partner','Morais Leitão','boca27/speakers-boca27/Sofia%20Vaz%20Sampaio.webp','--op:center 20%;'],
     ['Peter Hense','Partner','Spirit Legal','boca27/speakers-boca27/Peter%20Hense.jpg','--op:center 18%;'],
     ['Julia Suderow','Partner','Suderow Fernandez','boca27/speakers-boca27/Julia%20Suderow.jpg','--op:center 18%;'],
+    ['Paul Hitchings','Partner','Hitchings & Gonzalez','boca27/speakers-boca27/Paul%20Hitchings.jpeg','--op:center 30%;'],
+    ['Carine Seron','Legal Counsel','Euroconsumers','boca27/speakers-boca27/carine-seron.jpeg','--sc:1.2; --to:50% 40%;'],
+    ['Lena Hornkohl','President','Ius Omnibus','boca27/speakers-boca27/lena-hornkohl.jpeg','--sc:1.18; --to:50% 34%;'],
+    ['Patricia Suárez','President','ASUFIN','boca27/speakers-boca27/Patricia%20Suarez%20Ramirez.jpg','--op:center 20%;'],
+    ['Porfírio Moreira','Partner','Sousa Ferro & Associados','boca27/speakers-boca27/porfirio-moreira.png','--op:center 22%;'],
+    ['Stephan Kugler','Counsel','Wolf Theiss','boca27/speakers-boca27/Stephan%20Kugler.jpg','--sc:1.9; --to:100% 16%;'],
+    ['Sofia Vaz Sampaio','Partner','Morais Leitão','boca27/speakers-boca27/Sofia%20Vaz%20Sampaio.webp','--op:center 20%;'],
     ['Ozan Akyurek','Partner','Jones Day','boca27/speakers-boca27/Ozan%20Akyurek.webp','--op:center 18%;'],
-    ['Gian Paolo Coppola','Partner','LCA Studio Legale','boca27/speakers-boca27/Coppola-Gian-Paolo_sito-colore.jpg','--op:center 18%;']
+    ['Gian Paolo Coppola','Partner','LCA Studio Legale','boca27/speakers-boca27/Coppola-Gian-Paolo_sito-colore.jpg','--op:center 18%;'],
+    ['Ianika Tzankova','Head of Global Dispute Resolution & Collective Redress','Rubicon Impact & Litigation','boca27/speakers-boca27/Ianika-Tzankova.jpg','--sc:1.2; --to:50% 30%;'],
+    ['Maros Kravec','Partner','LitFin','boca27/speakers-boca27/Maros_Kravec_LL_M_b12d8b4858.jpg','--sc:1.5; --to:50% 18%;']
   ];
   var BIOS = {
     "Carine Seron":"Carine studied law at the University of Liège (Belgium), Maastricht University (Netherlands), and Harvard (LL.M.). With several years of experience addressing the impact of the economic and business sectors on human rights, the environment, and climate change globally, she worked as a lawyer at the Brussels Bar (Belgium) for four years. She joined Euroconsumers in September 2024, where she focuses on class actions and litigation funding to enhance consumer rights.",
@@ -1377,7 +1403,10 @@
     "Peter Hense":"Peter Hense is a lawyer and partner at Spirit Legal. He advises on international IT and technology law, the law governing the use, security, and protection of data, and related technology-heavy commercial litigation. His areas of focus are machine learning, sensor fusion, privacy engineering, conformity assessments, AI red teaming, and the ethics of automated decision-making systems (Accountable AI). For eight years, Peter served on the board of an R&D company developing deep neural networks.",
     "Julia Suderow":"Julia is a lawyer specializing in Competition Law, M & A, International Arbitration and Private International Law and superior legal support in German or English. In addition, she has extensive experience in legal advice abroad and to foreign companies in Spain. Prior to creating her own firm, she has developed her professional career as an associate with two big law firms in Madrid, providing advice on competition law, commercial law, international arbitration and private international law. She is an Associate Professor at the University of Deusto and cooperates with several universities in Spain and other European Member States.",
     "Ozan Akyurek":"Ozan Akyurek is a partner in Jones Day’s Paris office, practising in commercial litigation and international arbitration. He represents major French and international companies in disputes involving product liability, industrial risks, post-acquisition claims and business torts, with experience across sectors including aviation, automotive, energy, technology, transport and retail. Ozan also advises on insurance, internal investigations and compliance. He regularly speaks and writes on product liability and collective actions, bringing a defence-side perspective on emerging litigation risks and the practical management of complex claims.",
-    "Gian Paolo Coppola":"Gian Paolo Coppola is an equity partner at LCA Studio Legale, specialising in litigation and ADR. He advises clients across sectors ranging from industrial plants and infrastructure to technology, media, AI and sport, with particular experience in corporate and commercial disputes, consumer relations, unfair competition and international contracts. Qualified in Italy and as a Solicitor in England and Wales, he has extensive experience in domestic and cross-border litigation and arbitration, including as an arbitrator. He brings a practical defence perspective on emerging claims and the management of complex disputes across jurisdictions."
+    "Gian Paolo Coppola":"Gian Paolo Coppola is an equity partner at LCA Studio Legale, specialising in litigation and ADR. He advises clients across sectors ranging from industrial plants and infrastructure to technology, media, AI and sport, with particular experience in corporate and commercial disputes, consumer relations, unfair competition and international contracts. Qualified in Italy and as a Solicitor in England and Wales, he has extensive experience in domestic and cross-border litigation and arbitration, including as an arbitrator. He brings a practical defence perspective on emerging claims and the management of complex disputes across jurisdictions.",
+    "Maria José Azar-Baud":"Maria José Azar-Baud is a Paris- and Buenos Aires-admitted lawyer and Associate Professor at Paris-Saclay University, specialising in collective redress, consumer law and civil procedure. She has been involved in more than 100 collective actions across six countries and advises lawyers, NGOs, litigation funders and other stakeholders on collective redress strategy and procedure. She is also the founder and director of the Observatory of Class Actions and Other Forms of Collective Redress, which follows the development of collective litigation across Europe and beyond.",
+    "Xandra Kramer":"Xandra Kramer is Professor of Private Law at Erasmus University Rotterdam and a leading European expert on civil justice, collective redress and cross-border litigation. Her research focuses on access to justice, international litigation, procedural law and the development of collective actions in Europe. She has been closely involved in research and policy discussions on collective redress, litigation funding and the Dutch WAMCA framework.",
+    "Robbert-Jan Kamstra":"Robbert-Jan Kamstra is Managing Partner at Milberg Amsterdam and specialises in complex commercial disputes, collective actions and large-scale litigation. He is closely involved in collective claims under the Dutch WAMCA regime, including matters concerning consumer rights, competition law and environmental mass damage. He advises representative organisations on litigation strategy, governance, funding structures and cross-border coordination."
   };
   var LINKEDIN = {
     "Maros Kravec":"https://www.linkedin.com/in/maroskravec/",
@@ -1392,7 +1421,10 @@
     "Peter Hense":"https://www.linkedin.com/in/peter-hense-%F0%9F%87%BA%F0%9F%87%A6%F0%9F%87%AE%F0%9F%87%B1%F0%9F%87%AA%F0%9F%87%BA-19861318/",
     "Julia Suderow":"https://www.linkedin.com/in/juliasuderow/",
     "Ozan Akyurek":"https://www.linkedin.com/in/ozan-akyurek-6a22281/",
-    "Gian Paolo Coppola":"https://www.linkedin.com/in/gpcoppola"
+    "Gian Paolo Coppola":"https://www.linkedin.com/in/gpcoppola",
+    "Maria José Azar-Baud":"https://www.linkedin.com/in/maria-jos%C3%A9-azar-baud-2568a04/",
+    "Xandra Kramer":"https://www.linkedin.com/in/xandra-kramer-9434187/",
+    "Robbert-Jan Kamstra":"https://www.linkedin.com/in/robbert-jan-kamstra-bb788414/"
   };
 
   /* ---------- Render: programme ---------- */
@@ -1410,12 +1442,14 @@
         var row = el('div', 'b27-ses' + (s.brk ? ' b27-ses--break' : ''));
         row.appendChild(el('div', 'b27-ses-time', esc(s.time)));
         var body = el('div');
+        if (s.type) body.appendChild(el('p', 'b27-ses-type', esc(s.type)));
         body.appendChild(el('h3', 'b27-ses-title', esc(s.title)));
         if (s.desc) body.appendChild(el('p', 'b27-ses-desc', esc(s.desc)));
         if (s.speakers && s.speakers.length) {
           var people = el('div', 'b27-ses-people');
           s.speakers.forEach(function (name) {
             var sp = byName[name]; if (!sp) return;
+            var isMod = s.moderators && s.moderators.indexOf(name) !== -1;
             var person = el('button', 'b27-ses-person'); person.type = 'button';
             var photo = el('div', 'b27-ses-person-photo');
             var im = el('img'); im.src = sp[3] || FALLBACK_PHOTO; im.alt = sp[0]; im.loading = 'lazy';
@@ -1424,12 +1458,14 @@
             var meta = el('div');
             meta.appendChild(el('div', 'b27-ses-person-name', esc(sp[0])));
             meta.appendChild(el('div', 'b27-ses-person-co', esc(sp[2])));
+            if (isMod) meta.appendChild(el('div', 'b27-ses-person-mod', 'Moderator'));
             person.appendChild(meta);
             person.addEventListener('click', function () { openModal(sp); });
             people.appendChild(person);
           });
           body.appendChild(people);
         }
+        if (s.note) body.appendChild(el('p', 'b27-ses-note', esc(s.note)));
         row.appendChild(body);
         day.appendChild(row);
       });
