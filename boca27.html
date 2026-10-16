@@ -249,6 +249,14 @@
 
   /* ---- Registration pricing (4-up, dual price) ---- */
   .b27-pricing-grid--4 { grid-template-columns: repeat(4, 1fr); max-width: 1180px; }
+  .b27-pricing-grid--5 { grid-template-columns: repeat(5, 1fr); max-width: 1100px; gap: 14px; }
+  .b27-pricing-grid--5 .b27-price-card { padding: 22px 16px; gap: 4px; }
+  .b27-pricing-grid--5 .b27-price-card .pt-name { font-size: 17px; margin: 0 0 4px; }
+  .b27-pricing-grid--5 .b27-price-card .pt-desc { font-size: 12.5px; line-height: 1.4; }
+  .b27-pricing-grid--5 .b27-price-card .amt-old { font-size: 14px; margin-top: auto; }
+  .b27-pricing-grid--5 .b27-price-card .amt-new { font-size: 22px; margin: 3px 0 0; }
+  .b27-pricing-grid--5 .b27-eb-tag { font-size: 0.56rem; padding: 0.2rem 0.5rem; margin-bottom: 2px; }
+  .b27-pricing-grid--5 .b27-price-card .b27-btn { height: 40px; padding: 0 14px; font-size: 13px; margin-top: 14px; }
   .b27-price-card .amt-old {
     font-family: var(--serif); font-size: 20px; font-weight: 550; font-variation-settings: "wght" 550;
     letter-spacing: -0.02em; color: var(--black-40); text-decoration: line-through;
@@ -655,7 +663,7 @@
     <p class="b27-eyebrow">Registration</p>
     <h2 class="b27-h2">Conference rates</h2>
     <p class="b27-sub">Be part of the discussion on the future of collective redress in Europe. Early Bird pricing available until 30 November 2026.</p>
-    <div class="b27-pricing-grid b27-pricing-grid--4">
+    <div class="b27-pricing-grid b27-pricing-grid--5">
       <div class="b27-price-card">
         <h3 class="pt-name">Standard</h3>
         <p class="pt-desc">For law firms, economic consultancies, funders and other industry professionals.</p>
@@ -681,12 +689,20 @@
         <a class="b27-btn b27-btn--pine" href="./boca27-register?ticket=Students%20%26%20PhD%20candidates">Register</a>
       </div>
       <div class="b27-price-card">
-        <h3 class="pt-name">In-house counsel &amp; public sector</h3>
-        <p class="pt-desc">For in-house counsel, judges, regulators and public authorities.</p>
+        <h3 class="pt-name">In-house Counsel</h3>
+        <p class="pt-desc">For in-house counsel and corporate legal teams.</p>
+        <span class="amt-old">EUR 110</span>
+        <span class="b27-eb-tag">Early bird</span>
+        <div class="amt amt-new">EUR 75</div>
+        <a class="b27-btn b27-btn--pine" href="./boca27-register?ticket=In-house%20Counsel">Register</a>
+      </div>
+      <div class="b27-price-card">
+        <h3 class="pt-name">Judges, Regulators &amp; Public Authorities</h3>
+        <p class="pt-desc">For the judiciary, regulators and public bodies.</p>
         <span class="amt-old placeholder">EUR 0</span>
         <span class="b27-eb-tag">By application</span>
         <div class="amt amt-new">Free</div>
-        <a class="b27-btn b27-btn--pine" href="./boca27-register?ticket=In-house%20counsel%20%26%20public%20sector">Apply now</a>
+        <a class="b27-btn b27-btn--pine" href="./boca27-register?ticket=Judges%2C%20Regulators%20%26%20Public%20Authorities">Apply now</a>
       </div>
     </div>
 
