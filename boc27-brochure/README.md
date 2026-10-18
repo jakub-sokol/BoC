@@ -1,6 +1,6 @@
 # Business of Competition 2027 — brochure (HTML, A4)
 
-Open `boc27-brochure.html` in Chromium. 8 pages, A4, print-ready (`@page` is 210×297mm, no margins).
+Open `boc27-brochure.html` in Chromium. 9 pages (programme: Day One spread, Day Two single page), A4, print-ready (`@page` is 210×297mm, no margins).
 PDF export: print to PDF with "Background graphics" on, margins none (or use Playwright `page.pdf({preferCSSPageSize: true, printBackground: true})`).
 
 - `boc27.css` — BoCA design system (tokens, type, components) + BoC27 additions at the bottom
