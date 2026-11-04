@@ -319,8 +319,10 @@
 
   /* ---- Media Partner ---- */
   .b27-media-partner-logo { margin-top: 1.5rem; }
+  .b27-media-partner-logo a { display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; }
   .b27-media-partner-logo img { height: 76px; width: auto; display: block; transition: opacity 0.2s ease; }
   .b27-media-partner-logo a:hover img { opacity: 0.8; }
+  .b27-media-partner-logo span { font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--black-70); }
 
   /* ---- Partnership value props ---- */
   .b27-partner-cols {
@@ -789,7 +791,10 @@
   <section class="b27-section" id="boc27-media-partner">
     <p class="b27-eyebrow">Media Partner</p>
     <div class="b27-media-partner-logo">
-      <a href="https://iberianlawyer.com/" target="_blank" rel="noopener noreferrer"><img src="logos/Iberian-Lawyer.jpg" alt="Iberian Lawyer" loading="lazy"></a>
+      <a href="https://iberianlawyer.com/" target="_blank" rel="noopener noreferrer">
+        <img src="logos/Iberian-Lawyer.jpg" alt="Iberian Lawyer" loading="lazy">
+        <span>Iberian Lawyer</span>
+      </a>
     </div>
   </section>
 
