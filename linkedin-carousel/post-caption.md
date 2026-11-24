@@ -13,7 +13,7 @@ What's on the programme:
 
 24 confirmed speakers so far, from claimant and defence firms, funders, economists and academia. More to come.
 
-Early Bird pricing ends 30 November: Standard pass EUR 315 instead of EUR 450 (excl. VAT). In-house counsel EUR 75, academics EUR 175, students EUR 105, judges and regulators free by application.
+Early Bird tickets are available: Standard pass EUR 315 instead of EUR 450 (excl. VAT). In-house counsel EUR 75, academics EUR 175, students EUR 105, judges and regulators free by application.
 
 Register and see the full programme: businessofconnections.com/boca27
 
